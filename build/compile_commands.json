@@ -1,0 +1,8 @@
+[
+{
+  "directory": "C:/Dev/Projects/Pac.Man/build",
+  "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\main.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\main.cpp",
+  "file": "C:/Dev/Projects/Pac.Man/main.cpp",
+  "output": "CMakeFiles/pacman.dir/main.cpp.obj"
+}
+]
