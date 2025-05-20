@@ -1,8 +1,0 @@
-{
-  "name": "raylib-dev",
-  "image": "devcontainers-cpp",
-  "features": {
-    "ghcr.io/devcontainers-contrib/features/raylib:1": {}
-  },
-  "postCreateCommand": "g++ main.cpp -o main -lraylib -lGL -lm -lpthread -ldl -lrt -lX11"
-}
