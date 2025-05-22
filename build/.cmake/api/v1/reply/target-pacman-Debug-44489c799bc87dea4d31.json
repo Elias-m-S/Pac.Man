@@ -94,10 +94,6 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "",
-				"role" : "flags"
-			},
-			{
 				"backtrace" : 2,
 				"fragment" : "-LC:\\raylib\\lib",
 				"role" : "libraryPath"
