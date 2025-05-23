@@ -3,9 +3,19 @@ project(Pacman)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# --- Include Raylib ---
 include_directories("C:/raylib/include")
 link_directories("C:/raylib/lib")
 
-add_executable(pacman main.cpp)
+# --- Include your own headers ---
+include_directories(${PROJECT_SOURCE_DIR}/include)
 
+# --- Add executable ---
+add_executable(pacman
+    main.cpp
+    source/PacMan.cpp
+    source/Entity.cpp
+)
+
+# --- Link libraries ---
 target_link_libraries(pacman raylib opengl32 gdi32 winmm)

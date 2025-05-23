@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "pacman::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-pacman-Debug-44489c799bc87dea4d31.json",
+					"jsonFile" : "target-pacman-Debug-048dd9abdc8e12b3b913.json",
 					"name" : "pacman",
 					"projectIndex" : 0
 				}
@@ -49,12 +49,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Programmieren/Projekte/Pac.Man/build",
-		"source" : "D:/Programmieren/Projekte/Pac.Man"
+		"build" : "C:/Dev/Projects/Pac.Man/build",
+		"source" : "C:/Dev/Projects/Pac.Man"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 8
+		"minor" : 7
 	}
 }
