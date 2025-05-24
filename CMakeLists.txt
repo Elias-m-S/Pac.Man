@@ -15,6 +15,7 @@ add_executable(pacman
     main.cpp
     source/PacMan.cpp
     source/Entity.cpp
+    source/Map.cpp
 )
 
 # --- Link libraries ---

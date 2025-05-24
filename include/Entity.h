@@ -1,18 +1,17 @@
 #pragma once
-#include "raylib.h"
 
 class Entity {
-protected:
-    Vector2 position;
-    float speed;
-
 public:
-    Entity(Vector2 pos, float spd);
+    Entity(int x, int y);
     virtual ~Entity() = default;
 
-    virtual void update() = 0;       // abstrakt – jede Entity implementiert es selbst
-    virtual void draw() const = 0;   // abstrakt – für spätere Darstellung
+    virtual void draw(int tileSize) const = 0;
 
-    Vector2 getPosition() const;
-    void setPosition(Vector2 pos);
+    void move(int dx, int dy);
+    int getX() const;
+    int getY() const;
+
+protected:
+    int x;
+    int y;
 };

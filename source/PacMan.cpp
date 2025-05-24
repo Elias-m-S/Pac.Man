@@ -1,15 +1,16 @@
 #include "PacMan.h"
 #include "raylib.h"
 
-PacMan::PacMan(Vector2 pos, float spd) : Entity(pos, spd) {}
+PacMan::PacMan(int startX, int startY) : Entity(startX, startY), score(0) {}
 
-void PacMan::update() {
-    if (IsKeyDown(KEY_RIGHT)) position.x += speed;
-    if (IsKeyDown(KEY_LEFT))  position.x -= speed;
-    if (IsKeyDown(KEY_UP))    position.y -= speed;
-    if (IsKeyDown(KEY_DOWN))  position.y += speed;
+void PacMan::draw(int tileSize) const {
+    DrawCircle(x * tileSize + tileSize / 2, y * tileSize + tileSize / 2, tileSize / 2 - 2, YELLOW);
 }
 
-void PacMan::draw() const {
-    DrawCircleV(position, 10, YELLOW);
+void PacMan::addScore(int amount) {
+    score += amount;
+}
+
+int PacMan::getScore() const {
+    return score;
 }

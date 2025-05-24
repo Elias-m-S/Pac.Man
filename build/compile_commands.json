@@ -16,5 +16,11 @@
   "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\Entity.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\Entity.cpp",
   "file": "C:/Dev/Projects/Pac.Man/source/Entity.cpp",
   "output": "CMakeFiles/pacman.dir/source/Entity.cpp.obj"
+},
+{
+  "directory": "C:/Dev/Projects/Pac.Man/build",
+  "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\Map.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\Map.cpp",
+  "file": "C:/Dev/Projects/Pac.Man/source/Map.cpp",
+  "output": "CMakeFiles/pacman.dir/source/Map.cpp.obj"
 }
 ]

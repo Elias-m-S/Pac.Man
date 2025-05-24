@@ -1,12 +1,11 @@
 #include "Entity.h"
 
-Entity::Entity(Vector2 pos, float spd)
-    : position(pos), speed(spd) {}
+Entity::Entity(int x, int y) : x(x), y(y) {}
 
-Vector2 Entity::getPosition() const {
-    return position;
+void Entity::move(int dx, int dy) {
+    x += dx;
+    y += dy;
 }
 
-void Entity::setPosition(Vector2 pos) {
-    position = pos;
-}
+int Entity::getX() const { return x; }
+int Entity::getY() const { return y; }

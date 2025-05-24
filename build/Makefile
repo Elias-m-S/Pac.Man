@@ -176,6 +176,30 @@ source/Entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Entity.cpp.s
 .PHONY : source/Entity.cpp.s
 
+source/Map.obj: source/Map.cpp.obj
+.PHONY : source/Map.obj
+
+# target to build an object file
+source/Map.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Map.cpp.obj
+.PHONY : source/Map.cpp.obj
+
+source/Map.i: source/Map.cpp.i
+.PHONY : source/Map.i
+
+# target to preprocess a source file
+source/Map.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Map.cpp.i
+.PHONY : source/Map.cpp.i
+
+source/Map.s: source/Map.cpp.s
+.PHONY : source/Map.s
+
+# target to generate assembly for a file
+source/Map.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Map.cpp.s
+.PHONY : source/Map.cpp.s
+
 source/PacMan.obj: source/PacMan.cpp.obj
 .PHONY : source/PacMan.obj
 
@@ -215,6 +239,9 @@ help:
 	@echo ... source/Entity.obj
 	@echo ... source/Entity.i
 	@echo ... source/Entity.s
+	@echo ... source/Map.obj
+	@echo ... source/Map.i
+	@echo ... source/Map.s
 	@echo ... source/PacMan.obj
 	@echo ... source/PacMan.i
 	@echo ... source/PacMan.s

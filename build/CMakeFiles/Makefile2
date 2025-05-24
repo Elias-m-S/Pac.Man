@@ -84,12 +84,12 @@ clean: CMakeFiles/pacman.dir/clean
 CMakeFiles/pacman.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Projects\Pac.Man\build\CMakeFiles --progress-num=1,2,3,4 "Built target pacman"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Projects\Pac.Man\build\CMakeFiles --progress-num=1,2,3,4,5 "Built target pacman"
 .PHONY : CMakeFiles/pacman.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/pacman.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Projects\Pac.Man\build\CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Projects\Pac.Man\build\CMakeFiles 5
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/pacman.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Dev\Projects\Pac.Man\build\CMakeFiles 0
 .PHONY : CMakeFiles/pacman.dir/rule
@@ -101,7 +101,7 @@ pacman: CMakeFiles/pacman.dir/rule
 # codegen rule for target.
 CMakeFiles/pacman.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Projects\Pac.Man\build\CMakeFiles --progress-num=1,2,3,4 "Finished codegen for target pacman"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Dev\Projects\Pac.Man\build\CMakeFiles --progress-num=1,2,3,4,5 "Finished codegen for target pacman"
 .PHONY : CMakeFiles/pacman.dir/codegen
 
 # clean rule for target.
