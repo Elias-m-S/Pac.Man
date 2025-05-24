@@ -7,40 +7,30 @@ const int mapWidth = 20;
 const int mapHeight = 15;
 
 int main() {
-    InitWindow(mapWidth * tileSize, mapHeight * tileSize, "PacMan Test");
-    SetTargetFPS(60);
+    InitWindow(mapWidth * tileSize, mapHeight * tileSize, "Pac-Man: Autobewegung");
+    SetTargetFPS(10); // 10 FPS = langsame Bewegung wie im Original
 
     Map map(mapWidth, mapHeight);
-    PacMan pacman(1, 1); // Start bei Feld (1,1)
+    PacMan pacman(1, 1);
 
     while (!WindowShouldClose()) {
-        // ===== INPUT / UPDATE =====
-        int dx = 0, dy = 0;
+        // Eingabe für Richtungsänderung
+        if (IsKeyPressed(KEY_UP)) pacman.setDesiredDirection(0, -1);
+        if (IsKeyPressed(KEY_DOWN)) pacman.setDesiredDirection(0, 1);
+        if (IsKeyPressed(KEY_LEFT)) pacman.setDesiredDirection(-1, 0);
+        if (IsKeyPressed(KEY_RIGHT)) pacman.setDesiredDirection(1, 0);
 
-        if (IsKeyPressed(KEY_W) || IsKeyPressed(KEY_UP)) dy = -1;
-        if (IsKeyPressed(KEY_S) || IsKeyPressed(KEY_DOWN)) dy = 1;
-        if (IsKeyPressed(KEY_A) || IsKeyPressed(KEY_LEFT)) dx = -1;
-        if (IsKeyPressed(KEY_D) || IsKeyPressed(KEY_RIGHT)) dx = 1;
+        // Bewegung
+        pacman.update(map);
 
-        int newX = pacman.getX() + dx;
-        int newY = pacman.getY() + dy;
-
-        if (map.isWalkable(newX, newY)) {
-            pacman.move(dx, dy);
-            if (map.hasCoin(newX, newY)) {
-                map.collectCoin(newX, newY);
-                pacman.addScore(10);
-            }
-        }
-
-        // ===== DRAWING =====
+        // Zeichnen
         BeginDrawing();
         ClearBackground(BLACK);
 
         map.draw();
         pacman.draw(tileSize);
 
-        DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, YELLOW);
+        DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
 
         EndDrawing();
     }
