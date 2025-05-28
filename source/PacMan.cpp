@@ -2,28 +2,29 @@
 #include "Map.h"
 #include "raylib.h"
 
-PacMan::PacMan(int startX, int startY)
-    : Entity(startX, startY), dx(0), dy(0), desiredDx(0), desiredDy(0), score(0) {}
+PacMan::PacMan(int startX, int startY, int speed)
+    : Entity(startX, startY, speed), desiredDirX(0), desiredDirY(0), score(0) {}
 
 void PacMan::update(Map& map) {
     // Richtungswechsel, falls neue Richtung möglich ist
-    int testX = x + desiredDx;
-    int testY = y + desiredDy;
-
+    int testX = x + desiredDirX;
+    int testY = y + desiredDirY;
     if (map.isWalkable(testX, testY)) {
-        dx = desiredDx;
-        dy = desiredDy;
+        setDirection(desiredDirX, desiredDirY);
     }
 
-    int nextX = x + dx;
-    int nextY = y + dy;
-
+    // Bewegung
+    int nextX = x + getDirX() * getSpeed();
+    int nextY = y + getDirY() * getSpeed();
     if (map.isWalkable(nextX, nextY)) {
-        move(dx, dy);
-
-        if (map.hasCoin(x, y)) {
-            map.collectCoin(x, y);
-            addScore(10);
+        move();
+        // Tunnel wrap horizontally
+        if (x < 0) x = map.getWidth() - 1;
+        else if (x >= map.getWidth()) x = 0;
+        // Sammle Item (Coin, Fruit, PowerUp)
+        if (map.hasItem(x, y)) {
+            int pts = map.collectItem(x, y);
+            addScore(pts);
         }
     }
 }
@@ -33,8 +34,8 @@ void PacMan::draw(int tileSize) const {
 }
 
 void PacMan::setDesiredDirection(int dx, int dy) {
-    desiredDx = dx;
-    desiredDy = dy;
+    desiredDirX = dx;
+    desiredDirY = dy;
 }
 
 void PacMan::addScore(int points) {

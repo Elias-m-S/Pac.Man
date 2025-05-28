@@ -176,6 +176,78 @@ source/Entity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Entity.cpp.s
 .PHONY : source/Entity.cpp.s
 
+source/Game.obj: source/Game.cpp.obj
+.PHONY : source/Game.obj
+
+# target to build an object file
+source/Game.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Game.cpp.obj
+.PHONY : source/Game.cpp.obj
+
+source/Game.i: source/Game.cpp.i
+.PHONY : source/Game.i
+
+# target to preprocess a source file
+source/Game.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Game.cpp.i
+.PHONY : source/Game.cpp.i
+
+source/Game.s: source/Game.cpp.s
+.PHONY : source/Game.s
+
+# target to generate assembly for a file
+source/Game.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Game.cpp.s
+.PHONY : source/Game.cpp.s
+
+source/Ghost.obj: source/Ghost.cpp.obj
+.PHONY : source/Ghost.obj
+
+# target to build an object file
+source/Ghost.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Ghost.cpp.obj
+.PHONY : source/Ghost.cpp.obj
+
+source/Ghost.i: source/Ghost.cpp.i
+.PHONY : source/Ghost.i
+
+# target to preprocess a source file
+source/Ghost.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Ghost.cpp.i
+.PHONY : source/Ghost.cpp.i
+
+source/Ghost.s: source/Ghost.cpp.s
+.PHONY : source/Ghost.s
+
+# target to generate assembly for a file
+source/Ghost.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Ghost.cpp.s
+.PHONY : source/Ghost.cpp.s
+
+source/Leaderboard.obj: source/Leaderboard.cpp.obj
+.PHONY : source/Leaderboard.obj
+
+# target to build an object file
+source/Leaderboard.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Leaderboard.cpp.obj
+.PHONY : source/Leaderboard.cpp.obj
+
+source/Leaderboard.i: source/Leaderboard.cpp.i
+.PHONY : source/Leaderboard.i
+
+# target to preprocess a source file
+source/Leaderboard.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Leaderboard.cpp.i
+.PHONY : source/Leaderboard.cpp.i
+
+source/Leaderboard.s: source/Leaderboard.cpp.s
+.PHONY : source/Leaderboard.s
+
+# target to generate assembly for a file
+source/Leaderboard.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Leaderboard.cpp.s
+.PHONY : source/Leaderboard.cpp.s
+
 source/Map.obj: source/Map.cpp.obj
 .PHONY : source/Map.obj
 
@@ -239,6 +311,15 @@ help:
 	@echo ... source/Entity.obj
 	@echo ... source/Entity.i
 	@echo ... source/Entity.s
+	@echo ... source/Game.obj
+	@echo ... source/Game.i
+	@echo ... source/Game.s
+	@echo ... source/Ghost.obj
+	@echo ... source/Ghost.i
+	@echo ... source/Ghost.s
+	@echo ... source/Leaderboard.obj
+	@echo ... source/Leaderboard.i
+	@echo ... source/Leaderboard.s
 	@echo ... source/Map.obj
 	@echo ... source/Map.i
 	@echo ... source/Map.s

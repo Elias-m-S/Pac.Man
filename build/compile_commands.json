@@ -7,20 +7,38 @@
 },
 {
   "directory": "C:/Dev/Projects/Pac.Man/build",
-  "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\PacMan.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\PacMan.cpp",
-  "file": "C:/Dev/Projects/Pac.Man/source/PacMan.cpp",
-  "output": "CMakeFiles/pacman.dir/source/PacMan.cpp.obj"
-},
-{
-  "directory": "C:/Dev/Projects/Pac.Man/build",
   "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\Entity.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\Entity.cpp",
   "file": "C:/Dev/Projects/Pac.Man/source/Entity.cpp",
   "output": "CMakeFiles/pacman.dir/source/Entity.cpp.obj"
 },
 {
   "directory": "C:/Dev/Projects/Pac.Man/build",
+  "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\Game.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\Game.cpp",
+  "file": "C:/Dev/Projects/Pac.Man/source/Game.cpp",
+  "output": "CMakeFiles/pacman.dir/source/Game.cpp.obj"
+},
+{
+  "directory": "C:/Dev/Projects/Pac.Man/build",
+  "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\Ghost.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\Ghost.cpp",
+  "file": "C:/Dev/Projects/Pac.Man/source/Ghost.cpp",
+  "output": "CMakeFiles/pacman.dir/source/Ghost.cpp.obj"
+},
+{
+  "directory": "C:/Dev/Projects/Pac.Man/build",
+  "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\Leaderboard.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\Leaderboard.cpp",
+  "file": "C:/Dev/Projects/Pac.Man/source/Leaderboard.cpp",
+  "output": "CMakeFiles/pacman.dir/source/Leaderboard.cpp.obj"
+},
+{
+  "directory": "C:/Dev/Projects/Pac.Man/build",
   "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\Map.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\Map.cpp",
   "file": "C:/Dev/Projects/Pac.Man/source/Map.cpp",
   "output": "CMakeFiles/pacman.dir/source/Map.cpp.obj"
+},
+{
+  "directory": "C:/Dev/Projects/Pac.Man/build",
+  "command": "C:\\Dev\\mingw64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\PacMan.cpp.obj -c C:\\Dev\\Projects\\Pac.Man\\source\\PacMan.cpp",
+  "file": "C:/Dev/Projects/Pac.Man/source/PacMan.cpp",
+  "output": "CMakeFiles/pacman.dir/source/PacMan.cpp.obj"
 }
 ]

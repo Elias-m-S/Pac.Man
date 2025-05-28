@@ -1,8 +1,6 @@
-CMakeFiles/pacman.dir/source/PacMan.cpp.obj: \
- C:\Dev\Projects\Pac.Man\source\PacMan.cpp \
- C:/Dev/Projects/Pac.Man/include/PacMan.h \
- C:/Dev/Projects/Pac.Man/include/Entity.h \
- C:/Dev/Projects/Pac.Man/include/Map.h \
+CMakeFiles/pacman.dir/source/Leaderboard.cpp.obj: \
+ C:\Dev\Projects\Pac.Man\source\Leaderboard.cpp \
+ C:/Dev/Projects/Pac.Man/include/Leaderboard.h \
  C:/Dev/mingw64/include/c++/14.2.0/vector \
  C:/Dev/mingw64/include/c++/14.2.0/bits/requires_hosted.h \
  C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -65,38 +63,6 @@ CMakeFiles/pacman.dir/source/PacMan.cpp.obj: \
  C:/Dev/mingw64/include/c++/14.2.0/bits/uses_allocator.h \
  C:/Dev/mingw64/include/c++/14.2.0/bits/uses_allocator_args.h \
  C:/Dev/mingw64/include/c++/14.2.0/tuple \
- C:/Dev/mingw64/include/c++/14.2.0/random \
- C:/Dev/mingw64/include/c++/14.2.0/cmath \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/math.h \
- C:/Dev/mingw64/include/c++/14.2.0/bits/std_abs.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/stdlib.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
- C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h \
- C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/syslimits.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/limits.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
- C:/Dev/mingw64/include/c++/14.2.0/stdlib.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/malloc.h \
- C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/errno.h \
- C:/Dev/mingw64/include/c++/14.2.0/bits/specfun.h \
- C:/Dev/mingw64/include/c++/14.2.0/limits \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/gamma.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/special_function_util.h \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/bessel_function.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/beta_function.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/ell_integral.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/exp_integral.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/hypergeometric.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/legendre_function.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/modified_bessel_func.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/poly_hermite.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/poly_laguerre.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/tr1/riemann_zeta.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/cstdint \
- C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdint.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/stdint.h \
- C:/Dev/mingw64/include/c++/14.2.0/cstdlib \
  C:/Dev/mingw64/include/c++/14.2.0/string \
  C:/Dev/mingw64/include/c++/14.2.0/bits/stringfwd.h \
  C:/Dev/mingw64/include/c++/14.2.0/bits/char_traits.h \
@@ -104,6 +70,7 @@ CMakeFiles/pacman.dir/source/PacMan.cpp.obj: \
  C:/Dev/mingw64/include/c++/14.2.0/cwchar \
  C:/Dev/mingw64/x86_64-w64-mingw32/include/wchar.h \
  C:/Dev/mingw64/x86_64-w64-mingw32/include/corecrt_stdio_config.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/corecrt_wstdlib.h \
  C:/Dev/mingw64/x86_64-w64-mingw32/include/_mingw_off_t.h \
  C:/Dev/mingw64/x86_64-w64-mingw32/include/_mingw_stat64.h \
  C:/Dev/mingw64/x86_64-w64-mingw32/include/swprintf.inl \
@@ -123,18 +90,70 @@ CMakeFiles/pacman.dir/source/PacMan.cpp.obj: \
  C:/Dev/mingw64/include/c++/14.2.0/string_view \
  C:/Dev/mingw64/include/c++/14.2.0/bits/string_view.tcc \
  C:/Dev/mingw64/include/c++/14.2.0/ext/string_conversions.h \
+ C:/Dev/mingw64/include/c++/14.2.0/cstdlib \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/stdlib.h \
+ C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/limits.h \
+ C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/syslimits.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/limits.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h \
+ C:/Dev/mingw64/include/c++/14.2.0/stdlib.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/malloc.h \
+ C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/mm_malloc.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/errno.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/std_abs.h \
  C:/Dev/mingw64/include/c++/14.2.0/cstdio \
  C:/Dev/mingw64/include/c++/14.2.0/cerrno \
  C:/Dev/mingw64/include/c++/14.2.0/bits/charconv.h \
  C:/Dev/mingw64/include/c++/14.2.0/bits/basic_string.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/bits/random.h \
- C:/Dev/mingw64/include/c++/14.2.0/bits/uniform_int_dist.h \
- C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/opt_random.h \
- C:/Dev/mingw64/include/c++/14.2.0/bits/random.tcc \
- C:/Dev/mingw64/include/c++/14.2.0/numeric \
- C:/Dev/mingw64/include/c++/14.2.0/bits/stl_numeric.h \
- C:/Dev/mingw64/include/c++/14.2.0/pstl/glue_numeric_defs.h \
- C:/Dev/mingw64/include/c++/14.2.0/pstl/execution_defs.h \
+ C:/Dev/mingw64/include/c++/14.2.0/fstream \
+ C:/Dev/mingw64/include/c++/14.2.0/istream \
+ C:/Dev/mingw64/include/c++/14.2.0/ios \
+ C:/Dev/mingw64/include/c++/14.2.0/exception \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/exception_ptr.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/cxxabi_init_exception.h \
+ C:/Dev/mingw64/include/c++/14.2.0/typeinfo \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/nested_exception.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/ios_base.h \
+ C:/Dev/mingw64/include/c++/14.2.0/ext/atomicity.h \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/gthr.h \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/gthr-default.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/pthread.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/sys/types.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/process.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/corecrt_startup.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/signal.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/pthread_signal.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/time.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/sys/timeb.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/_timeval.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/pthread_time.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/pthread_compat.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/pthread_unistd.h \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/atomic_word.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/locale_classes.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/locale_classes.tcc \
+ C:/Dev/mingw64/include/c++/14.2.0/system_error \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/error_constants.h \
+ C:/Dev/mingw64/include/c++/14.2.0/stdexcept \
+ C:/Dev/mingw64/include/c++/14.2.0/streambuf \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/streambuf.tcc \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/basic_ios.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/locale_facets.h \
+ C:/Dev/mingw64/include/c++/14.2.0/cwctype \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/wctype.h \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/ctype_base.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/streambuf_iterator.h \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/ctype_inline.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/locale_facets.tcc \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/basic_ios.tcc \
+ C:/Dev/mingw64/include/c++/14.2.0/ostream \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/ostream.tcc \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/istream.tcc \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/codecvt.h \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/basic_file.h \
+ C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32/bits/c++io.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/fstream.tcc \
  C:/raylib/include/raylib.h \
  C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
  C:/Dev/mingw64/x86_64-w64-mingw32/include/stdarg.h \

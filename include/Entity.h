@@ -2,16 +2,25 @@
 
 class Entity {
 public:
-    Entity(int x, int y);
+    explicit Entity(int x, int y, int speed = 1, int dirX = 0, int dirY = 0);
     virtual ~Entity() = default;
 
     virtual void draw(int tileSize) const = 0;
 
-    void move(int dx, int dy);
-    int getX() const;
-    int getY() const;
+    void move();
+    void setDirection(int dx, int dy);
+    void setSpeed(int speed);
+
+    inline int getX() const { return x; }
+    inline int getY() const { return y; }
+    inline int getSpeed() const { return speed; }
+    inline int getDirX() const { return dirX; }
+    inline int getDirY() const { return dirY; }
 
 protected:
     int x;
     int y;
+    int speed;
+    int dirX;
+    int dirY;
 };

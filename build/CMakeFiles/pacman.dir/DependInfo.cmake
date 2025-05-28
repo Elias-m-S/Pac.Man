@@ -10,6 +10,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Dev/Projects/Pac.Man/main.cpp" "CMakeFiles/pacman.dir/main.cpp.obj" "gcc" "CMakeFiles/pacman.dir/main.cpp.obj.d"
   "C:/Dev/Projects/Pac.Man/source/Entity.cpp" "CMakeFiles/pacman.dir/source/Entity.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Entity.cpp.obj.d"
+  "C:/Dev/Projects/Pac.Man/source/Game.cpp" "CMakeFiles/pacman.dir/source/Game.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Game.cpp.obj.d"
+  "C:/Dev/Projects/Pac.Man/source/Ghost.cpp" "CMakeFiles/pacman.dir/source/Ghost.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Ghost.cpp.obj.d"
+  "C:/Dev/Projects/Pac.Man/source/Leaderboard.cpp" "CMakeFiles/pacman.dir/source/Leaderboard.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Leaderboard.cpp.obj.d"
   "C:/Dev/Projects/Pac.Man/source/Map.cpp" "CMakeFiles/pacman.dir/source/Map.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Map.cpp.obj.d"
   "C:/Dev/Projects/Pac.Man/source/PacMan.cpp" "CMakeFiles/pacman.dir/source/PacMan.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/PacMan.cpp.obj.d"
   )

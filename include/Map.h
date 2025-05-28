@@ -1,31 +1,45 @@
 #pragma once
 #include <vector>
-#include <raylib.h>
+#include <random>
+#include "raylib.h"
 
 class Map {
 public:
-    Map(int width, int height);
-    void loadDefaultLayout(); // Erstmal harter Map-Entwurf
+    enum TileType { WALL, EMPTY, COIN, POWERUP, FRUIT };
+
+    // Construct map with given dimensions and tile size
+    Map(int width, int height, int tileSize);
+
+    // Update map state (e.g., fruit spawning)
+    void update(float deltaTime);
+    // Draw the map (walls, coins, power-ups, fruit)
     void draw() const;
 
+    // Check if a tile is walkable (includes tunnel wrap-around)
     bool isWalkable(int x, int y) const;
-    bool hasCoin(int x, int y) const;
-    void collectCoin(int x, int y);
 
+    // Check for items on a tile (coin, power-up, fruit)
+    bool hasItem(int x, int y) const;
+    // Collect item at tile; returns points earned (10 coin, 100 fruit, 0 power-up)
+    int collectItem(int x, int y);
+
+    // Check if all coins have been collected
     bool allCoinsCollected() const;
 
     int getWidth() const;
     int getHeight() const;
 
 private:
-    enum TileType {
-        EMPTY,
-        WALL,
-        COIN
-    };
-
-    std::vector<std::vector<TileType>> grid;
     int width;
     int height;
-    int tileSize = 32; // Pixelgröße pro Tile
+    int tileSize;
+    std::vector<std::vector<TileType>> grid;
+
+    // Timing for fruit spawn
+    float fruitTimer;
+    float fruitSpawnInterval;
+    std::mt19937 rng;
+
+    void loadLayout();
+    void spawnFruit();
 };

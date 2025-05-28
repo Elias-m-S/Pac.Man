@@ -1,6 +1,6 @@
-CMakeFiles/pacman.dir/source/PacMan.cpp.obj: \
- C:\Dev\Projects\Pac.Man\source\PacMan.cpp \
- C:/Dev/Projects/Pac.Man/include/PacMan.h \
+CMakeFiles/pacman.dir/source/Ghost.cpp.obj: \
+ C:\Dev\Projects\Pac.Man\source\Ghost.cpp \
+ C:/Dev/Projects/Pac.Man/include/Ghost.h \
  C:/Dev/Projects/Pac.Man/include/Entity.h \
  C:/Dev/Projects/Pac.Man/include/Map.h \
  C:/Dev/mingw64/include/c++/14.2.0/vector \
@@ -138,4 +138,14 @@ CMakeFiles/pacman.dir/source/PacMan.cpp.obj: \
  C:/raylib/include/raylib.h \
  C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
  C:/Dev/mingw64/x86_64-w64-mingw32/include/stdarg.h \
- C:/Dev/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/_mingw_stdarg.h \
+ C:/Dev/Projects/Pac.Man/include/PacMan.h \
+ C:/Dev/mingw64/include/c++/14.2.0/algorithm \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/stl_algo.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/algorithmfwd.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/stl_heap.h \
+ C:/Dev/mingw64/include/c++/14.2.0/bits/stl_tempbuf.h \
+ C:/Dev/mingw64/include/c++/14.2.0/pstl/glue_algorithm_defs.h \
+ C:/Dev/mingw64/include/c++/14.2.0/cfloat \
+ C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/float.h \
+ C:/Dev/mingw64/x86_64-w64-mingw32/include/float.h

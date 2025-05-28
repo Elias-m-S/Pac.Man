@@ -27,7 +27,7 @@
 					[
 						0
 					],
-					"name" : "Pacman",
+					"name" : "PacMan",
 					"targetIndexes" : 
 					[
 						0
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "pacman::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-pacman-Debug-4b1dd4061222df462aed.json",
+					"jsonFile" : "target-pacman-Debug-f2d5d92e00e80035e2cb.json",
 					"name" : "pacman",
 					"projectIndex" : 0
 				}

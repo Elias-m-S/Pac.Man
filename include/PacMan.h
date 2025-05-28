@@ -3,7 +3,7 @@
 
 class PacMan : public Entity {
 public:
-    PacMan(int startX, int startY);
+    PacMan(int startX, int startY, int speed = 1);
 
     void update(class Map& map);  // Bewegung mit Kollision
     void draw(int tileSize) const override;
@@ -13,7 +13,6 @@ public:
     int getScore() const;
 
 private:
-    int dx, dy;                   // aktuelle Richtung
-    int desiredDx, desiredDy;     // gewünschte Richtung
+    int desiredDirX, desiredDirY; // gewünschte Richtung
     int score;
 };
