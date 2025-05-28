@@ -1,0 +1,35 @@
+# === Build-Verzeichnisse ===
+build/
+bin/
+obj/
+out/
+
+# === CMake ===
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# === VS Code ===
+.vscode/
+*.code-workspace
+
+# === Temporäre Dateien ===
+*.log
+*.tmp
+*.swp
+*~
+
+# === macOS/Linux Systemdateien ===
+.DS_Store
+Thumbs.db
+
+# === Backup-Dateien ===
+*.bak
+*.old
+
+# === Raylib spezifisch (falls zutreffend) ===
+raylib.lib
+raylib.dll
+raylib.a
+raylib.o

@@ -1,3 +1,0 @@
-C:/Dev/Projects/Pac.Man/build/CMakeFiles/pacman.dir
-C:/Dev/Projects/Pac.Man/build/CMakeFiles/edit_cache.dir
-C:/Dev/Projects/Pac.Man/build/CMakeFiles/rebuild_cache.dir
