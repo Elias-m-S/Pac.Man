@@ -16,6 +16,8 @@ add_executable(pacman
     source/PacMan.cpp
     source/Entity.cpp
     source/Map.cpp
+    source/Ghostbase.cpp
+    source/RedGhost.cpp
 )
 
 # --- Link libraries ---

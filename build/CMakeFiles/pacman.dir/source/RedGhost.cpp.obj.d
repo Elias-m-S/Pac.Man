@@ -1,12 +1,9 @@
-CMakeFiles/pacman.dir/main.cpp.obj: \
- D:\Programmieren\Projekte\Pac.Man\main.cpp C:/raylib/include/raylib.h \
- C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
- C:/msys64/ucrt64/include/stdarg.h \
- C:/msys64/ucrt64/include/_mingw_stdarg.h \
- C:/msys64/ucrt64/include/vadefs.h C:/msys64/ucrt64/include/_mingw.h \
- C:/msys64/ucrt64/include/_mingw_mac.h \
- C:/msys64/ucrt64/include/_mingw_secapi.h \
- C:/msys64/ucrt64/include/sdks/_mingw_ddk.h \
+CMakeFiles/pacman.dir/source/RedGhost.cpp.obj: \
+ D:\Programmieren\Projekte\Pac.Man\source\RedGhost.cpp \
+ D:/Programmieren/Projekte/Pac.Man/include/RedGhost.h \
+ D:/Programmieren/Projekte/Pac.Man/include/PacMan.h \
+ D:/Programmieren/Projekte/Pac.Man/include/Entity.h \
+ D:/Programmieren/Projekte/Pac.Man/include/Ghostbase.h \
  D:/Programmieren/Projekte/Pac.Man/include/Map.h \
  C:/msys64/ucrt64/include/c++/14.2.0/vector \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/requires_hosted.h \
@@ -60,9 +57,14 @@ CMakeFiles/pacman.dir/main.cpp.obj: \
  C:/msys64/ucrt64/include/c++/14.2.0/cstddef \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stddef.h \
  C:/msys64/ucrt64/include/stddef.h C:/msys64/ucrt64/include/crtdefs.h \
- C:/msys64/ucrt64/include/corecrt.h \
+ C:/msys64/ucrt64/include/corecrt.h C:/msys64/ucrt64/include/_mingw.h \
+ C:/msys64/ucrt64/include/_mingw_mac.h \
+ C:/msys64/ucrt64/include/_mingw_secapi.h \
+ C:/msys64/ucrt64/include/vadefs.h \
+ C:/msys64/ucrt64/include/sdks/_mingw_ddk.h \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator.h \
  C:/msys64/ucrt64/include/c++/14.2.0/bits/uses_allocator_args.h \
- C:/msys64/ucrt64/include/c++/14.2.0/tuple \
- D:/Programmieren/Projekte/Pac.Man/include/PacMan.h \
- D:/Programmieren/Projekte/Pac.Man/include/Entity.h
+ C:/msys64/ucrt64/include/c++/14.2.0/tuple C:/raylib/include/raylib.h \
+ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include/stdarg.h \
+ C:/msys64/ucrt64/include/stdarg.h \
+ C:/msys64/ucrt64/include/_mingw_stdarg.h

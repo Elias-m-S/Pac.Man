@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "C:/Dev/mingw64/bin/g++.exe")
+set(CMAKE_CXX_COMPILER "C:/msys64/ucrt64/bin/g++.exe")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "14.2.0")
@@ -19,22 +19,23 @@ set(CMAKE_CXX26_COMPILE_FEATURES "cxx_std_26")
 set(CMAKE_CXX_PLATFORM_ID "MinGW")
 set(CMAKE_CXX_SIMULATE_ID "")
 set(CMAKE_CXX_COMPILER_FRONTEND_VARIANT "GNU")
+set(CMAKE_CXX_COMPILER_APPLE_SYSROOT "")
 set(CMAKE_CXX_SIMULATE_VERSION "")
 
 
 
 
-set(CMAKE_AR "C:/Dev/mingw64/bin/ar.exe")
-set(CMAKE_CXX_COMPILER_AR "C:/Dev/mingw64/bin/gcc-ar.exe")
-set(CMAKE_RANLIB "C:/Dev/mingw64/bin/ranlib.exe")
-set(CMAKE_CXX_COMPILER_RANLIB "C:/Dev/mingw64/bin/gcc-ranlib.exe")
-set(CMAKE_LINKER "C:/Dev/mingw64/bin/ld.exe")
+set(CMAKE_AR "C:/msys64/ucrt64/bin/ar.exe")
+set(CMAKE_CXX_COMPILER_AR "C:/msys64/ucrt64/bin/gcc-ar.exe")
+set(CMAKE_RANLIB "C:/msys64/ucrt64/bin/ranlib.exe")
+set(CMAKE_CXX_COMPILER_RANLIB "C:/msys64/ucrt64/bin/gcc-ranlib.exe")
+set(CMAKE_LINKER "C:/msys64/ucrt64/bin/ld.exe")
 set(CMAKE_LINKER_LINK "")
 set(CMAKE_LINKER_LLD "")
-set(CMAKE_CXX_COMPILER_LINKER "Configured with: ../configure --prefix=/R/winlibs_staging_ucrt64/inst_gcc-14.2.0/share/gcc --build=x86_64-w64-mingw32 --host=x86_64-w64-mingw32 --enable-offload-targets=nvptx-none --with-pkgversion='MinGW-W64 x86_64-ucrt-posix-seh, built by Brecht Sanders, r3' --with-tune=generic --enable-checking=release --enable-threads=posix --disable-sjlj-exceptions --disable-libunwind-exceptions --disable-serial-configure --disable-bootstrap --enable-host-shared --enable-plugin --disable-default-ssp --disable-rpath --disable-libstdcxx-debug --disable-version-specific-runtime-libs --disable-symvers --enable-languages=c,c++,fortran,lto,objc,obj-c++ --disable-gold --disable-nls --disable-stage1-checking --disable-win32-registry --disable-multilib --enable-ld --enable-libquadmath --enable-libada --enable-libssp --enable-libstdcxx --enable-lto --enable-fully-dynamic-string --enable-libgomp --enable-graphite --enable-mingw-wildcard --enable-libstdcxx-time --enable-libstdcxx-pch --with-mpc=/c/Prog/winlibs_staging_ucrt/custombuilt64 --with-mpfr=/c/Prog/winlibs_staging_ucrt/custombuilt64 --with-gmp=/c/Prog/winlibs_staging_ucrt/custombuilt64 --with-isl=/c/Prog/winlibs_staging_ucrt/custombuilt64 --disable-libstdcxx-backtrace --enable-install-libiberty --enable-__cxa_atexit --without-included-gettext --with-diagnostics-color=auto --enable-clocale=generic --with-libiconv --with-system-zlib --with-build-sysroot=/R/winlibs_staging_ucrt64/gcc-14.2.0/build_mingw/mingw-w64 CFLAGS='-I/c/Prog/winlibs_staging_ucrt/custombuilt64/include/libdl-win32   -march=nocona -msahf -mtune=generic -O2 -Wno-error=format' CXXFLAGS='-Wno-int-conversion  -march=nocona -msahf -mtune=generic -O2' LDFLAGS='-pthread -Wl,--no-insert-timestamp -Wl,--dynamicbase -Wl,--high-entropy-va -Wl,--nxcompat -Wl,--tsaware' LD=/c/Prog/winlibs_staging_ucrt/custombuilt64/share/binutils/bin/ld.exe")
-set(CMAKE_CXX_COMPILER_LINKER_ID "")
-set(CMAKE_CXX_COMPILER_LINKER_VERSION )
-set(CMAKE_CXX_COMPILER_LINKER_FRONTEND_VARIANT )
+set(CMAKE_CXX_COMPILER_LINKER "C:/msys64/ucrt64/x86_64-w64-mingw32/bin/ld.exe")
+set(CMAKE_CXX_COMPILER_LINKER_ID "GNU")
+set(CMAKE_CXX_COMPILER_LINKER_VERSION 2.43.1)
+set(CMAKE_CXX_COMPILER_LINKER_FRONTEND_VARIANT GNU)
 set(CMAKE_MT "")
 set(CMAKE_TAPI "CMAKE_TAPI-NOTFOUND")
 set(CMAKE_COMPILER_IS_GNUCXX 1)
@@ -58,7 +59,9 @@ endforeach()
 
 set(CMAKE_CXX_LINKER_PREFERENCE 30)
 set(CMAKE_CXX_LINKER_PREFERENCE_PROPAGATES 1)
-set(CMAKE_CXX_LINKER_DEPFILE_SUPPORTED )
+set(CMAKE_CXX_LINKER_DEPFILE_SUPPORTED FALSE)
+set(CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED TRUE)
+set(CMAKE_CXX_LINKER_PUSHPOP_STATE_SUPPORTED TRUE)
 
 # Save compiler ABI information.
 set(CMAKE_CXX_SIZEOF_DATA_PTR "8")
@@ -87,9 +90,9 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "C:/Dev/mingw64/include/c++/14.2.0;C:/Dev/mingw64/include/c++/14.2.0/x86_64-w64-mingw32;C:/Dev/mingw64/include/c++/14.2.0/backward;C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include;C:/Dev/mingw64/include;C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed;C:/Dev/mingw64/x86_64-w64-mingw32/include")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "C:/msys64/ucrt64/include/c++/14.2.0;C:/msys64/ucrt64/include/c++/14.2.0/x86_64-w64-mingw32;C:/msys64/ucrt64/include/c++/14.2.0/backward;C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include;C:/msys64/ucrt64/include;C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0/include-fixed")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "stdc++;mingw32;gcc_s;gcc;mingwex;kernel32;pthread;advapi32;shell32;user32;kernel32;mingw32;gcc_s;gcc;mingwex;kernel32")
-set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "C:/Dev/mingw64/lib/gcc/x86_64-w64-mingw32/14.2.0;C:/Dev/mingw64/lib/gcc;C:/Dev/mingw64/x86_64-w64-mingw32/lib;C:/Dev/mingw64/lib")
+set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/14.2.0;C:/msys64/ucrt64/lib/gcc;C:/msys64/ucrt64/x86_64-w64-mingw32/lib;C:/msys64/ucrt64/lib")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")
 set(CMAKE_CXX_COMPILER_CLANG_RESOURCE_DIR "")
 

@@ -23,3 +23,6 @@ selbständig.
 wird. Das Leaderboard wird auf der Festplatte gespeichert und beim Start des Spiels sowie
 nach jedem Spiel angezeigt.
 
+
+Optional für guten Programmierstil:
+- exception handling (throw)
