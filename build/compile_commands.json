@@ -34,5 +34,23 @@
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\RedGhost.cpp.obj -c D:\\Programmieren\\Projekte\\Pac.Man\\source\\RedGhost.cpp",
   "file": "D:/Programmieren/Projekte/Pac.Man/source/RedGhost.cpp",
   "output": "CMakeFiles/pacman.dir/source/RedGhost.cpp.obj"
+},
+{
+  "directory": "D:/Programmieren/Projekte/Pac.Man/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\GreenGhost.cpp.obj -c D:\\Programmieren\\Projekte\\Pac.Man\\source\\GreenGhost.cpp",
+  "file": "D:/Programmieren/Projekte/Pac.Man/source/GreenGhost.cpp",
+  "output": "CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj"
+},
+{
+  "directory": "D:/Programmieren/Projekte/Pac.Man/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\BlueGhost.cpp.obj -c D:\\Programmieren\\Projekte\\Pac.Man\\source\\BlueGhost.cpp",
+  "file": "D:/Programmieren/Projekte/Pac.Man/source/BlueGhost.cpp",
+  "output": "CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj"
+},
+{
+  "directory": "D:/Programmieren/Projekte/Pac.Man/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/pacman.dir/includes_CXX.rsp -g -o CMakeFiles\\pacman.dir\\source\\PinkGhost.cpp.obj -c D:\\Programmieren\\Projekte\\Pac.Man\\source\\PinkGhost.cpp",
+  "file": "D:/Programmieren/Projekte/Pac.Man/source/PinkGhost.cpp",
+  "output": "CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj"
 }
 ]

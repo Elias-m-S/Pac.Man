@@ -152,6 +152,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+source/BlueGhost.obj: source/BlueGhost.cpp.obj
+.PHONY : source/BlueGhost.obj
+
+# target to build an object file
+source/BlueGhost.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj
+.PHONY : source/BlueGhost.cpp.obj
+
+source/BlueGhost.i: source/BlueGhost.cpp.i
+.PHONY : source/BlueGhost.i
+
+# target to preprocess a source file
+source/BlueGhost.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/BlueGhost.cpp.i
+.PHONY : source/BlueGhost.cpp.i
+
+source/BlueGhost.s: source/BlueGhost.cpp.s
+.PHONY : source/BlueGhost.s
+
+# target to generate assembly for a file
+source/BlueGhost.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/BlueGhost.cpp.s
+.PHONY : source/BlueGhost.cpp.s
+
 source/Entity.obj: source/Entity.cpp.obj
 .PHONY : source/Entity.obj
 
@@ -199,6 +223,30 @@ source/Ghostbase.s: source/Ghostbase.cpp.s
 source/Ghostbase.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/Ghostbase.cpp.s
 .PHONY : source/Ghostbase.cpp.s
+
+source/GreenGhost.obj: source/GreenGhost.cpp.obj
+.PHONY : source/GreenGhost.obj
+
+# target to build an object file
+source/GreenGhost.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj
+.PHONY : source/GreenGhost.cpp.obj
+
+source/GreenGhost.i: source/GreenGhost.cpp.i
+.PHONY : source/GreenGhost.i
+
+# target to preprocess a source file
+source/GreenGhost.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/GreenGhost.cpp.i
+.PHONY : source/GreenGhost.cpp.i
+
+source/GreenGhost.s: source/GreenGhost.cpp.s
+.PHONY : source/GreenGhost.s
+
+# target to generate assembly for a file
+source/GreenGhost.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/GreenGhost.cpp.s
+.PHONY : source/GreenGhost.cpp.s
 
 source/Map.obj: source/Map.cpp.obj
 .PHONY : source/Map.obj
@@ -248,6 +296,30 @@ source/PacMan.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/PacMan.cpp.s
 .PHONY : source/PacMan.cpp.s
 
+source/PinkGhost.obj: source/PinkGhost.cpp.obj
+.PHONY : source/PinkGhost.obj
+
+# target to build an object file
+source/PinkGhost.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj
+.PHONY : source/PinkGhost.cpp.obj
+
+source/PinkGhost.i: source/PinkGhost.cpp.i
+.PHONY : source/PinkGhost.i
+
+# target to preprocess a source file
+source/PinkGhost.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/PinkGhost.cpp.i
+.PHONY : source/PinkGhost.cpp.i
+
+source/PinkGhost.s: source/PinkGhost.cpp.s
+.PHONY : source/PinkGhost.s
+
+# target to generate assembly for a file
+source/PinkGhost.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\pacman.dir\build.make CMakeFiles/pacman.dir/source/PinkGhost.cpp.s
+.PHONY : source/PinkGhost.cpp.s
+
 source/RedGhost.obj: source/RedGhost.cpp.obj
 .PHONY : source/RedGhost.obj
 
@@ -284,18 +356,27 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... source/BlueGhost.obj
+	@echo ... source/BlueGhost.i
+	@echo ... source/BlueGhost.s
 	@echo ... source/Entity.obj
 	@echo ... source/Entity.i
 	@echo ... source/Entity.s
 	@echo ... source/Ghostbase.obj
 	@echo ... source/Ghostbase.i
 	@echo ... source/Ghostbase.s
+	@echo ... source/GreenGhost.obj
+	@echo ... source/GreenGhost.i
+	@echo ... source/GreenGhost.s
 	@echo ... source/Map.obj
 	@echo ... source/Map.i
 	@echo ... source/Map.s
 	@echo ... source/PacMan.obj
 	@echo ... source/PacMan.i
 	@echo ... source/PacMan.s
+	@echo ... source/PinkGhost.obj
+	@echo ... source/PinkGhost.i
+	@echo ... source/PinkGhost.s
 	@echo ... source/RedGhost.obj
 	@echo ... source/RedGhost.i
 	@echo ... source/RedGhost.s

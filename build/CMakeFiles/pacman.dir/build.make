@@ -161,6 +161,51 @@ CMakeFiles/pacman.dir/source/RedGhost.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pacman.dir/source/RedGhost.cpp.s"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Programmieren\Projekte\Pac.Man\source\RedGhost.cpp -o CMakeFiles\pacman.dir\source\RedGhost.cpp.s
 
+CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj: CMakeFiles/pacman.dir/flags.make
+CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj: CMakeFiles/pacman.dir/includes_CXX.rsp
+CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj: D:/Programmieren/Projekte/Pac.Man/source/GreenGhost.cpp
+CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj: CMakeFiles/pacman.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\Programmieren\Projekte\Pac.Man\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj -MF CMakeFiles\pacman.dir\source\GreenGhost.cpp.obj.d -o CMakeFiles\pacman.dir\source\GreenGhost.cpp.obj -c D:\Programmieren\Projekte\Pac.Man\source\GreenGhost.cpp
+
+CMakeFiles/pacman.dir/source/GreenGhost.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pacman.dir/source/GreenGhost.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Programmieren\Projekte\Pac.Man\source\GreenGhost.cpp > CMakeFiles\pacman.dir\source\GreenGhost.cpp.i
+
+CMakeFiles/pacman.dir/source/GreenGhost.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pacman.dir/source/GreenGhost.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Programmieren\Projekte\Pac.Man\source\GreenGhost.cpp -o CMakeFiles\pacman.dir\source\GreenGhost.cpp.s
+
+CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj: CMakeFiles/pacman.dir/flags.make
+CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj: CMakeFiles/pacman.dir/includes_CXX.rsp
+CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj: D:/Programmieren/Projekte/Pac.Man/source/BlueGhost.cpp
+CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj: CMakeFiles/pacman.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\Programmieren\Projekte\Pac.Man\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj -MF CMakeFiles\pacman.dir\source\BlueGhost.cpp.obj.d -o CMakeFiles\pacman.dir\source\BlueGhost.cpp.obj -c D:\Programmieren\Projekte\Pac.Man\source\BlueGhost.cpp
+
+CMakeFiles/pacman.dir/source/BlueGhost.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pacman.dir/source/BlueGhost.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Programmieren\Projekte\Pac.Man\source\BlueGhost.cpp > CMakeFiles\pacman.dir\source\BlueGhost.cpp.i
+
+CMakeFiles/pacman.dir/source/BlueGhost.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pacman.dir/source/BlueGhost.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Programmieren\Projekte\Pac.Man\source\BlueGhost.cpp -o CMakeFiles\pacman.dir\source\BlueGhost.cpp.s
+
+CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj: CMakeFiles/pacman.dir/flags.make
+CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj: CMakeFiles/pacman.dir/includes_CXX.rsp
+CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj: D:/Programmieren/Projekte/Pac.Man/source/PinkGhost.cpp
+CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj: CMakeFiles/pacman.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\Programmieren\Projekte\Pac.Man\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj -MF CMakeFiles\pacman.dir\source\PinkGhost.cpp.obj.d -o CMakeFiles\pacman.dir\source\PinkGhost.cpp.obj -c D:\Programmieren\Projekte\Pac.Man\source\PinkGhost.cpp
+
+CMakeFiles/pacman.dir/source/PinkGhost.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pacman.dir/source/PinkGhost.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Programmieren\Projekte\Pac.Man\source\PinkGhost.cpp > CMakeFiles\pacman.dir\source\PinkGhost.cpp.i
+
+CMakeFiles/pacman.dir/source/PinkGhost.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pacman.dir/source/PinkGhost.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Programmieren\Projekte\Pac.Man\source\PinkGhost.cpp -o CMakeFiles\pacman.dir\source\PinkGhost.cpp.s
+
 # Object files for target pacman
 pacman_OBJECTS = \
 "CMakeFiles/pacman.dir/main.cpp.obj" \
@@ -168,7 +213,10 @@ pacman_OBJECTS = \
 "CMakeFiles/pacman.dir/source/Entity.cpp.obj" \
 "CMakeFiles/pacman.dir/source/Map.cpp.obj" \
 "CMakeFiles/pacman.dir/source/Ghostbase.cpp.obj" \
-"CMakeFiles/pacman.dir/source/RedGhost.cpp.obj"
+"CMakeFiles/pacman.dir/source/RedGhost.cpp.obj" \
+"CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj" \
+"CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj" \
+"CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj"
 
 # External object files for target pacman
 pacman_EXTERNAL_OBJECTS =
@@ -179,11 +227,14 @@ pacman.exe: CMakeFiles/pacman.dir/source/Entity.cpp.obj
 pacman.exe: CMakeFiles/pacman.dir/source/Map.cpp.obj
 pacman.exe: CMakeFiles/pacman.dir/source/Ghostbase.cpp.obj
 pacman.exe: CMakeFiles/pacman.dir/source/RedGhost.cpp.obj
+pacman.exe: CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj
+pacman.exe: CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj
+pacman.exe: CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj
 pacman.exe: CMakeFiles/pacman.dir/build.make
 pacman.exe: CMakeFiles/pacman.dir/linkLibs.rsp
 pacman.exe: CMakeFiles/pacman.dir/objects1.rsp
 pacman.exe: CMakeFiles/pacman.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:\Programmieren\Projekte\Pac.Man\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable pacman.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=D:\Programmieren\Projekte\Pac.Man\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable pacman.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\pacman.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

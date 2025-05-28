@@ -9,10 +9,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "D:/Programmieren/Projekte/Pac.Man/main.cpp" "CMakeFiles/pacman.dir/main.cpp.obj" "gcc" "CMakeFiles/pacman.dir/main.cpp.obj.d"
+  "D:/Programmieren/Projekte/Pac.Man/source/BlueGhost.cpp" "CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/BlueGhost.cpp.obj.d"
   "D:/Programmieren/Projekte/Pac.Man/source/Entity.cpp" "CMakeFiles/pacman.dir/source/Entity.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Entity.cpp.obj.d"
   "D:/Programmieren/Projekte/Pac.Man/source/Ghostbase.cpp" "CMakeFiles/pacman.dir/source/Ghostbase.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Ghostbase.cpp.obj.d"
+  "D:/Programmieren/Projekte/Pac.Man/source/GreenGhost.cpp" "CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/GreenGhost.cpp.obj.d"
   "D:/Programmieren/Projekte/Pac.Man/source/Map.cpp" "CMakeFiles/pacman.dir/source/Map.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/Map.cpp.obj.d"
   "D:/Programmieren/Projekte/Pac.Man/source/PacMan.cpp" "CMakeFiles/pacman.dir/source/PacMan.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/PacMan.cpp.obj.d"
+  "D:/Programmieren/Projekte/Pac.Man/source/PinkGhost.cpp" "CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/PinkGhost.cpp.obj.d"
   "D:/Programmieren/Projekte/Pac.Man/source/RedGhost.cpp" "CMakeFiles/pacman.dir/source/RedGhost.cpp.obj" "gcc" "CMakeFiles/pacman.dir/source/RedGhost.cpp.obj.d"
   )
 
