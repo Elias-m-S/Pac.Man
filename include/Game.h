@@ -1,7 +1,6 @@
 #pragma once
 #include "Map.h"
 #include "PacMan.h"
-#include "Ghost.h"
 #include "Leaderboard.h"
 #include <vector>
 #include <string>
@@ -17,7 +16,6 @@ private:
     int mapWidth, mapHeight, tileSize;
     Map map;
     PacMan pacman;
-    std::vector<Ghost> ghosts;
     Leaderboard leaderboard;
     GameState state;
     float deltaTime;

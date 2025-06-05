@@ -8,14 +8,7 @@ Game::Game(int width, int height, int tileSize)
       pacman(1, 1, 1),
       leaderboard("assets/Scoreboard.txt"),
       state(GameState::START), playerName("")
-{
-    // Initialize ghosts at four corners with scatter targets
-    int ghostSpeed = 1;
-    ghosts.emplace_back(1, 1, ghostSpeed, RED, Vector2{0, 0});
-    ghosts.emplace_back(width - 2, 1, ghostSpeed, PINK, Vector2{(float)(width - 1), 0});
-    ghosts.emplace_back(1, height - 2, ghostSpeed, BLUE, Vector2{0, (float)(height - 1)});
-    ghosts.emplace_back(width - 2, height - 2, ghostSpeed, ORANGE, Vector2{(float)(width - 1), (float)(height - 1)});
-}
+{}
 
 void Game::run() {
     InitWindow(mapWidth * tileSize, mapHeight * tileSize, "Pac-Man");
@@ -70,13 +63,6 @@ void Game::update() {
     if (state == GameState::PLAYING) {
         map.update(GetFrameTime());
         pacman.update(map);
-        for (auto& g : ghosts) g.update(map, pacman, GetFrameTime());
-        // Collision PacMan-Ghost
-        for (auto& g : ghosts) {
-            if (pacman.getX() == g.getX() && pacman.getY() == g.getY()) {
-                state = GameState::GAMEOVER;
-            }
-        }
         if (map.allCoinsCollected()) state = GameState::GAMEOVER;
     }
 }
@@ -91,7 +77,6 @@ void Game::draw() {
     } else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
-        for (auto& g : ghosts) g.draw(tileSize);
         DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
     } else if (state == GameState::GAMEOVER) {
         DrawText("Game Over! Press Enter.", 50, 50, 20, RED);
