@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "PacMan.h"
 #include "Leaderboard.h"
+#include "RedGhost.h"
 #include <vector>
 #include <string>
 

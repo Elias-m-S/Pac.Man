@@ -4,27 +4,23 @@
 #include "Pacman.h"
 
 
-class Ghostbase : public Entity{
+// Beispiel: Basisklasse Ghost
+class Ghostbase : public Entity {
+    public:
+        enum class State { Chase, Scatter, Frightened };
+        protected:
+        State currentState; // einführen einer Variable umd Zustände der Geister zu dokumenteiren/überprüfen
+        Color normalColor; //Normalfarbe des Geistes, nonstatic um instanz für jeden geist zu kopieren
+        const Color frightenedColor;// Farbe im "Frightened" Zustand, nonstatic um instanz für jeden geist zu kopieren
+
+    public:
+        Ghostbase(Vector2 pos, Color color) : Entity(pos.x, pos.y), normalColor(color), frightenedColor(BLUE), currentState(State::Scatter) {}
+        
+        virtual void update(float dt, const PacMan &pacman);
+        virtual void draw();
+        virtual Vector2 getTarget(const PacMan &pacman) = 0; // von Unterklassen zu implementieren
+        void setState(State s) { currentState = s; };
     
-protected:
-    //gemeinsame hilfsfunktionen einfügen, wie z.B.blinken, collisionsüberprüfung etc 
-    //outsourcen der kollisionsprüfung der einzelnen geister
-    bool canMove(Map& map, int dx, int dy);
-    //Attribut der eigenen Farbe
-    Color color;
-public:
-
-    //Startposition (in Geisterklassen tatsächlichen startort)
-    Ghostbase(int startX, int startY);
-    //ermöglichen dass Farbe der Abgeleiteten Geister individuell sein können
-    Ghostbase(int sx, int sy, Color col)
-        : Entity(sx, sy), color(col){}
-
-    //nur virtuell, weil jeder geist später sein eigenes Verhalten bekommt
-    virtual void update(class Map& map, const PacMan& pacman) = 0;
-
-    //draw wird übershrieben, eventuell gemeinsame Grundzeichnung der Geister 
-    void draw(int tileSize) const override;
-
-
+    protected:
+        virtual void handleStateduration(float dt);
 };

@@ -38,10 +38,10 @@ void Game::handleInput() {
             }
         }
     } else if (state == GameState::PLAYING) {
-        if (IsKeyPressed(KEY_UP)) pacman.setDesiredDirection(0, -1);
-        if (IsKeyPressed(KEY_DOWN)) pacman.setDesiredDirection(0, 1);
-        if (IsKeyPressed(KEY_LEFT)) pacman.setDesiredDirection(-1, 0);
-        if (IsKeyPressed(KEY_RIGHT)) pacman.setDesiredDirection(1, 0);
+        if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) pacman.setDesiredDirection(0, -1);
+        if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) pacman.setDesiredDirection(0, 1);
+        if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) pacman.setDesiredDirection(-1, 0);
+        if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) pacman.setDesiredDirection(1, 0);
     } else if (state == GameState::GAMEOVER) {
         if (IsKeyPressed(KEY_ENTER)) {
             leaderboard.addEntry(playerName, pacman.getScore());
@@ -63,6 +63,7 @@ void Game::update() {
     if (state == GameState::PLAYING) {
         map.update(GetFrameTime());
         pacman.update(map);
+        redGhost.update(GetFrameTime(), pacman); // RedGhost bewegen
         if (map.allCoinsCollected()) state = GameState::GAMEOVER;
     }
 }
@@ -77,6 +78,7 @@ void Game::draw() {
     } else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
+        redGhost.draw(); // RedGhost zeichnen
         DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
     } else if (state == GameState::GAMEOVER) {
         DrawText("Game Over! Press Enter.", 50, 50, 20, RED);
