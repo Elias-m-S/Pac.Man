@@ -1,3 +1,4 @@
+
 #include "Game.h"
 #include <raylib.h>
 #include <algorithm>
@@ -6,6 +7,7 @@ Game::Game(int width, int height, int tileSize)
     : mapWidth(width), mapHeight(height), tileSize(tileSize),
       map(width, height, tileSize),
       pacman(1, 1, 1),
+      redGhost(1, 1),
       leaderboard("assets/Scoreboard.txt"),
       state(GameState::START), playerName("")
 {}
@@ -63,7 +65,6 @@ void Game::update() {
     if (state == GameState::PLAYING) {
         map.update(GetFrameTime());
         pacman.update(map);
-        redGhost.update(GetFrameTime(), pacman); // RedGhost bewegen
         if (map.allCoinsCollected()) state = GameState::GAMEOVER;
     }
 }
@@ -78,7 +79,7 @@ void Game::draw() {
     } else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
-        redGhost.draw(); // RedGhost zeichnen
+        redGhost.draw(tileSize);
         DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
     } else if (state == GameState::GAMEOVER) {
         DrawText("Game Over! Press Enter.", 50, 50, 20, RED);

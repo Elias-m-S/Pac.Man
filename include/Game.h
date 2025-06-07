@@ -17,6 +17,7 @@ private:
     int mapWidth, mapHeight, tileSize;
     Map map;
     PacMan pacman;
+    RedGhost redGhost;
     Leaderboard leaderboard;
     GameState state;
     float deltaTime;

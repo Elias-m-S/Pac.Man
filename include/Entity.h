@@ -18,10 +18,9 @@ public:
     inline int getDirY() const { return dirY; }
 
 protected:
-    Vector2 position;
-    int x;
-    int y;
+    float x;
+    float y;
     int speed;
-    int dirX;
-    int dirY;
+    float dirX;
+    float dirY;
 };

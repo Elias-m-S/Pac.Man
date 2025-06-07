@@ -4,23 +4,61 @@
 #include "Pacman.h"
 
 
-// Beispiel: Basisklasse Ghost
-class Ghostbase : public Entity {
-    public:
-        enum class State { Chase, Scatter, Frightened };
-        protected:
-        State currentState; // einführen einer Variable umd Zustände der Geister zu dokumenteiren/überprüfen
-        Color normalColor; //Normalfarbe des Geistes, nonstatic um instanz für jeden geist zu kopieren
-        const Color frightenedColor;// Farbe im "Frightened" Zustand, nonstatic um instanz für jeden geist zu kopieren
-
-    public:
-        Ghostbase(Vector2 pos, Color color) : Entity(pos.x, pos.y), normalColor(color), frightenedColor(BLUE), currentState(State::Scatter) {}
-        
-        virtual void update(float dt, const PacMan &pacman);
-        virtual void draw();
-        virtual Vector2 getTarget(const PacMan &pacman) = 0; // von Unterklassen zu implementieren
-        void setState(State s) { currentState = s; };
+class Ghostbase : public Entity{
     
-    protected:
-        virtual void handleStateduration(float dt);
+    // Zustände welche die Geister annehmen können
+    enum class GhostState {
+        SCATTER, //Geister bewegen sich weg vom "Spawn" zu ihren Ecken
+        CHASE, //geister vefolgen/jagen pacman
+        FRIGHTENED, //Geister haben angst und vergessen ihr Jagdmuster in bezug auf Pacman
+        EATEN //Geister wurden gefressen, kehren zum Spawnpunkt zurück und fangen erst dort an den kreislauf von vore zu beginnen
+    };
+    
+    public: // sind für das ganze Programm sichtbar
+
+        //Konstroktor | Map für Kollision und items | start X&Y für Spawnpoint | speed für speed
+        Ghostbase (/*const Map& map,*/ int startX, int startY, int speed = 1);
+        virtual ~Ghostbase(); //Destrukor, virtual, damit die abgeieteten klassen auch destruktet werden
+        // Update Funktion, wird von abgleitenden Klassen überschrieben| lastTime: Zeit letztes Update, für z.B. Timer der Zustände| PacmanPos für Position Pacman -> Zielberechnung
+        virtual void update(float lastTime, const Vector2& pacmanPos);
+
+        //überschreibt draw funktion von Entity | tileSize: größe einer kachel
+        void draw(int tileSize) const override;
+
+        
+        //versetzt nach bedingung alle Geister in Angst
+        void setFrightened(bool on);
+
+        //Lässt geister 
+        void reset();
+
+        //Pure virtuelle Funktion, denn, jeder Geist überschreibt mit eigenen werten -> andere Algorythmen. 
+        virtual Vector2 getTargetTile(const Vector2& pacmanPos) const = 0;
+
+    
+
+    protected:// können/sollen von allen abgeleiteten Klassen gesehen und verwendet werden, aber nicht von extern
+
+        //wechselt Zustand der geister, erstellt timer für den Zustand
+        void changeState(GhostState newState);
+
+        //berechnet welch richtung gewählt werden muss um Target zu erreichen
+        Vector2 chooseDirectionTowards(const Vector2& target) const;
+
+        Color normalColor; // normale Farbe welche jeder geist hat(verschiedene deswegen nicht festgelegt)
+        Color frightenedColor = BLUE; // farbe welche die geister haben wenn sie angst haben
+        float radius; //radius der Geister, bestimmt die form der geister mit
+        GhostState state; //Tatsächlicher Zustand des Geistes: SCATTER, CHASE, FRIGHTENED, EATEN
+        float stateTimer; //timer um ablauf der Zustände zu verwalten
+        const Map& mapRef; //referenz auf die Map, um Kollisionen zu prüfen
+
+    private: //sind nur in Ghostbase sichtbar, wie z.B. Form
+
+
+        // Hilfsfunktionen
+        std::mt19937 rng; //Zufallszahlengenerator
+        //Zufälige Tile (z.B. für Scatter Zustand)
+        Vector2 randomTile() const;
+
+
 };
