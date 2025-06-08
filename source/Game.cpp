@@ -36,8 +36,9 @@ void Game::handleInput() {
         if (menu.isSelected()) {
             switch (menu.getSelectedIndex()) {
                 case 0: state = GameState::PLAYING;    break;
-                case 1: state = GameState::LEADERBOARD; break;
-                case 2: state = GameState::HOWTO;       break;
+                case 1: state = GameState::HOWTO; break;
+                case 2: state = GameState::LEADERBOARD;       break;
+                case 3: CloseWindow(); return;          // Exit
             }
             menu.reset();
         }
@@ -102,7 +103,12 @@ void Game::draw() {
         menu.draw(mapWidth*tileSize, mapHeight*tileSize);
         
     } else if (state == GameState::HOWTO) {
-        // ...HowTo-Zeichnen...
+        DrawText("How to Play:", 50, 50, 30, WHITE);
+        DrawText("- Use Arrow keys or WASD to move Pac-Man.", 50, 100, 20, WHITE);
+        DrawText("- Eat all coins (10 pts).", 50, 130, 20, WHITE);
+        DrawText("- Fruits appear randomly (100 pts).", 50, 160, 20, WHITE);
+        DrawText("- Avoid ghosts unless they're frightened.", 50, 190, 20, WHITE);
+        DrawText("Press ESC to return to Menu", 50, 240, 20, SKYBLUE);
     } else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
