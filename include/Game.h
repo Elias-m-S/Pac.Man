@@ -1,5 +1,6 @@
 #pragma once
 #include "Map.h"
+#include "Menu.h"
 #include "PacMan.h"
 #include "Leaderboard.h"
 #include "RedGhost.h"
@@ -9,7 +10,7 @@
 #include <vector>
 #include <string>
 
-enum class GameState { START, PLAYING, GAMEOVER, ENDLESSGAME, LEADERBOARD };
+enum class GameState { MENU, HOWTO, PLAYING, ENDLESSGAME, GAMEOVER, LEADERBOARD };
 
 class Game {
 public:
@@ -19,6 +20,7 @@ public:
 
 private:
     int mapWidth, mapHeight, tileSize;
+    Menu menu;
     Map map;
     PacMan pacman;
     RedGhost redGhost;

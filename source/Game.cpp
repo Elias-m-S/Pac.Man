@@ -1,4 +1,4 @@
-
+#include "Menu.h"
 #include "Game.h"
 #include <raylib.h>
 #include <algorithm>
@@ -12,7 +12,8 @@ Game::Game(int width, int height, int tileSize)
       greenGhost(map, 9, 9), //Spawnpoint (im Käfig)
       blueGhost(map, 11, 9), //Spawnpoint (im Käfig)
       leaderboard("assets/Scoreboard.txt"),
-      state(GameState::START), playerName("")
+      state(GameState::MENU),
+      menu({"Start Game", "How to Play", "Leaderboard", "Exit"})
 {}
 
 void Game::run() {
@@ -30,17 +31,15 @@ void Game::run() {
 }
 
 void Game::handleInput() {
-    if (state == GameState::START) {
-        int key = GetKeyPressed();
-        if (key > 0) {
-            if (key == KEY_ENTER && !playerName.empty()) {
-                state = GameState::PLAYING;
-            } else if (key == KEY_BACKSPACE && !playerName.empty()) {
-                playerName.pop_back();
-            } else if (playerName.size() < maxNameLength) {
-                char c = static_cast<char>(key);
-                if (isprint(c)) playerName.push_back(c);
+    if (state == GameState::MENU) {
+        menu.update();
+        if (menu.isSelected()) {
+            switch (menu.getSelectedIndex()) {
+                case 0: state = GameState::PLAYING;    break;
+                case 1: state = GameState::LEADERBOARD; break;
+                case 2: state = GameState::HOWTO;       break;
             }
+            menu.reset();
         }
     } else if (state == GameState::PLAYING || state == GameState::ENDLESSGAME) {
         if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) pacman.setDesiredDirection(0, -1);
@@ -55,7 +54,7 @@ void Game::handleInput() {
     } else if (state == GameState::LEADERBOARD) {
         if (IsKeyPressed(KEY_ENTER)) {
             // restart
-            state = GameState::START;
+            state = GameState::MENU;
             // reset game
             map = Map(mapWidth, mapHeight, tileSize);
             pacman = PacMan(10, 15, 1); // Startposition Pacman
@@ -99,10 +98,11 @@ void Game::draw() {
     BeginDrawing();
     ClearBackground(BLACK);
 
-    if (state == GameState::START) {
-        DrawText("Enter Name:", 50, 50, 20, WHITE);
-        DrawText(playerName.c_str(), 50, 80, 20, GOLD);
-        DrawText("Press Enter to Start", 50, 120, 20, WHITE);
+    if (state == GameState::MENU) {
+        menu.draw(mapWidth*tileSize, mapHeight*tileSize);
+        
+    } else if (state == GameState::HOWTO) {
+        // ...HowTo-Zeichnen...
     } else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
