@@ -3,6 +3,9 @@
 #include "PacMan.h"
 #include "Leaderboard.h"
 #include "RedGhost.h"
+#include "PinkGhost.h"
+#include "GreenGhost.h"
+#include "BlueGhost.h"
 #include <vector>
 #include <string>
 
@@ -18,6 +21,10 @@ private:
     Map map;
     PacMan pacman;
     RedGhost redGhost;
+    PinkGhost pinkGhost;
+    GreenGhost greenGhost;
+    BlueGhost blueGhost;
+
     Leaderboard leaderboard;
     GameState state;
     float deltaTime;

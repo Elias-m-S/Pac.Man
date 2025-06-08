@@ -44,15 +44,52 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos) {
     // 5) Sammle keine Items, aber handle Kollision mit PacMan extern
 }
 
-
+// Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen
 void Ghostbase::draw(int tileSize) const {
     Color drawColor = (state == GhostState::FRIGHTENED)
                       ? frightenedColor
                       : normalColor;
-    DrawCircle(x * tileSize + tileSize/2,
-               y * tileSize + tileSize/2,
-               radius,
-               drawColor);
+
+    //Die Mitte der tiles festlegen als "Anker"
+    int centerX = x * tileSize + tileSize/2;
+    int centerY = y * tileSize + tileSize/2;
+    //Basierend auf TileSize den Radius der geister bestimmen
+    int ghostRadius = tileSize/2 - 2;
+    
+    // Kreis(Kopfrundung)der Geister
+    DrawCircle(centerX, centerY - ghostRadius/4, ghostRadius, drawColor);
+    
+    // rechteckiger Körper (aka das Betttuch was runterhängt)
+    DrawRectangle(centerX - ghostRadius, centerY - ghostRadius/4, 
+                  ghostRadius * 2, ghostRadius + ghostRadius/2, drawColor);
+    
+    
+    // Augen Zeichnen, aber anhängig von den zuständen
+    if (state != GhostState::FRIGHTENED) {
+        int eyeSize = ghostRadius / 4;
+        int eyeOffsetX = ghostRadius / 3;
+        int eyeOffsetY = ghostRadius / 3;
+        
+        // Linkes Auge
+        DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
+        DrawCircle(centerX - eyeOffsetX + eyeSize/3, centerY - eyeOffsetY, eyeSize/2, BLACK);
+        
+        // Rechtes Auge
+        DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
+        DrawCircle(centerX + eyeOffsetX + eyeSize/3, centerY - eyeOffsetY, eyeSize/2, BLACK);
+    } else {
+        // Wenn Geister verängstigt: Zeichne X-Augen oder andere verängstigt aussehende Augen
+        int eyeSize = ghostRadius / 4;
+        int eyeOffsetX = ghostRadius / 3;
+        int eyeOffsetY = ghostRadius / 3;
+        
+        DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
+        DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
+        
+        // Zeichne "ängstliche" Punkte in den Augen
+        DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize/3, BLACK);
+        DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize/3, BLACK);
+    }
 };
 
 void Ghostbase::setFrightened(bool on) {

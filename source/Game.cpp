@@ -7,7 +7,10 @@ Game::Game(int width, int height, int tileSize)
     : mapWidth(width), mapHeight(height), tileSize(tileSize),
       map(width, height, tileSize),
       pacman(10, 15, 1),
-      redGhost(map, 10, 7), // RedGhost initialisiert mit Map-Referenz und Startposition
+      redGhost(map, 10, 7), //Spawnpoint (über der Tür)
+      pinkGhost(map, 10, 9), //Spawnpoint (im Käfig)
+      greenGhost(map, 9, 9), //Spawnpoint (im Käfig)
+      blueGhost(map, 11, 9), //Spawnpoint (im Käfig)
       leaderboard("assets/Scoreboard.txt"),
       state(GameState::START), playerName("")
 {}
@@ -55,7 +58,8 @@ void Game::handleInput() {
             state = GameState::START;
             // reset game
             map = Map(mapWidth, mapHeight, tileSize);
-            pacman = PacMan(1, 1, 1);
+            pacman = PacMan(10, 15, 1); // Startposition Pacman
+            //eventuell fehlen Geister?
             playerName.clear();
         }
     }
@@ -65,7 +69,10 @@ void Game::update() {
     if (state == GameState::PLAYING) {
         map.update(GetFrameTime());
         pacman.update(map);
-        redGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // RedGhost Update aktiviert
+        redGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // RedGhost aktivieren
+        pinkGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // PinkGhost aktivieren
+        greenGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // GreenGhost aktivieren
+        blueGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // BlueGhost aktivieren
         if (map.allCoinsCollected()) state = GameState::GAMEOVER;
     }
 }
@@ -80,7 +87,10 @@ void Game::draw() {
     } else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
-        redGhost.draw(tileSize); //Zeichnet geist mit Tilesize
+        redGhost.draw(tileSize);
+        pinkGhost.draw(tileSize); 
+        greenGhost.draw(tileSize); 
+        blueGhost.draw(tileSize); 
         DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
     } else if (state == GameState::GAMEOVER) {
         DrawText("Game Over! Press Enter.", 50, 50, 20, RED);

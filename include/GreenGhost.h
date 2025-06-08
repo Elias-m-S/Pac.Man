@@ -1,14 +1,17 @@
 #pragma once
+
 #include "Ghostbase.h"
 
-class Greenghost : public Ghostbase{
+class GreenGhost : public Ghostbase {
+public:
+    GreenGhost(const Map& map, int startX, int startY);
 
-    public:
+    // Hier kannst du später den Bewegungsalgorithmus überschreiben
+    void update(float lastTime, const Vector2& pacmanPos) override;
+    Vector2 getTargetTile(const Vector2& pacmanPos) const override;
 
-    private:
-
-    protected:
-
+private:
+    // spezifische Variablen für RedGhost (z. B. Zielverhalten)
 
 
 };
