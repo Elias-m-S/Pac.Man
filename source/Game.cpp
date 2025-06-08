@@ -84,6 +84,7 @@ void Game::draw() {
     if (state == GameState::START) {
         DrawText("Enter Name:", 50, 50, 20, WHITE);
         DrawText(playerName.c_str(), 50, 80, 20, GOLD);
+        DrawText("Press Enter to Start", 50, 120, 20, WHITE);
     } else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
