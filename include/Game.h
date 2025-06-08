@@ -9,12 +9,13 @@
 #include <vector>
 #include <string>
 
-enum class GameState { START, PLAYING, GAMEOVER, LEADERBOARD };
+enum class GameState { START, PLAYING, GAMEOVER, ENDLESSGAME, LEADERBOARD };
 
 class Game {
 public:
     Game(int width, int height, int tileSize);
     void run();
+    void ghostCollision();//funktion ankündigen, um in der cpp kollision zu überprüfen
 
 private:
     int mapWidth, mapHeight, tileSize;

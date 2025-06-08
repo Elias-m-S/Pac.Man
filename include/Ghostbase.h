@@ -35,6 +35,8 @@ class Ghostbase : public Entity{
         //Pure virtuelle Funktion, denn, jeder Geist überschreibt mit eigenen werten -> andere Algorythmen. 
         virtual Vector2 getTargetTile(const Vector2& pacmanPos) const = 0;
 
+        bool isFrightened() const { return state == GhostState::FRIGHTENED; }
+
     
 
     protected:// können/sollen von allen abgeleiteten Klassen gesehen und verwendet werden, aber nicht von extern

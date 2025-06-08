@@ -42,7 +42,7 @@ void Game::handleInput() {
                 if (isprint(c)) playerName.push_back(c);
             }
         }
-    } else if (state == GameState::PLAYING) {
+    } else if (state == GameState::PLAYING || state == GameState::ENDLESSGAME) {
         if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) pacman.setDesiredDirection(0, -1);
         if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) pacman.setDesiredDirection(0, 1);
         if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) pacman.setDesiredDirection(-1, 0);
@@ -66,14 +66,32 @@ void Game::handleInput() {
 }
 
 void Game::update() {
-    if (state == GameState::PLAYING) {
+    if (state == GameState::PLAYING || state == GameState::ENDLESSGAME) {
         map.update(GetFrameTime());
         pacman.update(map);
         redGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // RedGhost aktivieren
         pinkGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // PinkGhost aktivieren
         greenGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // GreenGhost aktivieren
         blueGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // BlueGhost aktivieren
-        if (map.allCoinsCollected()) state = GameState::GAMEOVER;
+        if (map.allCoinsCollected()) state = GameState::ENDLESSGAME; //unendliches Spiel(bis pacman von geist erwischt)
+        ghostCollision(); // Touchen mit Geistern überprüfen
+    }
+}
+
+void Game::ghostCollision() {
+    // Wird nur verwendet, wenn das spiel läuft
+    if (state != GameState::PLAYING && state !=GameState::ENDLESSGAME) return;
+
+    // benutzen der aus enity gegebenen getX und getY Funktionen, um Position von Pacman zu speichern
+    int px = pacman.getX();
+    int py = pacman.getY();
+
+    // Jetzt gucken ob die Geister pacman touchen, und ob sie nicht in FRIGHTENED sind (alternativ ist überprüfung auch mit Vector der geister möglcih, aber so ist es einfacher), ist aber zu aufwendig für so wenige geister
+    if ((redGhost.getX() == px && redGhost.getY() == py && !redGhost.isFrightened() ) ||
+        (pinkGhost.getX() == px && pinkGhost.getY() == py && !pinkGhost.isFrightened()) ||
+        (greenGhost.getX() == px && greenGhost.getY() == py && !greenGhost.isFrightened()) ||
+        (blueGhost.getX() == px && blueGhost.getY() == py && !blueGhost.isFrightened())) {
+        state = GameState::GAMEOVER;
     }
 }
 
@@ -93,7 +111,17 @@ void Game::draw() {
         greenGhost.draw(tileSize); 
         blueGhost.draw(tileSize); 
         DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
-    } else if (state == GameState::GAMEOVER) {
+    } else if (state == GameState::ENDLESSGAME) {
+        map.draw();
+        pacman.draw(tileSize);
+        redGhost.draw(tileSize);
+        pinkGhost.draw(tileSize); 
+        greenGhost.draw(tileSize); 
+        blueGhost.draw(tileSize); 
+        DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
+        DrawText("Endless Mode! Avoid Ghosts!", 50, mapHeight * tileSize - 40, 20, WHITE);
+
+    }else if (state == GameState::GAMEOVER) {
         DrawText("Game Over! Press Enter.", 50, 50, 20, RED);
         DrawText(TextFormat("Final Score: %i", pacman.getScore()), 50, 80, 20, GOLD);
     } else if (state == GameState::LEADERBOARD) {
