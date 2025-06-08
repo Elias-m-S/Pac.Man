@@ -4,12 +4,13 @@
 #include <algorithm> //für algorythmen
 #include <random> //für zufällige Komponenten
 
-Ghostbase::Ghostbase(/*const Map& map,*/ int startX, int startY, int speed)
+Ghostbase::Ghostbase(const Map& map, int startX, int startY, int speed)
     : Entity(startX, startY, speed),
       frightenedColor(BLUE),
+      radius(14), // Feste Radius für Geister
       state(GhostState::SCATTER),
       stateTimer(0.0f),
-      mapRef(/*map*/),
+      mapRef(map),
       rng(std::random_device{}())
 {
 
