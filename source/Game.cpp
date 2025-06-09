@@ -95,6 +95,11 @@ void Game::handleInput() {
             playerName.clear();
         }
     }
+    else if (state == GameState::HOWTO) {
+        if (IsKeyPressed(KEY_ENTER)) {
+            state = GameState::MENU;
+        }
+    }
 }
 
 void Game::update() {
@@ -140,7 +145,7 @@ void Game::draw() {
         DrawText("- Eat all coins (10 pts).", 50, 130, 20, WHITE);
         DrawText("- Fruits appear randomly (100 pts).", 50, 160, 20, WHITE);
         DrawText("- Avoid ghosts unless they're frightened.", 50, 190, 20, WHITE);
-        DrawText("Press ESC to return to Menu", 50, 240, 20, SKYBLUE);
+        DrawText("Press ENTER to return to Menu", 50, 240, 20, SKYBLUE);
     }else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);
