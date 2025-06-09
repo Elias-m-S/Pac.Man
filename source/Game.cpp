@@ -20,6 +20,13 @@ void Game::run() {
     InitWindow(mapWidth * tileSize, mapHeight * tileSize, "Pac-Man");
     SetTargetFPS(10); // Zurück zu 10 FPS wie ursprünglich
 
+    // ─── Fenstersymbol setzen ───────────────────────────────────────────────
+    // Icon-Datei liegt im Root/assets/icon.png
+    Image icon = LoadImage("assets/icon.png");
+    SetWindowIcon(icon);
+    UnloadImage(icon);
+    // ─────────────────────────────────────────────────────────────────────────
+
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
         handleInput();
