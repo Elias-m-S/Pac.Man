@@ -78,23 +78,29 @@ void Map::spawnFruit() {
 }
 
 void Map::draw() const {
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-            Vector2 pos{ float(x*tileSize), float(y*tileSize) };
-            switch (grid[y][x]) {
-                case WALL:
-                    DrawRectangle(pos.x, pos.y, tileSize, tileSize, DARKGRAY);
+    for (int row = 0; row < height; ++row) {
+        for (int col = 0; col < width; ++col) {
+            float x = col * tileSize;
+            float y = row * tileSize;
+            switch (grid[row][col]) {
+                case WALL: {
+                    // abgerundetes Rechteck in dunklem Blau
+                    Rectangle box = { x, y, (float)tileSize, (float)tileSize };
+                    float roundness = 0.3f;   // 0.0 = eckig, 1.0 = kreisrund
+                    int segments   = 8;       // Glättung
+                    DrawRectangleRounded(box, roundness, segments, DARKBLUE);
                     break;
+                }
                 case COIN:
-                    DrawCircle(pos.x + tileSize/2, pos.y + tileSize/2, 4, GOLD);
+                    DrawCircle(x + tileSize/2, y + tileSize/2, tileSize/8, GOLD);
                     break;
                 case POWERUP:
-                    DrawCircle(pos.x + tileSize/2, pos.y + tileSize/2, 8, SKYBLUE);
+                    DrawCircle(x + tileSize/2, y + tileSize/2, tileSize/3, YELLOW);
                     break;
-                case FRUIT:
-                    DrawRectangle(pos.x+tileSize/4, pos.y+tileSize/4, tileSize/2, tileSize/2, RED);
-                    break;
+                case EMPTY:
                 default:
+                    // Tunnelboden oder leer
+                    DrawRectangle(x, y, tileSize, tileSize, BLACK);
                     break;
             }
         }
