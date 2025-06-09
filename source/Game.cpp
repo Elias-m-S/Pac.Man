@@ -14,7 +14,7 @@ Game::Game(int width, int height, int tileSize)
       pinkGhost(new PinkGhost(map, 10, 9, ghostSpeed)),
       greenGhost(new GreenGhost(map, 9, 9, ghostSpeed)),
       blueGhost(new BlueGhost(map, 11, 9, ghostSpeed)),
-      leaderboard("../assets/Scoreboard.txt"),
+      leaderboard(),
       state(GameState::MENU),
       menu({"Start Game", "How to Play", "Leaderboard", "Exit"})
 {}

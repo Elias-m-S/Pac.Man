@@ -1,12 +1,11 @@
 #include "Leaderboard.h"
-#include <filesystem>
 #include <fstream>
 #include <algorithm>
 #include <raylib.h>
 #include <iostream>
 
 Leaderboard::Leaderboard(const std::string& filename)
-    : filename("../assets/Scoreboard.txt")
+    : filename("assets/Scoreboard.txt") // immer fester Pfad
 {
     load();
 }
