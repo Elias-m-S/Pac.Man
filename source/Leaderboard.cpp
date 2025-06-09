@@ -4,7 +4,7 @@
 #include <raylib.h>
 
 Leaderboard::Leaderboard(const std::string& filename)
-    : filename(filename)
+    : filename("../assets/Scoreboard.txt")
 {
     load();
 }

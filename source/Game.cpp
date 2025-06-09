@@ -57,7 +57,10 @@ void Game::handleInput() {
 
                 case 1: state = GameState::HOWTO; break;
                 case 2: state = GameState::LEADERBOARD;       break;
-                case 3: CloseWindow(); return;          // Exit
+                case 3: 
+                leaderboard.save(); 
+                CloseWindow();
+                return;          // Exit
             }
             menu.reset();
         }

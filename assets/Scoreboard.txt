@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 PLAYER 430
 PLAYER 430
 PLAYER 330
@@ -9,3 +10,10 @@ PLAYER 160
 PLAYER 150
 PLAYER 150
 Elias 100
+=======
+eli 180
+lol 110
+test4 110
+Tesst 50
+uf 0
+>>>>>>> f04e409

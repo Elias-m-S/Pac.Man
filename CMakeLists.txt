@@ -22,8 +22,8 @@ add_executable(pacman ${SOURCES})
 # Link libraries
 target_link_libraries(pacman raylib opengl32 gdi32 winmm)
 
-add_custom_command(TARGET pacman PRE_BUILD
+add_custom_command(TARGET pacman POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/assets
-        $<TARGET_FILE_DIR:pacman>/assets
+        "${PROJECT_SOURCE_DIR}/assets"   # Quelle: Root/assets
+        "$<TARGET_FILE_DIR:pacman>/assets"  # Ziel: Build/assets
 )
