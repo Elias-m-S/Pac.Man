@@ -3,8 +3,9 @@
 #include <iostream>
 #include <algorithm> //für algorythmen
 #include <random> //für zufällige Komponenten
+#include <cfloat> //für FLT_MAX, um unendlich roße werte zu haben
 
-Ghostbase::Ghostbase(const Map& map, int startX, int startY, int speed)
+Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
     : Entity(startX, startY, speed),
       frightenedColor(BLUE),
       radius(14), // Feste Radius für Geister
@@ -108,15 +109,50 @@ void Ghostbase::changeState(GhostState newState) {
 }
 
 Vector2 Ghostbase::chooseDirectionTowards(const Vector2& target) const {
-    // Simple Heuristik: versuche die Nachbarkachel mit geringster Distanz
-    // (Implementierung hier)
-    return Vector2{ dirX, dirY };
+    // Richtungen welche möglich sind, static um nicht bei jedem Aufruf neu zu erstellen
+    static const Vector2 options[4] = {
+        {  1,  0 },  // rechts
+        { -1,  0 },  // links
+        {  0,  1 },  // runter
+        {  0, -1 }   // rauf
+    };
+
+    //Zurücklaufen auschließen
+    float oppX = -dirX;//setzt entgegengesetzte Richtung
+    float oppY = -dirY;
+
+    
+    float bestDist = FLT_MAX; //größtmöglicher floatwert, um beste Distanz finden zu können
+    Vector2 bestMove{0,0}; //standardwert, falls keine Richtung gefunden
+
+    for (auto& opt : options) {
+        // Zurückgehen überspringen
+        if ((int)opt.x == oppX && (int)opt.y == oppY) continue;
+
+        int nx = x + (int)opt.x;
+        int ny = y + (int)opt.y;
+        //checken ob das nächste Feld überhupt begehbar ist
+        if (!mapRef.isWalkable(nx, ny)) continue;
+
+        // Kürzeste Distanz (Fachbegriff Manhatten- Distanz) berechnen
+        float dist = fabsf((nx - target.x)) + fabsf((ny - target.y));// fabsf aus header, um negative Werte zu vermeiden
+        if (dist < bestDist) {
+            bestDist = dist;//gleichsetzen mit der berechneten distanz
+            bestMove = opt;//beste richtung setzen
+        }
+    }
+
+    //Wenn keine Richtung gefunden wurde, soll der Geist umkehren
+    if (bestDist == FLT_MAX) {
+        // Fall wie z.B. Sackgassen(selten)
+        return Vector2{ oppX, oppY };
+    }
+    return bestMove;
 }
 
 // Private-Helfer
 Vector2 Ghostbase::randomTile() const {
-    // Wähle zufällige begehbare Kachel auf mapRef
+    // Wähle zufällige begehbare Kachel auf mapRef (für z.B. Scatter-Zustand in Frightend)
     return Vector2{ x, y };
-
 }
 

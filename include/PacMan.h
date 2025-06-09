@@ -3,7 +3,7 @@
 
 class PacMan : public Entity {
 public:
-    PacMan(int startX, int startY, int speed = 1);
+    PacMan(int startX, int startY, float speed = 1);
 
     void update(class Map& map);  // Bewegung mit Kollision
     void draw(int tileSize) const override;

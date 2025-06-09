@@ -15,7 +15,7 @@ Vector2 GreenGhost::getTargetTile(const Vector2& pacmanPos) const { // einfacher
     //Verfolgt Pacman nur, solang dieser mehr als 8 tiles entfernt ist,ansonsten flieht er zur Ecke (1, 1)
     float distance = sqrt(pow(pacmanPos.x - x, 2) + pow(pacmanPos.y - y, 2));
     
-    if (distance > 8) {
+    if (distance > 5) {
         return pacmanPos; //Verfolgung
     } else {
         return {2, 2}; //Flieht

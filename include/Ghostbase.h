@@ -17,7 +17,7 @@ class Ghostbase : public Entity{
     public: // sind für das ganze Programm sichtbar
 
         //Konstroktor | Map für Kollision und items | start X&Y für Spawnpoint | speed für speed
-        Ghostbase (const Map& map, int startX, int startY, int speed = 1);
+        Ghostbase (const Map& map, int startX, int startY, float speed = 1);
         virtual ~Ghostbase(); //Destrukor, virtual, damit die abgeieteten klassen auch destruktet werden
         // Update Funktion, wird von abgleitenden Klassen überschrieben| lastTime: Zeit letztes Update, für z.B. Timer der Zustände| PacmanPos für Position Pacman -> Zielberechnung
         virtual void update(float lastTime, const Vector2& pacmanPos);

@@ -11,7 +11,7 @@ public:
     Vector2 getTargetTile(const Vector2& pacmanPos) const override;
 
 private:
-    // spezifische Variablen für RedGhost (z. B. Zielverhalten)
+    // spezifische Variablen für RedGhost (z.B. Zielverhalten)
 
 
 };

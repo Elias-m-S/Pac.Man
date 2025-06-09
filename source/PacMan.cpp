@@ -3,7 +3,7 @@
 #include "Map.h"
 #include "raylib.h"
 
-PacMan::PacMan(int startX, int startY, int speed)
+PacMan::PacMan(int startX, int startY, float speed)
     : Entity(startX, startY, speed), desiredDirX(0), desiredDirY(0), score(0) {}
 
 void PacMan::update(Map& map) {
