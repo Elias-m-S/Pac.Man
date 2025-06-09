@@ -43,10 +43,15 @@ void Game::handleInput() {
         if (menu.isSelected()) {
             switch (menu.getSelectedIndex()) {
                 case 0: 
-                    map     = Map(mapWidth, mapHeight, tileSize);
-                    pacman  = PacMan(10, 15, 1);
+                    map         = Map(mapWidth, mapHeight, tileSize);
+                    pacman      = PacMan(10, 15, 1);
+                    
+                    redGhost.resetPosition(10, 7);
+                    pinkGhost.resetPosition(10, 9);
+                    greenGhost.resetPosition(9, 9);
+                    blueGhost.resetPosition(11, 9);
 
-                    //Till: hier vermutlich noch geister auf startposition stzen 
+                    
                     state = GameState::PLAYING;    
                     break;
 
@@ -109,10 +114,10 @@ void Game::update() {
     if (state == GameState::PLAYING || state == GameState::ENDLESSGAME) {
         map.update(GetFrameTime());
         pacman.update(map);
-        redGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // RedGhost aktivieren
-        pinkGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // PinkGhost aktivieren
-        greenGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // GreenGhost aktivieren
-        blueGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}); // BlueGhost aktivieren
+        redGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // RedGhost aktivieren
+        pinkGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // PinkGhost aktivieren
+        greenGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // GreenGhost aktivieren
+        blueGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // BlueGhost aktivieren
         if (map.allCoinsCollected()) state = GameState::ENDLESSGAME; //unendliches Spiel(bis pacman von geist erwischt)
         ghostCollision(); // Touchen mit Geistern überprüfen
     }

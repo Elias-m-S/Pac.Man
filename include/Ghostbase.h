@@ -20,7 +20,7 @@ class Ghostbase : public Entity{
         Ghostbase (const Map& map, int startX, int startY, float speed = 1);
         virtual ~Ghostbase(); //Destrukor, virtual, damit die abgeieteten klassen auch destruktet werden
         // Update Funktion, wird von abgleitenden Klassen überschrieben| lastTime: Zeit letztes Update, für z.B. Timer der Zustände| PacmanPos für Position Pacman -> Zielberechnung
-        virtual void update(float lastTime, const Vector2& pacmanPos);
+        virtual void update(float lastTime, const Vector2& pacmanPos, const Map& map);
 
         //überschreibt draw funktion von Entity | tileSize: größe einer kachel
         void draw(int tileSize) const override;
@@ -37,6 +37,10 @@ class Ghostbase : public Entity{
 
         bool isFrightened() const { return state == GhostState::FRIGHTENED; }
 
+        void resetPosition(int x, int y) {//einfach hier ganz rein weil eh winzig
+            this->x = x;
+            this->y = y;
+        }
     
 
     protected:// können/sollen von allen abgeleiteten Klassen gesehen und verwendet werden, aber nicht von extern
@@ -53,6 +57,7 @@ class Ghostbase : public Entity{
         GhostState state; //Tatsächlicher Zustand des Geistes: SCATTER, CHASE, FRIGHTENED, EATEN
         float stateTimer; //timer um ablauf der Zustände zu verwalten
         const Map& mapRef; //referenz auf die Map, um Kollisionen zu prüfen
+        
 
     private: //sind nur in Ghostbase sichtbar, wie z.B. Form
 

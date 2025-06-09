@@ -21,28 +21,22 @@ Ghostbase::~Ghostbase() {
     //Destruktor, nicht umbedingt nötig, aber gut für debugging
 }
 
-void Ghostbase::update(float deltaTime, const Vector2& pacmanPos) {
+void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map) {
 
     stateTimer -= deltaTime;
 
-    // (State-Wechsellogik hier einfügen)
-    //z.B. Wenn powerup gegessen -> Geister in FRIGHTENED Zustand
-    // (Hier State-Wechsel-Logik einbauen)
-
-    // 2) Ziel berechnen (Polymorphie)
+    //Hier eventuell noch frightend rein?
 
     Vector2 target = (state == GhostState::FRIGHTENED) ? randomTile() : getTargetTile(pacmanPos);
 
 
-    // 3) Bewegung in Richtung Ziel
+    //bewegung in richtung ausgewählten Ziels
     Vector2 dir = chooseDirectionTowards(target);
     setDirection((int)dir.x, (int)dir.y);
+    //Lauf Lauf
     Entity::move();
-
-    // 4) Tunnel-Logik (wie bei PacMan)
-    //    …  
-
-    // 5) Sammle keine Items, aber handle Kollision mit PacMan extern
+    //Tunnel benutzen
+    handleTunnelWrap(map.getWidth());
 }
 
 // Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen

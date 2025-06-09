@@ -7,7 +7,7 @@ public:
     PinkGhost(const Map& map, int startX, int startY);
 
     // Hier kannst du später den Bewegungsalgorithmus überschreiben
-    void update(float lastTime, const Vector2& pacmanPos) override;
+    void update(float lastTime, const Vector2& pacmanPos, const Map& map) override;
     Vector2 getTargetTile(const Vector2& pacmanPos) const override;
 
 private:

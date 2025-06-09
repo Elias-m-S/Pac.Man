@@ -7,8 +7,8 @@ GreenGhost::GreenGhost(const Map& map, int startX, int startY)
     normalColor = GREEN; //Setzt normale Farbe
 }
 
-void GreenGhost::update(float lastTime, const Vector2& pacmanPos) {
-    Ghostbase::update(lastTime, pacmanPos);
+void GreenGhost::update(float lastTime, const Vector2& pacmanPos, const Map& map) {
+    Ghostbase::update(lastTime, pacmanPos, map);
 }
 
 Vector2 GreenGhost::getTargetTile(const Vector2& pacmanPos) const { // einfacher Algorytmus

@@ -16,12 +16,10 @@ void PacMan::update(Map& map) {
 
     // Bewegung
     int nextX = x + getDirX() * getSpeed();
-    int nextY = y + getDirY() * getSpeed();
-    if (map.isWalkable(nextX, nextY)) {
+    int nextY = y + getDirY() * getSpeed();    if (map.isWalkable(nextX, nextY)) {
         move();
-        // Tunnel wrap horizontally
-        if (x < 0) x = map.getWidth() - 1;
-        else if (x >= map.getWidth()) x = 0;
+        // Handle tunnel wrapping using inherited method
+        handleTunnelWrap(map.getWidth());
         // Sammle Item (Coin, Fruit, PowerUp)
         if (map.hasItem(x, y)) {
             int pts = map.collectItem(x, y);

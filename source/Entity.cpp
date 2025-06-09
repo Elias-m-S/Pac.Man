@@ -1,6 +1,8 @@
 #include "Entity.h"
+#include "Map.h"
+#include "constants.h"
 
-Entity::Entity(int x, int y, float speed, int dirX, int dirY)
+Entity::Entity(int x, int y, float speed, float dirX, float dirY)
     : x(x), y(y), speed(speed), dirX(dirX), dirY(dirY) {}
 
 void Entity::setDirection(int dx, int dy) {
@@ -16,4 +18,13 @@ void Entity::move() {
 
 void Entity::setSpeed(int s) {
     speed = s;
+}
+
+void Entity::handleTunnelWrap(int mapWidth) {
+    // Entity coordinates are in tiles, not pixels
+    if (x < 0) {
+        x = mapWidth - 1; // Wrap to the right side
+    } else if (x >= mapWidth) {
+        x = 0; // Wrap to the left side (tile 0)
+    }
 }
