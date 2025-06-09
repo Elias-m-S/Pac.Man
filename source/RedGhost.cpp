@@ -14,6 +14,6 @@ void RedGhost::update(float lastTime, const Vector2& pacmanPos) {
 }
 
 Vector2 RedGhost::getTargetTile(const Vector2& pacmanPos) const {
-    // RedGhost verfolgt PacMan direkt
+    //Gibt die Position von Pacman zurück, um ihn zu verfolgen
     return pacmanPos;
 }
