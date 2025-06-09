@@ -1,3 +1,6 @@
-Elias 100
+PLAYER 430
+PLAYER 430
+awda 300
 Till 200
-
+PLAYER 160
+Elias 100

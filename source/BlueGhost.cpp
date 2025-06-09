@@ -7,9 +7,9 @@ BlueGhost::BlueGhost(const Map& map, int startX, int startY)
     normalColor = BLUE; // Setzt die normale Farbe für den BlueGhost
 }
 
-void BlueGhost::update(float lastTime, const Vector2& pacmanPos) {
+void BlueGhost::update(float lastTime, const Vector2& pacmanPos, const Map& map) {
     // Rufe die Basisklassen-Update Methode auf
-    Ghostbase::update(lastTime, pacmanPos);
+    Ghostbase::update(lastTime, pacmanPos, map);
 }
 
 Vector2 BlueGhost::getTargetTile(const Vector2& pacmanPos) const {

@@ -2,7 +2,7 @@
 
 class Entity {
 public:
-    explicit Entity(int x, int y, float speed = 1, int dirX = 0, int dirY = 0);
+    explicit Entity(int x, int y, float speed = 1, float dirX = 0, float dirY = 0);
     virtual ~Entity() = default;
 
     virtual void draw(int tileSize) const = 0;
@@ -17,10 +17,15 @@ public:
     inline int getDirX() const { return dirX; }
     inline int getDirY() const { return dirY; }
 
+
+
 protected:
     float x;
     float y;
-    int speed;
+    float speed;
     float dirX;
     float dirY;
+
+    void handleTunnelWrap(int mapWidth);
+
 };

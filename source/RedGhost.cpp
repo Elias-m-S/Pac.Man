@@ -8,9 +8,9 @@ RedGhost::RedGhost(const Map& map, int startX, int startY)
     frightenedColor = BLUE; // Farbe wenn verängstigt
 }
 
-void RedGhost::update(float lastTime, const Vector2& pacmanPos) {
+void RedGhost::update(float lastTime, const Vector2& pacmanPos, const Map& map) {
     // Rufe die Basisklassen-Update Methode auf
-    Ghostbase::update(lastTime, pacmanPos);
+    Ghostbase::update(lastTime, pacmanPos, map);
 }
 
 Vector2 RedGhost::getTargetTile(const Vector2& pacmanPos) const {
