@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-Entity::Entity(int x, int y, int speed, int dirX, int dirY)
+Entity::Entity(int x, int y, float speed, int dirX, int dirY)
     : x(x), y(y), speed(speed), dirX(dirX), dirY(dirY) {}
 
 void Entity::setDirection(int dx, int dy) {

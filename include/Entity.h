@@ -2,7 +2,7 @@
 
 class Entity {
 public:
-    explicit Entity(int x, int y, int speed = 1, int dirX = 0, int dirY = 0);
+    explicit Entity(int x, int y, float speed = 1, int dirX = 0, int dirY = 0);
     virtual ~Entity() = default;
 
     virtual void draw(int tileSize) const = 0;
