@@ -1,36 +1,60 @@
-
 #include "Leaderboard.h"
 #include <fstream>
+#include <algorithm>
 #include <raylib.h>
 
 Leaderboard::Leaderboard(const std::string& filename)
-    : filename(filename) {
+    : filename(filename)
+{
+    load();
+}
+
+Leaderboard::~Leaderboard() {
+    save();
+}
+
+void Leaderboard::load() {
+    entries.clear();
     std::ifstream file(filename);
+    if (!file.is_open()) return;
     std::string name;
     int score;
     while (file >> name >> score) {
         entries.emplace_back(name, score);
     }
     file.close();
+
+    // Bereits sortieren, falls die Datei unsortiert war
+    std::sort(entries.begin(), entries.end(),
+              [](auto &a, auto &b){ return a.second > b.second; });
 }
 
-Leaderboard::~Leaderboard() {
-    std::ofstream file(filename);
-    for (auto& e : entries) {
+void Leaderboard::save() const {
+    std::ofstream file(filename, std::ios::trunc);
+    if (!file.is_open()) return;
+    for (auto &e : entries) {
         file << e.first << " " << e.second << "\n";
     }
+    file.close();
 }
 
 void Leaderboard::addEntry(const std::string& name, int score) {
     entries.emplace_back(name, score);
+    std::sort(entries.begin(), entries.end(),
+              [](auto &a, auto &b){ return a.second > b.second; });
 }
 
-void Leaderboard::draw() const {
+void Leaderboard::draw(int x, int yStart) const {
     ClearBackground(BLACK);
-    DrawText("Leaderboard", 100, 50, 40, WHITE);
-    int y = 120;
-    for (auto& e : entries) {
-        DrawText(TextFormat("%s: %i", e.first.c_str(), e.second), 100, y, 20, GOLD);
+    DrawText("Leaderboard", x, yStart - 40, 40, WHITE);
+    int y = yStart;
+    for (size_t i = 0; i < entries.size(); ++i) {
+        const auto& e = entries[i];
+        // 1. "Name" 1234
+        DrawText(
+            TextFormat("%zu. \"%s\" %d", i + 1, e.first.c_str(), e.second),
+            x, y, 20, GOLD
+        );
         y += 30;
     }
 }

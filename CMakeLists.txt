@@ -22,5 +22,5 @@ add_executable(pacman ${SOURCES})
 # Link libraries
 target_link_libraries(pacman raylib opengl32 gdi32 winmm)
 
-# Copy assets (Scoreboard.txt and any others)
+# Copy assets (Scoreboard.txt)
 file(COPY ${PROJECT_SOURCE_DIR}/assets DESTINATION ${PROJECT_BINARY_DIR})

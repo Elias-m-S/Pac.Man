@@ -117,6 +117,7 @@ void Game::draw() {
         greenGhost.draw(tileSize); 
         blueGhost.draw(tileSize); 
         DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
+        
     } else if (state == GameState::ENDLESSGAME) {
         map.draw();
         pacman.draw(tileSize);
