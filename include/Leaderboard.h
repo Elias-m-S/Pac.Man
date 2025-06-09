@@ -11,11 +11,11 @@ public:
 
     void addEntry(const std::string& name, int score);
     void draw(int x = 100, int yStart = 120) const;
+    void save() const;
 
 private:
     std::string filename;
     std::vector<std::pair<std::string,int>> entries;
 
     void load();
-    void save() const;
 };

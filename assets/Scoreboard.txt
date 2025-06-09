@@ -1,3 +1,5 @@
-Elias 100
-Till 200
-
+eli 180
+lol 110
+test4 110
+Tesst 50
+uf 0
