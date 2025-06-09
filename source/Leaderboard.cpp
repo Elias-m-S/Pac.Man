@@ -1,7 +1,9 @@
 #include "Leaderboard.h"
+#include <filesystem>
 #include <fstream>
 #include <algorithm>
 #include <raylib.h>
+#include <iostream>
 
 Leaderboard::Leaderboard(const std::string& filename)
     : filename("../assets/Scoreboard.txt")
@@ -14,6 +16,7 @@ Leaderboard::~Leaderboard() {
 }
 
 void Leaderboard::load() {
+    std::cout << "Loading from: " << filename << std::endl;
     entries.clear();
     std::ifstream file(filename);
     if (!file.is_open()) return;
@@ -30,6 +33,7 @@ void Leaderboard::load() {
 }
 
 void Leaderboard::save() const {
+    std::cout << "Saving to: " << filename << std::endl;
     std::ofstream file(filename, std::ios::trunc);
     if (!file.is_open()) return;
     for (auto &e : entries) {

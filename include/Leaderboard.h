@@ -6,7 +6,7 @@
 class Leaderboard {
 public:
     // Standard auf assets/Leaderboard.txt
-    explicit Leaderboard(const std::string& filename = "assets/Scoreboard.txt");
+    explicit Leaderboard(const std::string& filename = "../assets/Scoreboard.txt");
     ~Leaderboard();
 
     void addEntry(const std::string& name, int score);
