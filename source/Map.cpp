@@ -1,4 +1,3 @@
-
 #include "Map.h"
 #include <raylib.h>
 #include <algorithm>
@@ -96,6 +95,10 @@ void Map::draw() const {
                     break;
                 case POWERUP:
                     DrawCircle(x + tileSize/2, y + tileSize/2, tileSize/3, YELLOW);
+                    break;
+                case FRUIT:
+                    DrawCircle(x + tileSize/2, y + tileSize/2, tileSize/3, RED); // Apfel als roter Kreis
+                    DrawCircle(x + tileSize/2, y + tileSize/2 - tileSize/6, tileSize/10, DARKGREEN); // Stiel
                     break;
                 case EMPTY:
                 default:
