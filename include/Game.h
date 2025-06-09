@@ -36,5 +36,5 @@ private:
 
     void handleInput();
     void update();
-    void draw();
+    void draw(float dt);
 };

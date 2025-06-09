@@ -31,7 +31,7 @@ void Game::run() {
         float dt = GetFrameTime();
         handleInput();
         update();
-        draw();
+        draw(dt);
     }
 
     CloseWindow();
@@ -140,7 +140,7 @@ void Game::ghostCollision() {
     }
 }
 
-void Game::draw() {
+void Game::draw(float dt) {
     BeginDrawing();
     ClearBackground(BLACK);
 
@@ -179,10 +179,45 @@ void Game::draw() {
         int cx = 50 + MeasureText(playerName.c_str(), 30);
         if ( ((int)(GetTime()*2) % 2) == 0 )
             DrawLine(cx, 80, cx, 110, YELLOW);   
-    }else if (state == GameState::GAMEOVER) {
-        DrawText("Game Over! Press Enter.", 50, 50, 20, RED);
-        DrawText(TextFormat("Final Score: %i", pacman.getScore()), 50, 80, 20, GOLD);
-    }else if (state == GameState::LEADERBOARD) {
+    }else if (state == GameState::GAMEOVER)
+    BeginDrawing();
+    ClearBackground(BLACK);
+
+    // … Dein üblicher Draw-Code für MENU, PLAYING etc. …
+
+    if (state == GameState::GAMEOVER) {
+    static float fadeTimer = 0.0f;
+    fadeTimer += dt;
+
+    int  w        = GetScreenWidth();
+    int  h        = GetScreenHeight();
+    float maxInset = std::min(w, h) * 0.5f;
+    float speed    = 300.0f;                    // px pro Sekunde
+    float inset    = std::min(maxInset, fadeTimer * speed);
+
+    // 1) Hintergrundszene noch einmal zeichnen
+    map.draw();
+    pacman.draw(tileSize);
+
+    // 2) 4 Ränder, die von außen hereinschieben
+    DrawRectangle(    0, 0,                (int)inset, h,      BLACK); // links
+    DrawRectangle(w-(int)inset, 0,         (int)inset, h,      BLACK); // rechts
+    DrawRectangle((int)inset, 0,           w-2*(int)inset, (int)inset, BLACK); // oben
+    DrawRectangle((int)inset, h-(int)inset, w-2*(int)inset, (int)inset, BLACK); // unten
+
+    // 3) Wenn das Loch geschlossen ist, Game Over anzeigen
+    if (inset >= maxInset) {
+        const char* msg = "GAME OVER";
+        int fontSize    = 48;
+        int tw          = MeasureText(msg, fontSize);
+        DrawText(msg,
+                 w/2 - tw/2,
+                 h/2 - fontSize/2,
+                 fontSize,
+                 RED);
+    }
+    }
+    else if (state == GameState::LEADERBOARD) {
         leaderboard.draw();
         DrawText("Press Enter to Restart", 50, mapHeight * tileSize - 40, 20, WHITE);
     }
