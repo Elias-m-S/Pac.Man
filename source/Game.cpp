@@ -11,7 +11,7 @@ Game::Game(int width, int height, int tileSize)
       pinkGhost(map, 10, 9), //Spawnpoint (im Käfig)
       greenGhost(map, 9, 9), //Spawnpoint (im Käfig)
       blueGhost(map, 11, 9), //Spawnpoint (im Käfig)
-      leaderboard("assets/Scoreboard.txt"),
+      leaderboard("../assets/Scoreboard.txt"),
       state(GameState::MENU),
       menu({"Start Game", "How to Play", "Leaderboard", "Exit"})
 {}

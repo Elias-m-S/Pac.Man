@@ -50,9 +50,9 @@ void Leaderboard::draw(int x, int yStart) const {
     int y = yStart;
     for (size_t i = 0; i < entries.size(); ++i) {
         const auto& e = entries[i];
-        // 1. "Name" 1234
+        // 1. Name 1234
         DrawText(
-            TextFormat("%zu. \"%s\" %d", i + 1, e.first.c_str(), e.second),
+            TextFormat("%zu. %s %d", i + 1, e.first.c_str(), e.second),
             x, y, 20, GOLD
         );
         y += 30;
