@@ -4,7 +4,7 @@
 
 class GreenGhost : public Ghostbase {
 public:
-    GreenGhost(const Map& map, int startX, int startY);
+    GreenGhost(const Map& map, int startX, int startY, float speed);
 
     // Hier kannst du später den Bewegungsalgorithmus überschreiben
     void update(float lastTime, const Vector2& pacmanPos, const Map& map) override;

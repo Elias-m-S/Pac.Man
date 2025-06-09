@@ -1,11 +1,11 @@
 #include "RedGhost.h"
 #include "Map.h"
 
-RedGhost::RedGhost(const Map& map, int startX, int startY)
-    : Ghostbase(map, startX, startY, 4.0) //geister schneller für besseres gameplay
+RedGhost::RedGhost(const Map& map, int startX, int startY, float speed)
+    : Ghostbase(map, startX, startY, speed)
 {
-    normalColor = RED; // Setzt die normale Farbe für den RedGhost
-    frightenedColor = BLUE; // Farbe wenn verängstigt
+    normalColor = RED;
+    frightenedColor = BLUE;
 }
 
 void RedGhost::update(float lastTime, const Vector2& pacmanPos, const Map& map) {

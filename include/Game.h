@@ -15,6 +15,7 @@ enum class GameState { MENU, HOWTO, PLAYING, ENDLESSGAME, GAMEOVER, ENTERNAME, L
 class Game {
 public:
     Game(int width, int height, int tileSize);
+    ~Game();
     void run();
     void ghostCollision();//funktion ankündigen, um in der cpp kollision zu überprüfen
 
@@ -23,16 +24,18 @@ private:
     Menu menu;
     Map map;
     PacMan pacman;
-    RedGhost redGhost;
-    PinkGhost pinkGhost;
-    GreenGhost greenGhost;
-    BlueGhost blueGhost;
+    RedGhost* redGhost;
+    PinkGhost* pinkGhost;
+    GreenGhost* greenGhost;
+    BlueGhost* blueGhost;
 
     Leaderboard leaderboard;
     GameState state;
     float deltaTime;
     std::string playerName;
     const int maxNameLength = 10;
+    float pacmanSpeed;
+    float ghostSpeed;
 
     void handleInput();
     void update();

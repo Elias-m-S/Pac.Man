@@ -2,8 +2,8 @@
 #include "Map.h"
 #include <cmath>
 
-PinkGhost::PinkGhost(const Map& map, int startX, int startY)
-    : Ghostbase(map, startX, startY, 4.0) //geister schneller für besseres gameplay
+PinkGhost::PinkGhost(const Map& map, int startX, int startY, float speed)
+    : Ghostbase(map, startX, startY, speed)
 {
     normalColor = PINK; // Setzt die normale Farbe für den RedGhost
     frightenedColor = BLUE; // Farbe wenn verängstigt

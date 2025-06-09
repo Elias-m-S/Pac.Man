@@ -4,7 +4,7 @@
 
 class RedGhost : public Ghostbase {
 public:
-    RedGhost(const Map& map, int startX, int startY);
+    RedGhost(const Map& map, int startX, int startY, float speed);
 
     //Update um Bewegungsalgorythmus zu überschreiben
     void update(float lastTime, const Vector2& pacmanPos, const Map& map) override;

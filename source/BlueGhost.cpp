@@ -2,8 +2,8 @@
 #include "Map.h"
 #include <cmath>
 
-BlueGhost::BlueGhost(const Map& map, int startX, int startY)
-    : Ghostbase(map, startX, startY, 4.0) //geister schneller für besseres gameplay
+BlueGhost::BlueGhost(const Map& map, int startX, int startY, float speed)
+    : Ghostbase(map, startX, startY, speed)
 {
     normalColor = BLUE; // Setzt die normale Farbe für den BlueGhost
 }
