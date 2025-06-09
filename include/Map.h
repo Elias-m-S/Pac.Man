@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <random>
-#include "raylib.h"
+#include <raylib.h>
 
 class Map {
 public:
