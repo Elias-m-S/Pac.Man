@@ -2,7 +2,7 @@
 #include "Map.h"
 
 RedGhost::RedGhost(const Map& map, int startX, int startY)
-    : Ghostbase(map, startX, startY, 0.5) // Speed = 0.5 leicht langsamer wie andere Entitäten
+    : Ghostbase(map, startX, startY, 4.0) //geister schneller für besseres gameplay
 {
     normalColor = RED; // Setzt die normale Farbe für den RedGhost
     frightenedColor = BLUE; // Farbe wenn verängstigt

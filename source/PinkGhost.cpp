@@ -3,7 +3,7 @@
 #include <cmath>
 
 PinkGhost::PinkGhost(const Map& map, int startX, int startY)
-    : Ghostbase(map, startX, startY, 1) // Speed = 1 wie andere Entitäten
+    : Ghostbase(map, startX, startY, 4.0) //geister schneller für besseres gameplay
 {
     normalColor = PINK; // Setzt die normale Farbe für den RedGhost
     frightenedColor = BLUE; // Farbe wenn verängstigt

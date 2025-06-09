@@ -6,7 +6,7 @@
 Game::Game(int width, int height, int tileSize)
     : mapWidth(width), mapHeight(height), tileSize(tileSize),
       map(width, height, tileSize),
-      pacman(10, 15, 1),
+      pacman(10, 15, 12.0),
       redGhost(map, 10, 7), //Spawnpoint (über der Tür)
       pinkGhost(map, 10, 9), //Spawnpoint (im Käfig)
       greenGhost(map, 9, 9), //Spawnpoint (im Käfig)
@@ -41,10 +41,9 @@ void Game::handleInput() {
     if (state == GameState::MENU) {
         menu.update();
         if (menu.isSelected()) {
-            switch (menu.getSelectedIndex()) {
-                case 0: 
+            switch (menu.getSelectedIndex()) {                case 0: 
                     map         = Map(mapWidth, mapHeight, tileSize);
-                    pacman      = PacMan(10, 15, 1);
+                    pacman      = PacMan(10, 15, 3.0);
                     
                     redGhost.resetPosition(10, 7);
                     pinkGhost.resetPosition(10, 9);
@@ -112,12 +111,13 @@ void Game::handleInput() {
 
 void Game::update() {
     if (state == GameState::PLAYING || state == GameState::ENDLESSGAME) {
-        map.update(GetFrameTime());
-        pacman.update(map);
-        redGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // RedGhost aktivieren
-        pinkGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // PinkGhost aktivieren
-        greenGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // GreenGhost aktivieren
-        blueGhost.update(GetFrameTime(), {(float)pacman.getX(), (float)pacman.getY()}, map); // BlueGhost aktivieren
+        float deltaTime = GetFrameTime();
+        map.update(deltaTime);
+        pacman.update(map, deltaTime);
+        redGhost.update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map); // RedGhost aktivieren
+        pinkGhost.update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map); // PinkGhost aktivieren
+        greenGhost.update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map); // GreenGhost aktivieren
+        blueGhost.update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map); // BlueGhost aktivieren
         if (map.allCoinsCollected()) state = GameState::ENDLESSGAME; //unendliches Spiel(bis pacman von geist erwischt)
         ghostCollision(); // Touchen mit Geistern überprüfen
     }

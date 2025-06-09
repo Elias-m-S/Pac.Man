@@ -20,11 +20,11 @@ public:
 
 
 protected:
-    float x;
-    float y;
+    int x;
+    int y;
     float speed;
-    float dirX;
-    float dirY;
+    int dirX;
+    int dirY;
 
     void handleTunnelWrap(int mapWidth);
 

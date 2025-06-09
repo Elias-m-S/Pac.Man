@@ -11,6 +11,8 @@ Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
       radius(14), // Feste Radius für Geister
       state(GhostState::SCATTER),
       stateTimer(0.0f),
+      moveTimer(0.0f),
+      moveInterval(1.0f / speed), // Bewegungsintervall: 1/speed Sekunden pro Tile
       mapRef(map),
       rng(std::random_device{}())
 {
@@ -24,19 +26,30 @@ Ghostbase::~Ghostbase() {
 void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map) {
 
     stateTimer -= deltaTime;
+    moveTimer -= deltaTime;
 
-    //Hier eventuell noch frightend rein?
+    // Nur bewegen wenn Move-Timer abgelaufen ist (diskrete Tile-Bewegung)
+    if (moveTimer <= 0.0f) {
+        moveTimer = moveInterval; // Timer zurücksetzen
+        
+        Vector2 target = (state == GhostState::FRIGHTENED) ? randomTile() : getTargetTile(pacmanPos);
 
-    Vector2 target = (state == GhostState::FRIGHTENED) ? randomTile() : getTargetTile(pacmanPos);
-
-
-    //bewegung in richtung ausgewählten Ziels
-    Vector2 dir = chooseDirectionTowards(target);
-    setDirection((int)dir.x, (int)dir.y);
-    //Lauf Lauf
-    Entity::move();
-    //Tunnel benutzen
-    handleTunnelWrap(map.getWidth());
+        // Bewegung in Richtung ausgewählten Ziels
+        Vector2 dir = chooseDirectionTowards(target);
+        setDirection((int)dir.x, (int)dir.y);
+        
+        // Diskrete Tile-Bewegung: immer genau 1 Tile bewegen
+        int nextX = x + getDirX();
+        int nextY = y + getDirY();
+        
+        // Prüfe ob Bewegung möglich ist
+        if (mapRef.isWalkable(nextX, nextY)) {
+            x = nextX;
+            y = nextY;
+            // Tunnel benutzen
+            handleTunnelWrap(map.getWidth());
+        }
+    }
 }
 
 // Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen
