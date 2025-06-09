@@ -49,13 +49,13 @@ class Ghostbase : public Entity{
         void changeState(GhostState newState);
 
         //berechnet welch richtung gewählt werden muss um Target zu erreichen
-        Vector2 chooseDirectionTowards(const Vector2& target) const;
-
-        Color normalColor; // normale Farbe welche jeder geist hat(verschiedene deswegen nicht festgelegt)
+        Vector2 chooseDirectionTowards(const Vector2& target) const;        Color normalColor; // normale Farbe welche jeder geist hat(verschiedene deswegen nicht festgelegt)
         Color frightenedColor = BLUE; // farbe welche die geister haben wenn sie angst haben
         float radius; //radius der Geister, bestimmt die form der geister mit
         GhostState state; //Tatsächlicher Zustand des Geistes: SCATTER, CHASE, FRIGHTENED, EATEN
         float stateTimer; //timer um ablauf der Zustände zu verwalten
+        float moveTimer; // Timer für diskrete Tile-basierte Bewegung 
+        float moveInterval; // Bewegungsintervall basierend auf Geschwindigkeit
         const Map& mapRef; //referenz auf die Map, um Kollisionen zu prüfen
         
 

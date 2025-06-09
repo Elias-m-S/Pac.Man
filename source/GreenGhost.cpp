@@ -2,7 +2,7 @@
 #include "Map.h"
 
 GreenGhost::GreenGhost(const Map& map, int startX, int startY)
-    : Ghostbase(map, startX, startY, 1)
+    : Ghostbase(map, startX, startY, 4.0) //geister schneller für besseres gameplay
 {
     normalColor = GREEN; //Setzt normale Farbe
 }

@@ -3,7 +3,7 @@
 #include "constants.h"
 
 Entity::Entity(int x, int y, float speed, float dirX, float dirY)
-    : x(x), y(y), speed(speed), dirX(dirX), dirY(dirY) {}
+    : x(x), y(y), speed(speed), dirX((int)dirX), dirY((int)dirY) {}
 
 void Entity::setDirection(int dx, int dy) {
         dirX = dx;
@@ -11,8 +11,8 @@ void Entity::setDirection(int dx, int dy) {
     }
 
 void Entity::move() {
-    x += dirX * speed;
-    y += dirY * speed;
+    x += dirX;
+    y += dirY;
 }
 
 
@@ -21,10 +21,10 @@ void Entity::setSpeed(int s) {
 }
 
 void Entity::handleTunnelWrap(int mapWidth) {
-    // Entity coordinates are in tiles, not pixels
+    // Entity coordinates are in tiles, handle integer coordinates
     if (x < 0) {
-        x = mapWidth - 1; // Wrap to the right side
+        x = mapWidth - 1;
     } else if (x >= mapWidth) {
-        x = 0; // Wrap to the left side (tile 0)
+        x = 0;
     }
 }

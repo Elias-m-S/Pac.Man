@@ -3,7 +3,7 @@
 #include <cmath>
 
 BlueGhost::BlueGhost(const Map& map, int startX, int startY)
-    : Ghostbase(map, startX, startY, 1) // Speed = 1 wie andere Entitäten
+    : Ghostbase(map, startX, startY, 4.0) //geister schneller für besseres gameplay
 {
     normalColor = BLUE; // Setzt die normale Farbe für den BlueGhost
 }
