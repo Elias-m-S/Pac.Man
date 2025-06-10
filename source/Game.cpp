@@ -6,8 +6,8 @@
 Game::Game(int width, int height, int tileSize)
     : mapWidth(width), mapHeight(height), tileSize(tileSize),
 
-      pacmanSpeed(10.0f), // <--- Set your default PacMan speed here
-      ghostSpeed(8.0f),  // <--- Set your default Ghost speed here
+      pacmanSpeed(8.0f), // <--- Set your default PacMan speed here
+      ghostSpeed(4.0f),  // <--- Set your default Ghost speed here
       map(width, height, tileSize),
       pacman(10, 15, pacmanSpeed),
       redGhost(new RedGhost(map, 10, 7, ghostSpeed)),
