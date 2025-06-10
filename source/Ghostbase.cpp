@@ -191,7 +191,7 @@ Vector2 Ghostbase::chooseDirectionTowards(const Vector2& target) const {
 
 // Private-Helfer
 Vector2 Ghostbase::randomTile() const {
-    // Wähle zufällige begehbare Kachel auf mapRef (für z.B. Scatter-Zustand in Frightend)
+    // Wähle zufällige begehbare Kachel auf mapRef (für z.B. Scatter-Zustand in Frightend)"noch zu erledigen"
     return Vector2{ (float)x, (float)y };//umwandlung zu float für Vector
 }
 

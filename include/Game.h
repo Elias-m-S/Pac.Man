@@ -10,7 +10,7 @@
 #include <vector>
 #include <string>
 
-enum class GameState { MENU, HOWTO, PLAYING, ENDLESSGAME, GAMEOVER, ENTERNAME, LEADERBOARD };
+enum class GameState { MENU, HOWTO, PLAYING, GAMEOVER, ENTERNAME, LEADERBOARD };
 
 class Game {
 public:

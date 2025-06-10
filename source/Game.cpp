@@ -75,7 +75,7 @@ void Game::handleInput() {
             menu.reset();
         }
     }
-    else if (state == GameState::PLAYING || state == GameState::ENDLESSGAME) {
+    else if (state == GameState::PLAYING) {
         if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) pacman.setDesiredDirection(0, -1);
         if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) pacman.setDesiredDirection(0, 1);
         if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) pacman.setDesiredDirection(-1, 0);
@@ -121,7 +121,7 @@ void Game::handleInput() {
 }
 
 void Game::update() {
-    if (state == GameState::PLAYING || state == GameState::ENDLESSGAME) {
+    if (state == GameState::PLAYING) {
         float deltaTime = GetFrameTime();
         map.update(deltaTime);
         pacman.update(map, deltaTime);
@@ -129,13 +129,13 @@ void Game::update() {
         pinkGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
         greenGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
         blueGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
-        if (map.allCoinsCollected()) state = GameState::ENDLESSGAME;
+        if (map.allCoinsCollected()) state = GameState::GAMEOVER;
         ghostCollision();
     }
 }
 
 void Game::ghostCollision() {
-    if (state != GameState::PLAYING && state !=GameState::ENDLESSGAME) return;
+    if (state != GameState::PLAYING) return;
     int px = pacman.getX();
     int py = pacman.getY();
     if ((redGhost->getX() == px && redGhost->getY() == py && !redGhost->isFrightened() ) ||
@@ -166,21 +166,12 @@ void Game::draw(float dt) {
         greenGhost->draw(tileSize);
         blueGhost->draw(tileSize);
         DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
-    }else if (state == GameState::ENDLESSGAME) {
-        map.draw();
-        pacman.draw(tileSize);
-        redGhost->draw(tileSize);
-        pinkGhost->draw(tileSize);
-        greenGhost->draw(tileSize);
-        blueGhost->draw(tileSize);
-        DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
-        DrawText("Endless Mode! Avoid Ghosts!", 50, mapHeight * tileSize - 40, 20, WHITE);
     }else if (state == GameState::ENTERNAME) {
         DrawText("Enter your name:", 50, 50, 20, WHITE);
         DrawText(playerName.c_str(), 50, 80, 30, YELLOW);
         int cx = 50 + MeasureText(playerName.c_str(), 30);
         if ( ((int)(GetTime()*2) % 2) == 0 )
-            DrawLine(cx, 80, cx, 110, YELLOW);
+        DrawLine(cx, 80, cx, 110, YELLOW);
     }else if (state == GameState::GAMEOVER) {
         static float fadeTimer = 0.0f;
         fadeTimer += dt;
