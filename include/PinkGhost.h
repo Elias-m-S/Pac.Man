@@ -3,12 +3,10 @@
 #include "Ghostbase.h"
 
 class PinkGhost : public Ghostbase {
-public:
-    PinkGhost(const Map& map, int startX, int startY, float speed);
+public:    PinkGhost(const Map& map, int startX, int startY, float speed);
 
-    // Hier kannst du später den Bewegungsalgorithmus überschreiben
-    void update(float lastTime, const Vector2& pacmanPos, const Map& map) override;
     Vector2 getTargetTile(const Vector2& pacmanPos) const override;
+    Vector2 getScatterTarget() const override;
 
 private:
     // spezifische Variablen für RedGhost (z.B. Zielverhalten)

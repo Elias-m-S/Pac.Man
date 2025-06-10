@@ -8,11 +8,6 @@ BlueGhost::BlueGhost(const Map& map, int startX, int startY, float speed)
     normalColor = BLUE; // Setzt die normale Farbe für den BlueGhost
 }
 
-void BlueGhost::update(float lastTime, const Vector2& pacmanPos, const Map& map) {
-    // Rufe die Basisklassen-Update Methode auf
-    Ghostbase::update(lastTime, pacmanPos, map);
-}
-
 Vector2 BlueGhost::getTargetTile(const Vector2& pacmanPos) const {
     // BlueGhost (Inky) has a complex algorithm based on both PacMan and RedGhost position
     // Since we don't have access to RedGhost position here, we'll implement
@@ -47,8 +42,7 @@ Vector2 BlueGhost::getTargetTile(const Vector2& pacmanPos) const {
         // Target 2 tiles ahead in a strategic direction
         target.x += (pacmanPos.x > mapWidth/2) ? -2 : 2;
         target.y += (pacmanPos.y > mapHeight/2) ? -2 : 2;
-        
-        // Clamp to map bounds
+          // Clamp to map bounds
         target.x = fmax(0, fmin(target.x, mapWidth - 1));
         target.y = fmax(0, fmin(target.y, mapHeight - 1));
         
@@ -57,4 +51,9 @@ Vector2 BlueGhost::getTargetTile(const Vector2& pacmanPos) const {
         // Close distance: direct chase
         return pacmanPos;
     }
+}
+
+Vector2 BlueGhost::getScatterTarget() const {
+    // BlueGhost (Inky) geht zur unteren rechten Ecke im Scatter-Modus
+    return Vector2{18, 20};
 }

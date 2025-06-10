@@ -9,11 +9,6 @@ PinkGhost::PinkGhost(const Map& map, int startX, int startY, float speed)
     frightenedColor = BLUE; // Farbe wenn verängstigt
 }
 
-void PinkGhost::update(float lastTime, const Vector2& pacmanPos, const Map& map) {
-    // Rufe die Basisklassen-Update Methode auf
-    Ghostbase::update(lastTime, pacmanPos, map);
-}
-
 Vector2 PinkGhost::getTargetTile(const Vector2& pacmanPos) const {
     // PinkGhost (Speedy) ambushes 4 tiles ahead of PacMan's current direction
     // We need to get PacMan's direction, but since we only have position,
@@ -40,10 +35,14 @@ Vector2 PinkGhost::getTargetTile(const Vector2& pacmanPos) const {
         target.x = pacmanPos.x + dirX * 3.0f;
         target.y = pacmanPos.y + dirY * 3.0f;
     }
-    
-    // Clamp to map bounds
+      // Clamp to map bounds
     target.x = fmax(0, fmin(target.x, mapRef.getWidth() - 1));
     target.y = fmax(0, fmin(target.y, mapRef.getHeight() - 1));
     
     return target;
+}
+
+Vector2 PinkGhost::getScatterTarget() const {
+    // PinkGhost (Pinky) geht zur oberen linken Ecke im Scatter-Modus
+    return Vector2{2, 2};
 }

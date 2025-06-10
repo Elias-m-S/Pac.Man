@@ -9,8 +9,8 @@ Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
     : Entity(startX, startY, speed),
       frightenedColor(BLUE),
       radius(14), // Feste Radius für Geister
-      state(GhostState::SCATTER),
-      stateTimer(0.0f),
+      state(GhostState::IN_BASE),
+      stateTimer(2.0f), // 2 Sekunden warten bevor sie die Basis verlassen
       moveTimer(0.0f),
       moveInterval(1.0f / speed), // Bewegungsintervall: 1/speed Sekunden pro Tile
       mapRef(map),
@@ -28,11 +28,35 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
     stateTimer -= deltaTime;
     moveTimer -= deltaTime;
 
+    // Automatischer State-Wechsel
+    if (stateTimer <= 0.0f) {
+        if (state == GhostState::IN_BASE) {
+            changeState(GhostState::SCATTER);
+            stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
+        } else if (state == GhostState::SCATTER && state != GhostState::FRIGHTENED) {
+            changeState(GhostState::CHASE);
+            stateTimer = 20.0f; // 20 Sekunden im Chase-Modus
+        } else if (state == GhostState::CHASE && state != GhostState::FRIGHTENED) {
+            changeState(GhostState::SCATTER);
+            stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
+        }
+    }
+
     // Nur bewegen wenn Move-Timer abgelaufen ist (diskrete Tile-Bewegung)
     if (moveTimer <= 0.0f) {
         moveTimer = moveInterval; // Timer zurücksetzen
         
-        Vector2 target = (state == GhostState::FRIGHTENED) ? randomTile() : getTargetTile(pacmanPos);
+        Vector2 target;
+        if (state == GhostState::IN_BASE) {
+            // Ziel: Basis verlassen (gehe nach oben zur Tür bei Position 10,7)
+            target = Vector2{10, 7};
+        } else if (state == GhostState::FRIGHTENED) {
+            target = randomTile();
+        } else if (state == GhostState::SCATTER) {
+            target = getScatterTarget(); // Zur eigenen Ecke gehen
+        } else { // CHASE Modus
+            target = getTargetTile(pacmanPos); // Pacman verfolgen
+        }
 
         // Bewegung in Richtung ausgewählten Ziels
         Vector2 dir = chooseDirectionTowards(target);
@@ -101,12 +125,20 @@ void Ghostbase::draw(int tileSize) const {
 };
 
 void Ghostbase::setFrightened(bool on) {
-    changeState(on ? GhostState::FRIGHTENED : GhostState::CHASE);
-    // ggf. Timer neu setzen
+    if (on) {
+        changeState(GhostState::FRIGHTENED);
+        stateTimer = 10.0f; // 10 Sekunden verängstigt
+    } else {
+        changeState(GhostState::CHASE);
+        stateTimer = 20.0f; // Nach Frightened wieder zum Chase-Modus
+    }
 }
 
 void Ghostbase::reset() {
     // Zurück auf Startposition, State zurücksetzen
+    state = GhostState::IN_BASE;
+    stateTimer = 2.0f; // 2 Sekunden warten bevor sie die Basis verlassen
+    moveTimer = 0.0f;
 }
 
 // Protected-Helfer

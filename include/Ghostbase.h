@@ -5,13 +5,13 @@
 
 
 class Ghostbase : public Entity{
-    
-    // Zustände welche die Geister annehmen können
+      // Zustände welche die Geister annehmen können
     enum class GhostState {
-        SCATTER, //Geister bewegen sich weg vom "Spawn" zu ihren Ecken
-        CHASE, //geister vefolgen/jagen pacman
-        FRIGHTENED, //Geister haben angst und vergessen ihr Jagdmuster in bezug auf Pacman
-        EATEN //Geister wurden gefressen, kehren zum Spawnpunkt zurück und fangen erst dort an den kreislauf von vore zu beginnen
+        IN_BASE,     // Geister sind noch in der Basis und müssen zuerst hinaus
+        SCATTER,     // Geister bewegen sich weg vom "Spawn" zu ihren Ecken
+        CHASE,       // geister vefolgen/jagen pacman
+        FRIGHTENED,  // Geister haben angst und vergessen ihr Jagdmuster in bezug auf Pacman
+        EATEN        // Geister wurden gefressen, kehren zum Spawnpunkt zurück und fangen erst dort an den kreislauf von vore zu beginnen
     };
     
     public: // sind für das ganze Programm sichtbar
@@ -30,10 +30,11 @@ class Ghostbase : public Entity{
         void setFrightened(bool on);
 
         //Lässt geister 
-        void reset();
-
-        //Pure virtuelle Funktion, denn, jeder Geist überschreibt mit eigenen werten -> andere Algorythmen. 
+        void reset();        //Pure virtuelle Funktion, denn, jeder Geist überschreibt mit eigenen werten -> andere Algorythmen. 
         virtual Vector2 getTargetTile(const Vector2& pacmanPos) const = 0;
+        
+        // Pure virtuelle Funktion für Scatter-Ziel (jeder Geist hat seine eigene Ecke)
+        virtual Vector2 getScatterTarget() const = 0;
 
         bool isFrightened() const { return state == GhostState::FRIGHTENED; }
 
