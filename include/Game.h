@@ -31,10 +31,14 @@ private:
     GameState state;
     float deltaTime;
     std::string playerName;
-    const int maxNameLength = 10;
-    float pacmanSpeed;
+    const int maxNameLength = 10;    float pacmanSpeed;
     float ghostSpeed;
     int ghostEatenCount; // Track ghosts eaten in current frightened phase
+    
+    // Sound effects
+    Sound deathSound;
+    Sound eatFruitSound;
+    Sound eatGhostSound;
 
     void handleInput();
     void update();

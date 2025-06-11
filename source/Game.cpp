@@ -13,23 +13,63 @@ Game::Game(int width, int height, int tileSize)
       redGhost(new RedGhost(map, 10, 7, ghostSpeed)),
       pinkGhost(new PinkGhost(map, 10, 9, ghostSpeed)),
       greenGhost(new GreenGhost(map, 9, 9, ghostSpeed)),
-      blueGhost(new BlueGhost(map, 11, 9, ghostSpeed)),
-      leaderboard(),
+      blueGhost(new BlueGhost(map, 11, 9, ghostSpeed)),      leaderboard(),
       state(GameState::MENU),
       menu({"Start Game", "How to Play", "Leaderboard", "Exit"}),
       ghostEatenCount(0)
-{}
+{
+    // Audio wird später in run() initialisiert
+}
 
 Game::~Game() {
     delete redGhost;
     delete pinkGhost;
     delete greenGhost;
     delete blueGhost;
+    
+    // Sounds entladen und Audio schließen
+    UnloadSound(deathSound);
+    UnloadSound(eatFruitSound);
+    UnloadSound(eatGhostSound);
+    CloseAudioDevice();
 }
 
 void Game::run() {
     InitWindow(mapWidth * tileSize, mapHeight * tileSize, "Pac-Man");
     SetTargetFPS(60);//rück zu 10 FPS wie ursprünglich
+
+    // ─── Audio initialisieren NACH Fenster-Initialisierung ───────────────────
+    InitAudioDevice();
+    
+    // Prüfe ob Audio-Device initialisiert wurde
+    if (!IsAudioDeviceReady()) {
+        // Fallback: versuche Audio nochmal zu initialisieren
+        CloseAudioDevice();
+        InitAudioDevice();
+    }
+      deathSound = LoadSound("assets/pacman_death.wav");
+    eatFruitSound = LoadSound("assets/pacman_eatfruit.wav");
+    eatGhostSound = LoadSound("assets/pacman_eatghost.wav");
+    
+    // Lautstärke setzen
+    SetSoundVolume(deathSound, 1.0f);
+    SetSoundVolume(eatFruitSound, 1.0f);
+    SetSoundVolume(eatGhostSound, 1.0f);
+    
+    // Debug: Prüfe ob Sounds geladen wurden (nur für Debugging)
+    if (deathSound.frameCount == 0) {
+        deathSound = LoadSound("./assets/pacman_death.wav");
+        SetSoundVolume(deathSound, 1.0f);
+    }
+    if (eatFruitSound.frameCount == 0) {
+        eatFruitSound = LoadSound("./assets/pacman_eatfruit.wav");
+        SetSoundVolume(eatFruitSound, 1.0f);
+    }
+    if (eatGhostSound.frameCount == 0) {
+        eatGhostSound = LoadSound("./assets/pacman_eatghost.wav");
+        SetSoundVolume(eatGhostSound, 1.0f);
+    }
+    // ─────────────────────────────────────────────────────────────────────────
 
     // ─── Fenstersymbol setzen ───────────────────────────────────────────────
     // Icon-Datei liegt im Root/assets/icon.png
@@ -65,6 +105,11 @@ void Game::handleInput() {
                     blueGhost   = new BlueGhost(map, 11, 9, ghostSpeed);
                     ghostEatenCount = 0; // Reset ghost eaten counter
                     state = GameState::PLAYING;
+                    
+                    // Test-Sound beim Spielstart
+                    if (eatFruitSound.frameCount > 0) {
+                        PlaySound(eatFruitSound);
+                    }
                     break;
                 case 1: state = GameState::HOWTO; break;
                 case 2: state = GameState::LEADERBOARD; break;
@@ -125,8 +170,7 @@ void Game::update() {
     if (state == GameState::PLAYING) {
         float deltaTime = GetFrameTime();
         map.update(deltaTime);
-          pacman.update(map, deltaTime);
-          // Check if pacman just ate a power-up (not fruit!)
+          pacman.update(map, deltaTime);        // Check if pacman just ate a power-up (not fruit!)
         if (pacman.justAtePowerUp()) {
             // Set all ghosts to frightened mode for 10 seconds
             redGhost->setFrightened(true);
@@ -134,6 +178,19 @@ void Game::update() {
             greenGhost->setFrightened(true);
             blueGhost->setFrightened(true);
             ghostEatenCount = 0; // Reset ghost eaten counter for new frightened phase
+            
+            // Play eat fruit sound for power-up
+            if (eatFruitSound.frameCount > 0) {
+                PlaySound(eatFruitSound);
+            }
+        }
+        
+        // Check if pacman just ate a fruit
+        if (pacman.justAteFruit()) {
+            // Play eat fruit sound
+            if (eatFruitSound.frameCount > 0) {
+                PlaySound(eatFruitSound);
+            }
         }
         
         redGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
@@ -158,8 +215,7 @@ void Game::ghostCollision() {
         Ghostbase* ghost = ghosts[i];
         
         // Check if pacman and ghost are on the same position
-        if (ghost->getX() == px && ghost->getY() == py) {
-              if (ghost->canBeEaten()) {
+        if (ghost->getX() == px && ghost->getY() == py) {            if (ghost->canBeEaten()) {
                 // Ghost is frightened and can be eaten
                 ghost->getEaten();
                 
@@ -167,8 +223,16 @@ void Game::ghostCollision() {
                 int points = 200 * (1 << ghostEatenCount); // 200, 400, 800, 1600
                 ghostEatenCount = (ghostEatenCount + 1) % 4; // Reset after 4 ghosts
                 pacman.addScore(points);
-                  } else if (!ghost->isFrightened()) {
+                  // Play eat ghost sound
+                if (eatGhostSound.frameCount > 0) {
+                    PlaySound(eatGhostSound);
+                }
+                
+            } else if (!ghost->isFrightened()) {
                 // Ghost is not frightened - game over
+                if (deathSound.frameCount > 0) {
+                    PlaySound(deathSound);
+                }
                 state = GameState::GAMEOVER;
                 return;
             }
