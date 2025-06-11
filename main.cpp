@@ -1,13 +1,10 @@
 
 #include <raylib.h>
 #include "Game.h"
-
-const int tileSize = 32;
-const int mapWidth = 21;
-const int mapHeight = 21;
+#include "constants.h"
 
 int main() {
-    Game game(mapWidth, mapHeight, tileSize);
+    Game game(MAP_WIDTH, MAP_HEIGHT, TILE_SIZE);
     game.run();
     return 0;
 }
