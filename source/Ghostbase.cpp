@@ -145,7 +145,7 @@ void Ghostbase::setFrightened(bool on) {
         moveInterval = 1.0f / (speed * 0.5f); // Langsamere Bewegung im Frightened-Modus
     } else if (!on && state == GhostState::FRIGHTENED) {
         changeState(GhostState::CHASE);
-        stateTimer = 20.0f; // Nach Frightened wieder zum Chase-Modus
+        stateTimer = 10.0f; // Nach Frightened wieder zum Chase-Modus
         moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
     }
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include "constants.h"
 #include "Map.h"
 #include "Menu.h"
 #include "PacMan.h"
@@ -14,7 +15,8 @@ enum class GameState {
     MENU, 
     HOWTO, 
     PLAYING, 
-    GAMEOVER, 
+    GAMEOVERL,
+    GAMEOVERW, 
     ENTERNAME, 
     LEADERBOARD 
 };
@@ -53,6 +55,7 @@ private:
     Sound deathSound;
     Sound eatFruitSound;
     Sound eatGhostSound;    // Private methods
+
     void handleInput();
     void handleMenuInput();
     void handlePlayingInput();
@@ -67,7 +70,9 @@ private:
     void drawHowTo();
     void drawPlaying();
     void drawEnterName();
-    void drawGameOver(float dt);    void drawLeaderboard();
+    void drawGameOverL(float dt); 
+    void drawGameOverW(float dt);   
+    void drawLeaderboard();
     void ghostCollision(); // Collision detection between Pac-Man and ghosts
     void handleGhostEaten(Ghostbase* ghost);
     void handlePacmanDeath();

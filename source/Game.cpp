@@ -2,6 +2,7 @@
 #include "Game.h"
 #include <raylib.h>
 #include <algorithm>
+#include "constants.h"
 
 Game::Game(int width, int height, int tileSize)
     : mapWidth(width)
@@ -9,15 +10,15 @@ Game::Game(int width, int height, int tileSize)
     , tileSize(tileSize)
     , menu({"Start Game", "How to Play", "Leaderboard", "Exit"})
     , map(width, height, tileSize)
-    , pacman(10, 15, 8.0f) // Default PacMan speed
-    , redGhost(new RedGhost(map, 10, 7, 4.0f))
-    , pinkGhost(new PinkGhost(map, 10, 9, 4.0f))
-    , greenGhost(new GreenGhost(map, 9, 9, 4.0f))
-    , blueGhost(new BlueGhost(map, 11, 9, 4.0f))
+    , pacman(10, 15, PACMAN_SPEED) // Using constant from constants.h
+    , redGhost(new RedGhost(map, 10, 7, GHOST_SPEED))
+    , pinkGhost(new PinkGhost(map, 10, 9, GHOST_SPEED))
+    , greenGhost(new GreenGhost(map, 9, 9, GHOST_SPEED))
+    , blueGhost(new BlueGhost(map, 11, 9, GHOST_SPEED))
     , leaderboard()
     , state(GameState::MENU)
-    , pacmanSpeed(8.0f) // Default PacMan speed
-    , ghostSpeed(4.0f)  // Default Ghost speed
+    , pacmanSpeed(PACMAN_SPEED) // Using constant from constants.h
+    , ghostSpeed(GHOST_SPEED)  // Using constant from constants.h
     , ghostEatenCount(0)
 {
     // Audio wird später in run() initialisiert
@@ -76,19 +77,6 @@ void Game::initializeAudio() {
     SetSoundVolume(eatFruitSound, 1.0f);
     SetSoundVolume(eatGhostSound, 1.0f);
     
-    // Fallback für fehlende Dateien
-    if (deathSound.frameCount == 0) {
-        deathSound = LoadSound("./assets/pacman_death.wav");
-        SetSoundVolume(deathSound, 1.0f);
-    }
-    if (eatFruitSound.frameCount == 0) {
-        eatFruitSound = LoadSound("./assets/pacman_eatfruit.wav");
-        SetSoundVolume(eatFruitSound, 1.0f);
-    }
-    if (eatGhostSound.frameCount == 0) {
-        eatGhostSound = LoadSound("./assets/pacman_eatghost.wav");
-        SetSoundVolume(eatGhostSound, 1.0f);
-    }
 }
 
 void Game::setWindowIcon() {
@@ -105,7 +93,10 @@ void Game::handleInput() {
         case GameState::PLAYING:
             handlePlayingInput();
             break;
-        case GameState::GAMEOVER:
+        case GameState::GAMEOVERL:
+            handleGameOverInput();
+            break;
+        case GameState::GAMEOVERW:
             handleGameOverInput();
             break;
         case GameState::ENTERNAME:
@@ -164,6 +155,7 @@ void Game::handleGameOverInput() {
         playerName.clear();
     }
 }
+
 
 void Game::handleEnterNameInput() {
     // Buchstaben einsammeln
@@ -230,7 +222,7 @@ void Game::update() {
         
         // Check game end conditions
         if (map.allCoinsCollected()) {
-            state = GameState::GAMEOVER;
+            state = GameState::GAMEOVERW;
         }
         
         ghostCollision();
@@ -277,13 +269,13 @@ void Game::ghostCollision() {
     int pacmanX = pacman.getX();
     int pacmanY = pacman.getY();
     
-    // Array of ghost pointers for easier iteration
+    // Array von Geister Pointern
     Ghostbase* ghosts[] = {redGhost, pinkGhost, greenGhost, blueGhost};
     
     for (int i = 0; i < 4; i++) {
         Ghostbase* ghost = ghosts[i];
         
-        // Check if pacman and ghost are on the same position
+        // Ist pacman == ghost?
         if (ghost->getX() == pacmanX && ghost->getY() == pacmanY) {
             if (ghost->canBeEaten()) {
                 handleGhostEaten(ghost);
@@ -315,7 +307,7 @@ void Game::handlePacmanDeath() {
     if (deathSound.frameCount > 0) {
         PlaySound(deathSound);
     }
-    state = GameState::GAMEOVER;
+    state = GameState::GAMEOVERL;
 }
 
 void Game::draw(float dt) {
@@ -335,8 +327,11 @@ void Game::draw(float dt) {
         case GameState::ENTERNAME:
             drawEnterName();
             break;
-        case GameState::GAMEOVER:
-            drawGameOver(dt);
+        case GameState::GAMEOVERL:
+            drawGameOverL(dt);
+            break;
+        case GameState::GAMEOVERW:
+            drawGameOverW(dt);
             break;
         case GameState::LEADERBOARD:
             drawLeaderboard();
@@ -381,7 +376,7 @@ void Game::drawEnterName() {
     }
 }
 
-void Game::drawGameOver(float dt) {
+void Game::drawGameOverL(float dt) {
     static float fadeTimer = 0.0f;
     fadeTimer += dt;
     int w = GetScreenWidth();
@@ -405,10 +400,64 @@ void Game::drawGameOver(float dt) {
     DrawRectangle((int)inset, h - (int)inset, w - 2 * (int)inset, (int)inset, BLACK);
     
     if (inset >= maxInset) {
-        const char* msg = "GAME OVER";
-        int fontSize = 48;
-        int tw = MeasureText(msg, fontSize);
-        DrawText(msg, w / 2 - tw / 2, h / 2 - fontSize / 2, fontSize, RED);
+        const char* msg1 = "GAME OVER";
+        int fontSize1 = 54;
+        int tw1 = MeasureText(msg1, fontSize1);
+    
+        // Position of main message
+        int y1 = h / 2 - fontSize1 / 2;
+        DrawText(msg1, w / 2 - tw1 / 2, y1, fontSize1, RED);
+
+        const char* msg2 = "ENTER to continue";
+        int fontSize2 = 20;
+        int tw2 = MeasureText(msg2, fontSize2);
+    
+        // Position second message below the first with some spacing
+        int y2 = y1 + fontSize1 + 10; // 10 pixels of space between the texts
+        DrawText(msg2, w / 2 - tw2 / 2, y2, fontSize2, RED);
+    }
+}
+
+void Game::drawGameOverW(float dt) {
+    static float fadeTimer = 0.0f;
+    fadeTimer += dt;
+    int w = GetScreenWidth();
+    int h = GetScreenHeight();
+    float maxInset = std::min(w, h) * 0.5f;
+    float speed = 300.0f;
+    float inset = std::min(maxInset, fadeTimer * speed);
+    
+    // Draw game state behind fade effect
+    map.draw();
+    pacman.draw(tileSize);
+    redGhost->draw(tileSize);
+    pinkGhost->draw(tileSize);
+    greenGhost->draw(tileSize);
+    blueGhost->draw(tileSize);
+    
+    // Draw fade effect
+    DrawRectangle(0, 0, (int)inset, h, BLACK);
+    DrawRectangle(w - (int)inset, 0, (int)inset, h, BLACK);
+    DrawRectangle((int)inset, 0, w - 2 * (int)inset, (int)inset, BLACK);
+    DrawRectangle((int)inset, h - (int)inset, w - 2 * (int)inset, (int)inset, BLACK);
+    
+    if (inset >= maxInset) {
+        const char* msg1 = "YOU WIN!";
+        int fontSize1 = 54;
+        int tw1 = MeasureText(msg1, fontSize1);
+    
+        // Position of main message
+        int y1 = h / 2 - fontSize1 / 2;
+        DrawText(msg1, w / 2 - tw1 / 2, y1, fontSize1, GOLD);
+
+        const char* msg2 = "ENTER to continue";
+        int fontSize2 = 20;
+        int tw2 = MeasureText(msg2, fontSize2);
+    
+        // Position second message below the first with some spacing
+        int y2 = y1 + fontSize1 + 10; // 10 pixels of space between the texts
+        DrawText(msg2, w / 2 - tw2 / 2, y2, fontSize2, GOLD);
+
     }
 }
 

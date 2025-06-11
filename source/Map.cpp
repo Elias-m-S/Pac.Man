@@ -36,12 +36,19 @@ Map::Map(int width, int height, int tileSize)
 }
 
 void Map::loadLayout() {
+    // Clear any previous positions
+    validFruitPositions.clear();
+    
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             char ch = level[y][x];
             switch (ch) {
                 case '#': grid[y][x] = WALL;    break;
-                case '.': grid[y][x] = COIN;    break;
+                case '.': 
+                    grid[y][x] = COIN;    
+                    // Save this position as a valid fruit spawn location
+                    validFruitPositions.emplace_back(x, y);
+                    break;
                 case 'o': grid[y][x] = POWERUP; break;
                 // tunnels, ghosts, pacman, numbers -> empty
                 default:  grid[y][x] = EMPTY;   break;
@@ -64,16 +71,15 @@ void Map::update(float deltaTime) {
 }
 
 void Map::spawnFruit() {
-    std::vector<std::pair<int,int>> coins;
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-            if (grid[y][x] == COIN) coins.emplace_back(x,y);
-        }
-    }
-    if (coins.empty()) return;
-    std::uniform_int_distribution<size_t> dist(0, coins.size()-1);
-    auto [fx, fy] = coins[dist(rng)];
-    grid[fy][fx] = FRUIT;
+    // No complex checks needed - just use our pre-calculated positions
+    if (validFruitPositions.empty()) return;
+    
+    // Pick a random valid position
+    std::uniform_int_distribution<size_t> dist(0, validFruitPositions.size()-1);
+    auto [x, y] = validFruitPositions[dist(rng)];
+    
+    // Place the fruit (regardless of what's currently there)
+    grid[y][x] = FRUIT;
 }
 
 void Map::draw() const {
@@ -110,6 +116,7 @@ void Map::draw() const {
     }
 }
 
+
 bool Map::isWalkable(int x, int y) const {
     // tunnel wrap
     if (y >= 0 && y < height) {
@@ -141,7 +148,7 @@ int Map::collectItem(int x, int y) {
 bool Map::allCoinsCollected() const {
     for (const auto& row : grid) {
         for (auto t : row) {
-            if (t == COIN) return false;
+            if (t == COIN ) return false;
         }
     }
     return true;

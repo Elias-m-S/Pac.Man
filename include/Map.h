@@ -38,6 +38,7 @@ private:
     int height;
     int tileSize;
     std::vector<std::vector<TileType>> grid;
+    std::vector<std::pair<int,int>> validFruitPositions;
 
     // Timing for fruit spawn
     float fruitTimer;
