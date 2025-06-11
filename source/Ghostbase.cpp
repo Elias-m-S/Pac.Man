@@ -4,16 +4,19 @@
 #include <algorithm> //für algorythmen
 #include <random> //für zufällige Komponenten
 #include <cfloat> //für FLT_MAX, um unendlich roße werte zu haben
+#include <cstdlib> //für rand()
 
 Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
     : Entity(startX, startY, speed),
       frightenedColor(BLUE),
+      eatenColor(DARKGRAY),
       radius(14), // Feste Radius für Geister
       state(GhostState::IN_BASE),
       stateTimer(2.0f), // 2 Sekunden warten bevor sie die Basis verlassen
       moveTimer(0.0f),
       moveInterval(1.0f / speed), // Bewegungsintervall: 1/speed Sekunden pro Tile
       mapRef(map),
+      spawnX(startX), spawnY(startY), // Spawn-Position merken
       rng(std::random_device{}())
 {
 
@@ -26,13 +29,16 @@ Ghostbase::~Ghostbase() {
 void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map) {
 
     stateTimer -= deltaTime;
-    moveTimer -= deltaTime;
-
-    // Automatischer State-Wechsel
+    moveTimer -= deltaTime;    // Automatischer State-Wechsel
     if (stateTimer <= 0.0f) {
         if (state == GhostState::IN_BASE) {
             changeState(GhostState::SCATTER);
             stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
+        } else if (state == GhostState::FRIGHTENED) {
+            // Frightened-Modus beendet, zurück zu Chase
+            changeState(GhostState::CHASE);
+            stateTimer = 20.0f; // 20 Sekunden im Chase-Modus
+            moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
         } else if (state == GhostState::SCATTER && state != GhostState::FRIGHTENED) {
             changeState(GhostState::CHASE);
             stateTimer = 20.0f; // 20 Sekunden im Chase-Modus
@@ -45,11 +51,18 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
     // Nur bewegen wenn Move-Timer abgelaufen ist (diskrete Tile-Bewegung)
     if (moveTimer <= 0.0f) {
         moveTimer = moveInterval; // Timer zurücksetzen
-        
-        Vector2 target;
+          Vector2 target;
         if (state == GhostState::IN_BASE) {
             // Ziel: Basis verlassen (gehe nach oben zur Tür bei Position 10,7)
             target = Vector2{10, 7};
+        } else if (state == GhostState::EATEN) {
+            // Ziel: Zurück zur Spawn-Position (Basis)
+            target = Vector2{(float)spawnX, (float)spawnY};
+            // Prüfen ob Spawn erreicht wurde
+            if (x == spawnX && y == spawnY) {
+                changeState(GhostState::SCATTER);
+                stateTimer = 7.0f; // Nach Respawn wieder 7 Sekunden Scatter
+            }
         } else if (state == GhostState::FRIGHTENED) {
             target = randomTile();
         } else if (state == GhostState::SCATTER) {
@@ -78,9 +91,14 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
 
 // Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen
 void Ghostbase::draw(int tileSize) const {
-    Color drawColor = (state == GhostState::FRIGHTENED)
-                      ? frightenedColor
-                      : normalColor;
+    Color drawColor;
+    if (state == GhostState::FRIGHTENED) {
+        drawColor = frightenedColor;
+    } else if (state == GhostState::EATEN) {
+        drawColor = eatenColor;
+    } else {
+        drawColor = normalColor;
+    }
 
     //Die Mitte der tiles festlegen als "Anker"
     int centerX = x * tileSize + tileSize/2;
@@ -88,50 +106,72 @@ void Ghostbase::draw(int tileSize) const {
     //Basierend auf TileSize den Radius der geister bestimmen
     int ghostRadius = tileSize/2 - 2;
     
-    // Kreis(Kopfrundung)der Geister
-    DrawCircle(centerX, centerY - ghostRadius/4, ghostRadius, drawColor);
-    
-    // rechteckiger Körper (aka das Betttuch was runterhängt)
-    DrawRectangle(centerX - ghostRadius, centerY - ghostRadius/4, 
-                  ghostRadius * 2, ghostRadius + ghostRadius/2, drawColor);
-    
-    
-    // Augen Zeichnen, aber anhängig von den zuständen
-    if (state != GhostState::FRIGHTENED) {
-        int eyeSize = ghostRadius / 4;
-        int eyeOffsetX = ghostRadius / 3;
-        int eyeOffsetY = ghostRadius / 3;
+    // Körper nur zeichnen wenn NICHT im Frightened oder Eaten Modus
+    if (state != GhostState::FRIGHTENED && state != GhostState::EATEN) {
+        // Kreis(Kopfrundung)der Geister
+        DrawCircle(centerX, centerY - ghostRadius/4, ghostRadius, drawColor);
         
-        // Linkes Auge
+        // rechteckiger Körper (aka das Betttuch was runterhängt)
+        DrawRectangle(centerX - ghostRadius, centerY - ghostRadius/4, 
+                      ghostRadius * 2, ghostRadius + ghostRadius/2, drawColor);
+    }
+    
+    // Augen Zeichnen, abhängig von den Zuständen
+    int eyeSize = ghostRadius / 4;
+    int eyeOffsetX = ghostRadius / 3;
+    int eyeOffsetY = ghostRadius / 3;
+    
+    if (state == GhostState::EATEN || state == GhostState::FRIGHTENED) {
+        // Nur Augen für gefressene Geister oder frightened Geister (größer und auffälliger)
+        eyeSize = ghostRadius / 2;
+        DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
+        DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
+        DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize/2, BLACK);
+        DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize/2, BLACK);
+    } else {
+        // Normale Augen für normale Geister
         DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
         DrawCircle(centerX - eyeOffsetX + eyeSize/3, centerY - eyeOffsetY, eyeSize/2, BLACK);
         
-        // Rechtes Auge
         DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
         DrawCircle(centerX + eyeOffsetX + eyeSize/3, centerY - eyeOffsetY, eyeSize/2, BLACK);
-    } else {
-        // Wenn Geister verängstigt: Zeichne X-Augen oder andere verängstigt aussehende Augen
-        int eyeSize = ghostRadius / 4;
-        int eyeOffsetX = ghostRadius / 3;
-        int eyeOffsetY = ghostRadius / 3;
-        
-        DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
-        DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
-        
-        // Zeichne "ängstliche" Punkte in den Augen
-        DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize/3, BLACK);
-        DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize/3, BLACK);
     }
 };
 
 void Ghostbase::setFrightened(bool on) {
-    if (on) {
+    if (on && state != GhostState::EATEN) { // Nur setzen wenn nicht bereits tot
         changeState(GhostState::FRIGHTENED);
         stateTimer = 10.0f; // 10 Sekunden verängstigt
-    } else {
+        moveInterval = 1.0f / (speed * 0.5f); // Langsamere Bewegung im Frightened-Modus
+    } else if (!on && state == GhostState::FRIGHTENED) {
         changeState(GhostState::CHASE);
         stateTimer = 20.0f; // Nach Frightened wieder zum Chase-Modus
+        moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
     }
+}
+
+void Ghostbase::getEaten() {
+    if (state == GhostState::FRIGHTENED) {
+        // Geist wird sofort zur Spawn-Position teleportiert
+        x = spawnX;
+        y = spawnY;
+        // Direkt zu Scatter-Modus wechseln (nicht EATEN)
+        changeState(GhostState::SCATTER);
+        stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
+        moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
+    }
+}
+
+bool Ghostbase::canBeEaten() const {
+    return state == GhostState::FRIGHTENED;
+}
+
+bool Ghostbase::isEaten() const {
+    return state == GhostState::EATEN;
+}
+
+bool Ghostbase::isFrightened() const {
+    return state == GhostState::FRIGHTENED;
 }
 
 void Ghostbase::reset() {
@@ -191,7 +231,35 @@ Vector2 Ghostbase::chooseDirectionTowards(const Vector2& target) const {
 
 // Private-Helfer
 Vector2 Ghostbase::randomTile() const {
-    // Wähle zufällige begehbare Kachel auf mapRef (für z.B. Scatter-Zustand in Frightend)"noch zu erledigen"
-    return Vector2{ (float)x, (float)y };//umwandlung zu float für Vector
+    // Improved random movement for frightened mode
+    // Try to move away from current position in a random direction
+    static const Vector2 directions[4] = {
+        {  1,  0 },  // right
+        { -1,  0 },  // left
+        {  0,  1 },  // down
+        {  0, -1 }   // up
+    };
+    
+    std::vector<Vector2> validMoves;
+    
+    // Find all valid directions
+    for (int i = 0; i < 4; i++) {
+        int testX = x + (int)directions[i].x;
+        int testY = y + (int)directions[i].y;
+        
+        if (mapRef.isWalkable(testX, testY)) {
+            validMoves.push_back(directions[i]);
+        }
+    }
+    
+    if (validMoves.empty()) {
+        return Vector2{ (float)x, (float)y }; // Stay in place if no valid moves
+    }
+    
+    // Choose random valid direction
+    int randomIndex = rand() % validMoves.size();
+    Vector2 chosenDir = validMoves[randomIndex];
+    
+    return Vector2{ (float)(x + (int)chosenDir.x), (float)(y + (int)chosenDir.y) };
 }
 

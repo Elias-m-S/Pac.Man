@@ -24,8 +24,12 @@ public:
     int collectItem(int x, int y);
 
     // Check if all coins have been collected
-    bool allCoinsCollected() const;
-
+    bool allCoinsCollected() const;    // Check if a tile contains a fruit
+    bool hasFruit(int x, int y) const;
+    
+    // Check if a tile contains a power-up
+    bool hasPowerUp(int x, int y) const;
+    
     int getWidth() const;
     int getHeight() const;
 

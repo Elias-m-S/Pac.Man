@@ -51,12 +51,28 @@ void Leaderboard::draw(int x, int yStart) const {
     ClearBackground(BLACK);
     DrawText("Leaderboard", x, yStart - 40, 40, WHITE);
     int y = yStart;
-    for (size_t i = 0; i < entries.size(); ++i) {
+    
+    // Nur Top 10 anzeigen
+    size_t maxEntries = std::min(entries.size(), (size_t)10);
+    
+    for (size_t i = 0; i < maxEntries; ++i) {
         const auto& e = entries[i];
-        // 1. Name 1234
+        
+        // Farbe basierend auf Platzierung
+        Color color;
+        if (i == 0) {
+            color = GOLD;           // 1. Platz: Gold
+        } else if (i == 1) {
+            color = Color{192, 192, 192, 255};  // 2. Platz: Silber
+        } else if (i == 2) {
+            color = Color{205, 127, 50, 255};   // 3. Platz: Bronze/Kupfer
+        } else {
+            color = GRAY;           // Rest: Grau
+        }
+        
         DrawText(
             TextFormat("%zu. %s %d", i + 1, e.first.c_str(), e.second),
-            x, y, 20, GOLD
+            x, y, 20, color
         );
         y += 30;
     }

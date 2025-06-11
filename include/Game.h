@@ -27,15 +27,14 @@ private:
     RedGhost* redGhost;
     PinkGhost* pinkGhost;
     GreenGhost* greenGhost;
-    BlueGhost* blueGhost;
-
-    Leaderboard leaderboard;
+    BlueGhost* blueGhost;    Leaderboard leaderboard;
     GameState state;
     float deltaTime;
     std::string playerName;
     const int maxNameLength = 10;
     float pacmanSpeed;
     float ghostSpeed;
+    int ghostEatenCount; // Track ghosts eaten in current frightened phase
 
     void handleInput();
     void update();

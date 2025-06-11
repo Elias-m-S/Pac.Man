@@ -16,7 +16,8 @@ Game::Game(int width, int height, int tileSize)
       blueGhost(new BlueGhost(map, 11, 9, ghostSpeed)),
       leaderboard(),
       state(GameState::MENU),
-      menu({"Start Game", "How to Play", "Leaderboard", "Exit"})
+      menu({"Start Game", "How to Play", "Leaderboard", "Exit"}),
+      ghostEatenCount(0)
 {}
 
 Game::~Game() {
@@ -51,8 +52,7 @@ void Game::handleInput() {
     if (state == GameState::MENU) {
         menu.update();
         if (menu.isSelected()) {
-            switch (menu.getSelectedIndex()) {
-                case 0:
+            switch (menu.getSelectedIndex()) {                case 0:
                     map         = Map(mapWidth, mapHeight, tileSize);
                     pacman      = PacMan(10, 15, pacmanSpeed);
                     delete redGhost;
@@ -63,6 +63,7 @@ void Game::handleInput() {
                     pinkGhost   = new PinkGhost(map, 10, 9, ghostSpeed);
                     greenGhost  = new GreenGhost(map, 9, 9, ghostSpeed);
                     blueGhost   = new BlueGhost(map, 11, 9, ghostSpeed);
+                    ghostEatenCount = 0; // Reset ghost eaten counter
                     state = GameState::PLAYING;
                     break;
                 case 1: state = GameState::HOWTO; break;
@@ -124,11 +125,22 @@ void Game::update() {
     if (state == GameState::PLAYING) {
         float deltaTime = GetFrameTime();
         map.update(deltaTime);
-        pacman.update(map, deltaTime);
+          pacman.update(map, deltaTime);
+          // Check if pacman just ate a power-up (not fruit!)
+        if (pacman.justAtePowerUp()) {
+            // Set all ghosts to frightened mode for 10 seconds
+            redGhost->setFrightened(true);
+            pinkGhost->setFrightened(true);
+            greenGhost->setFrightened(true);
+            blueGhost->setFrightened(true);
+            ghostEatenCount = 0; // Reset ghost eaten counter for new frightened phase
+        }
+        
         redGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
         pinkGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
         greenGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
         blueGhost->update(deltaTime, {(float)pacman.getX(), (float)pacman.getY()}, map);
+        
         if (map.allCoinsCollected()) state = GameState::GAMEOVER;
         ghostCollision();
     }
@@ -138,11 +150,29 @@ void Game::ghostCollision() {
     if (state != GameState::PLAYING) return;
     int px = pacman.getX();
     int py = pacman.getY();
-    if ((redGhost->getX() == px && redGhost->getY() == py && !redGhost->isFrightened() ) ||
-        (pinkGhost->getX() == px && pinkGhost->getY() == py && !pinkGhost->isFrightened()) ||
-        (greenGhost->getX() == px && greenGhost->getY() == py && !greenGhost->isFrightened()) ||
-        (blueGhost->getX() == px && blueGhost->getY() == py && !blueGhost->isFrightened())) {
-        state = GameState::GAMEOVER;
+    
+    // Array of ghost pointers for easier iteration
+    Ghostbase* ghosts[] = {redGhost, pinkGhost, greenGhost, blueGhost};
+    
+    for (int i = 0; i < 4; i++) {
+        Ghostbase* ghost = ghosts[i];
+        
+        // Check if pacman and ghost are on the same position
+        if (ghost->getX() == px && ghost->getY() == py) {
+              if (ghost->canBeEaten()) {
+                // Ghost is frightened and can be eaten
+                ghost->getEaten();
+                
+                // Award points for eating ghost (200, 400, 800, 1600 points)
+                int points = 200 * (1 << ghostEatenCount); // 200, 400, 800, 1600
+                ghostEatenCount = (ghostEatenCount + 1) % 4; // Reset after 4 ghosts
+                pacman.addScore(points);
+                  } else if (!ghost->isFrightened()) {
+                // Ghost is not frightened - game over
+                state = GameState::GAMEOVER;
+                return;
+            }
+        }
     }
 }
 
@@ -150,14 +180,16 @@ void Game::draw(float dt) {
     BeginDrawing();
     ClearBackground(BLACK);
     if (state == GameState::MENU) {
-        menu.draw(mapWidth*tileSize, mapHeight*tileSize);
-    }else if (state == GameState::HOWTO) {
+        menu.draw(mapWidth*tileSize, mapHeight*tileSize);    }else if (state == GameState::HOWTO) {
         DrawText("How to Play:", 50, 50, 30, WHITE);
         DrawText("- Use Arrow keys or WASD to move Pac-Man.", 50, 100, 20, WHITE);
         DrawText("- Eat all coins (10 pts).", 50, 130, 20, WHITE);
         DrawText("- Fruits appear randomly (100 pts).", 50, 160, 20, WHITE);
-        DrawText("- Avoid ghosts unless they're frightened.", 50, 190, 20, WHITE);
-        DrawText("Press ENTER to return to Menu", 50, 240, 20, SKYBLUE);
+        DrawText("- Power-ups (yellow) make ghosts frightened!", 50, 190, 20, WHITE);
+        DrawText("- Frightened ghosts show only eyes and can be eaten.", 50, 220, 20, WHITE);
+        DrawText("- Eaten ghosts respawn at center and restart.", 50, 250, 20, WHITE);
+        DrawText("- Avoid normal ghosts or it's game over.", 50, 280, 20, WHITE);
+        DrawText("Press ENTER to return to Menu", 50, 320, 20, SKYBLUE);
     }else if (state == GameState::PLAYING) {
         map.draw();
         pacman.draw(tileSize);

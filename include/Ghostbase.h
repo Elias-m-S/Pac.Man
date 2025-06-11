@@ -25,18 +25,27 @@ class Ghostbase : public Entity{
         //überschreibt draw funktion von Entity | tileSize: größe einer kachel
         void draw(int tileSize) const override;
 
-        
-        //versetzt nach bedingung alle Geister in Angst
+          //versetzt nach bedingung alle Geister in Angst
         void setFrightened(bool on);
+          // Wird gefressen von PacMan (nur im Frightened-Modus möglich)
+        void getEaten();
+        
+        // Prüft ob der Geist von PacMan gefressen werden kann
+        bool canBeEaten() const;
+        
+        // Prüft ob der Geist "tot" ist und zur Basis zurückkehrt
+        bool isEaten() const;
 
         //Lässt geister 
-        void reset();        //Pure virtuelle Funktion, denn, jeder Geist überschreibt mit eigenen werten -> andere Algorythmen. 
+        void reset();
+
+        //Pure virtuelle Funktion, denn, jeder Geist überschreibt mit eigenen werten -> andere Algorythmen. 
         virtual Vector2 getTargetTile(const Vector2& pacmanPos) const = 0;
         
         // Pure virtuelle Funktion für Scatter-Ziel (jeder Geist hat seine eigene Ecke)
         virtual Vector2 getScatterTarget() const = 0;
 
-        bool isFrightened() const { return state == GhostState::FRIGHTENED; }
+        bool isFrightened() const;
 
         void resetPosition(int x, int y) {//einfach hier ganz rein weil eh winzig
             this->x = x;
@@ -52,12 +61,16 @@ class Ghostbase : public Entity{
         //berechnet welch richtung gewählt werden muss um Target zu erreichen
         Vector2 chooseDirectionTowards(const Vector2& target) const;        Color normalColor; // normale Farbe welche jeder geist hat(verschiedene deswegen nicht festgelegt)
         Color frightenedColor = BLUE; // farbe welche die geister haben wenn sie angst haben
+        Color eatenColor = DARKGRAY; // farbe für gefressene Geister (nur Augen sichtbar)
         float radius; //radius der Geister, bestimmt die form der geister mit
         GhostState state; //Tatsächlicher Zustand des Geistes: SCATTER, CHASE, FRIGHTENED, EATEN
         float stateTimer; //timer um ablauf der Zustände zu verwalten
         float moveTimer; // Timer für diskrete Tile-basierte Bewegung 
         float moveInterval; // Bewegungsintervall basierend auf Geschwindigkeit
         const Map& mapRef; //referenz auf die Map, um Kollisionen zu prüfen
+        
+        // Spawn-Position für EATEN Zustand
+        int spawnX, spawnY;
         
 
     private: //sind nur in Ghostbase sichtbar, wie z.B. Form

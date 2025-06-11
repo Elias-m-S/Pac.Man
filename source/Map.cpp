@@ -131,7 +131,7 @@ int Map::collectItem(int x, int y) {
     int points = 0;
     if (t == COIN) points = 10;
     else if (t == FRUIT) points = 100;
-    // POWERUP points = 0; // handled externally
+    else if (t == POWERUP) points = 50; // Power-up gives points and triggers frightened mode
     if (t == COIN || t == FRUIT || t == POWERUP) {
         t = EMPTY;
     }
@@ -145,6 +145,16 @@ bool Map::allCoinsCollected() const {
         }
     }
     return true;
+}
+
+bool Map::hasFruit(int x, int y) const {
+    if (x < 0 || y < 0 || x >= width || y >= height) return false;
+    return grid[y][x] == FRUIT;
+}
+
+bool Map::hasPowerUp(int x, int y) const {
+    if (x < 0 || y < 0 || x >= width || y >= height) return false;
+    return grid[y][x] == POWERUP;
 }
 
 int Map::getWidth() const { return width; }
