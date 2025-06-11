@@ -9,7 +9,6 @@
 Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
     : Entity(startX, startY, speed),
       frightenedColor(BLUE),
-      eatenColor(DARKGRAY),
       radius(14), // Feste Radius für Geister
       state(GhostState::IN_BASE),
       stateTimer(2.0f), // 2 Sekunden warten bevor sie die Basis verlassen
@@ -46,23 +45,13 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
             changeState(GhostState::SCATTER);
             stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
         }
-    }
-
-    // Nur bewegen wenn Move-Timer abgelaufen ist (diskrete Tile-Bewegung)
+    }    // Nur bewegen wenn Move-Timer abgelaufen ist (diskrete Tile-Bewegung)
     if (moveTimer <= 0.0f) {
         moveTimer = moveInterval; // Timer zurücksetzen
           Vector2 target;
         if (state == GhostState::IN_BASE) {
             // Ziel: Basis verlassen (gehe nach oben zur Tür bei Position 10,7)
             target = Vector2{10, 7};
-        } else if (state == GhostState::EATEN) {
-            // Ziel: Zurück zur Spawn-Position (Basis)
-            target = Vector2{(float)spawnX, (float)spawnY};
-            // Prüfen ob Spawn erreicht wurde
-            if (x == spawnX && y == spawnY) {
-                changeState(GhostState::SCATTER);
-                stateTimer = 7.0f; // Nach Respawn wieder 7 Sekunden Scatter
-            }
         } else if (state == GhostState::FRIGHTENED) {
             target = randomTile();
         } else if (state == GhostState::SCATTER) {
@@ -94,8 +83,6 @@ void Ghostbase::draw(int tileSize) const {
     Color drawColor;
     if (state == GhostState::FRIGHTENED) {
         drawColor = frightenedColor;
-    } else if (state == GhostState::EATEN) {
-        drawColor = eatenColor;
     } else {
         drawColor = normalColor;
     }
@@ -106,23 +93,22 @@ void Ghostbase::draw(int tileSize) const {
     //Basierend auf TileSize den Radius der geister bestimmen
     int ghostRadius = tileSize/2 - 2;
     
-    // Körper nur zeichnen wenn NICHT im Frightened oder Eaten Modus
-    if (state != GhostState::FRIGHTENED && state != GhostState::EATEN) {
+    // Körper nur zeichnen wenn NICHT im Frightened Modus
+    if (state != GhostState::FRIGHTENED) {
         // Kreis(Kopfrundung)der Geister
         DrawCircle(centerX, centerY - ghostRadius/4, ghostRadius, drawColor);
         
         // rechteckiger Körper (aka das Betttuch was runterhängt)
         DrawRectangle(centerX - ghostRadius, centerY - ghostRadius/4, 
                       ghostRadius * 2, ghostRadius + ghostRadius/2, drawColor);
-    }
-    
-    // Augen Zeichnen, abhängig von den Zuständen
+    }    
+    // Augen Zeichnenvorbereiten, damit abhängig von den Zuständen
     int eyeSize = ghostRadius / 4;
     int eyeOffsetX = ghostRadius / 3;
     int eyeOffsetY = ghostRadius / 3;
     
-    if (state == GhostState::EATEN || state == GhostState::FRIGHTENED) {
-        // Nur Augen für gefressene Geister oder frightened Geister (größer und auffälliger)
+    if (state == GhostState::FRIGHTENED) {
+        // Nur Augen für frightened Geister (größer und auffälliger)
         eyeSize = ghostRadius / 2;
         DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
         DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
@@ -139,7 +125,7 @@ void Ghostbase::draw(int tileSize) const {
 };
 
 void Ghostbase::setFrightened(bool on) {
-    if (on && state != GhostState::EATEN) { // Nur setzen wenn nicht bereits tot
+    if (on) { // Vereinfacht: kein EATEN check mehr nötig
         changeState(GhostState::FRIGHTENED);
         stateTimer = 10.0f; // 10 Sekunden verängstigt
         moveInterval = 1.0f / (speed * 0.5f); // Langsamere Bewegung im Frightened-Modus
@@ -164,10 +150,6 @@ void Ghostbase::getEaten() {
 
 bool Ghostbase::canBeEaten() const {
     return state == GhostState::FRIGHTENED;
-}
-
-bool Ghostbase::isEaten() const {
-    return state == GhostState::EATEN;
 }
 
 bool Ghostbase::isFrightened() const {

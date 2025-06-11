@@ -1,0 +1,55 @@
+@startuml Ghost_State_Machine
+
+!theme aws-orange
+skinparam backgroundColor #1E1E1E
+skinparam stateBackgroundColor #2D2D30
+skinparam stateBorderColor #007ACC
+skinparam stateArrowColor #FFCC00
+
+title Ghost AI - State Machine Diagram
+
+[*] --> IN_BASE : Ghost spawns
+
+state IN_BASE {
+    IN_BASE : Wait in ghost house
+    IN_BASE : Timer: 2 seconds
+    IN_BASE : No movement
+}
+
+state SCATTER {
+    SCATTER : Move to assigned corner
+    SCATTER : Timer: 7 seconds
+    SCATTER : Target: getScatterTarget()
+}
+
+state CHASE {
+    CHASE : Pursue PacMan
+    CHASE : Timer: 20 seconds
+    CHASE : Target: getTargetTile(pacmanPos)
+}
+
+state FRIGHTENED {
+    FRIGHTENED : Vulnerable state
+    FRIGHTENED : Timer: 10 seconds
+    FRIGHTENED : Movement: Random + Slow
+    FRIGHTENED : Visual: Only eyes visible
+}
+
+IN_BASE --> SCATTER : Timer expires (2s)
+SCATTER --> CHASE : Timer expires (7s)
+CHASE --> SCATTER : Timer expires (20s)
+SCATTER --> CHASE : Timer expires (7s)
+
+SCATTER --> FRIGHTENED : Power-Up eaten
+CHASE --> FRIGHTENED : Power-Up eaten
+
+FRIGHTENED --> SCATTER : Timer expires (10s)
+FRIGHTENED --> SCATTER : Ghost eaten by PacMan\n(Instant teleport)
+
+note right of FRIGHTENED : **Special Behaviors:**\n• Can be eaten by PacMan\n• Awards progressive points\n• Instant respawn when eaten\n• Visual change (eyes only)
+
+note bottom of CHASE : **Target Algorithms:**\n• RedGhost: Direct chase\n• PinkGhost: 4 tiles ahead\n• GreenGhost: Ambush pattern\n• BlueGhost: Complex algorithm
+
+note top of SCATTER : **Corner Targets:**\n• RedGhost: Top-right (18,2)\n• PinkGhost: Top-left (2,2)\n• GreenGhost: Bottom-left (2,18)\n• BlueGhost: Bottom-right (18,18)
+
+@enduml

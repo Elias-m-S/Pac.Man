@@ -1,0 +1,110 @@
+@startuml Pac-Man_Simplified_Architecture
+
+!theme aws-orange
+skinparam backgroundColor #1E1E1E
+skinparam classBackgroundColor #2D2D30
+skinparam classBorderColor #007ACC
+skinparam classHeaderBackgroundColor #007ACC
+skinparam arrowColor #FFCC00
+
+title Pac-Man Game - Simplified Architecture Overview
+
+package "Core Game Engine" {
+    class Game {
+        - state : GameState
+        - entities management
+        + run()
+        + update()
+        + draw()
+        + ghostCollision()
+    }
+    
+    class Map {
+        - grid : TileType[][]
+        + isWalkable()
+        + collectItem()
+        + hasPowerUp()
+    }
+}
+
+package "Game Entities" {
+    abstract Entity {
+        # x, y : int
+        # speed : float
+        + move()
+        + {abstract} draw()
+    }
+    
+    class PacMan {
+        - score : int
+        - powerUpEaten : bool
+        + justAtePowerUp()
+    }
+    
+    abstract Ghostbase {
+        # state : GhostState
+        + setFrightened()
+        + canBeEaten()
+        + {abstract} getTargetTile()
+    }
+    
+    class "Ghost Variants" as Ghosts {
+        RedGhost
+        PinkGhost
+        GreenGhost
+        BlueGhost
+    }
+}
+
+package "User Interface" {
+    class Menu {
+        + update()
+        + draw()
+    }
+    
+    class Leaderboard {
+        + addEntry()
+        + save()
+    }
+}
+
+package "Game States" {
+    enum GameState {
+        MENU
+        PLAYING
+        GAMEOVER
+        ...
+    }
+    
+    enum GhostState {
+        SCATTER
+        CHASE
+        FRIGHTENED
+        ...
+    }
+}
+
+' Relationships
+Game --> Map : manages
+Game --> PacMan : controls
+Game --> Ghostbase : controls
+Game --> Menu : displays
+Game --> Leaderboard : manages
+Game --> GameState : uses
+
+Entity <|-- PacMan
+Entity <|-- Ghostbase
+Ghostbase <|-- Ghosts
+Ghostbase --> GhostState : uses
+Ghostbase --> Map : references
+
+PacMan --> Map : interacts
+Ghostbase --> Map : interacts
+
+note top of Game : **Central Controller**\nManages game loop,\nentity interactions,\nand state transitions
+
+note right of Ghostbase : **AI System**\nImplements ghost behaviors:\n• Scatter mode (corners)\n• Chase mode (pursue PacMan)\n• Frightened mode (vulnerable)\n• Power-up triggered transitions
+
+note bottom of Map : **World System**\nHandles:\n• Collision detection\n• Item collection (coins, power-ups)\n• Level layout\n• Tunnel wrapping
+
+@enduml
