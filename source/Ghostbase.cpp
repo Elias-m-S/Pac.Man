@@ -21,16 +21,12 @@ Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
 
 }
 
-Ghostbase::~Ghostbase() {
-    //Destruktor, nicht umbedingt nötig, aber gut für debugging
-}
 
 void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map) {
-    stateTimer -= deltaTime;
     moveTimer -= deltaTime;
-    
+
     // Simplified state transitions
-    if (stateTimer <= 0.0f) {
+        if (stateTimer <= 0.0f) {
         if (state == GhostState::IN_BASE) {
             // Leave base after initial wait
             changeState(GhostState::SCATTER);
@@ -49,11 +45,11 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
         }
         // No more cycling between chase and scatter
     }
-    
+
     // Rest of update method remains unchanged
     if (moveTimer <= 0.0f) {
-         moveTimer = moveInterval; // Timer zurücksetzen
-          Vector2 target;
+        moveTimer = moveInterval; // Timer zurücksetzen
+        Vector2 target;
         if (state == GhostState::IN_BASE) {
             // Ziel: Basis verlassen (gehe nach oben zur Tür bei Position 10,7)
             target = Vector2{10, 7};
@@ -82,7 +78,6 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
         }
     }
 }
-
 
 // Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen
 void Ghostbase::draw(int tileSize) const {
@@ -131,7 +126,7 @@ void Ghostbase::draw(int tileSize) const {
 };
 
 void Ghostbase::setFrightened(bool on) {
-    if (on) { // Vereinfacht: kein EATEN check mehr nötig
+    if (on) {
         changeState(GhostState::FRIGHTENED);
         stateTimer = 10.0f; // 10 Sekunden verängstigt
         moveInterval = 1.0f / (speed * 0.5f); // Langsamere Bewegung im Frightened-Modus
@@ -147,9 +142,9 @@ void Ghostbase::getEaten() {
         // Geist wird sofort zur Spawn-Position teleportiert
         x = spawnX;
         y = spawnY;
-        // Direkt zu Scatter-Modus wechseln (nicht EATEN)
+        // Direkt zu inbase-Modus wechseln (nicht EATEN)
         changeState(GhostState::IN_BASE);
-        stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
+        stateTimer = 2.0f; // 7 Sekunden im Scatter-Modus
         moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
     }
 }

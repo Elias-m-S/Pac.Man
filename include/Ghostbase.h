@@ -15,7 +15,6 @@ public:    // Zustände welche die Geister annehmen können
     
     // Konstruktor | Map für Kollision und Items | start X&Y für Spawnpoint | speed für Geschwindigkeit
     Ghostbase(const Map& map, int startX, int startY, float speed = 1);
-    virtual ~Ghostbase(); // Destruktor, virtual, damit die abgeleiteten Klassen auch destruktet werden
     
     // Update Funktion, wird von abgeleiteten Klassen überschrieben
     // lastTime: Zeit letztes Update, für z.B. Timer der Zustände

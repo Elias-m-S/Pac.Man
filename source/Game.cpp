@@ -10,15 +10,15 @@ Game::Game(int width, int height, int tileSize)
     , tileSize(tileSize)
     , menu({"Start Game", "How to Play", "Leaderboard", "Exit"})
     , map(width, height, tileSize)
-    , pacman(10, 15, PACMAN_SPEED) // Using constant from constants.h
-    , redGhost(new RedGhost(map, 10, 7, GHOST_SPEED))
-    , pinkGhost(new PinkGhost(map, 10, 9, GHOST_SPEED))
-    , greenGhost(new GreenGhost(map, 9, 9, GHOST_SPEED))
-    , blueGhost(new BlueGhost(map, 11, 9, GHOST_SPEED))
+    , pacman(PACMAN_SPAWN_X, PACMAN_SPAWN_Y, PACMAN_SPEED) // Konstanten aus constants.h
+    , redGhost(new RedGhost(map, RED_GHOST_SPAWN_X, RED_GHOST_SPAWN_Y, GHOST_SPEED))
+    , pinkGhost(new PinkGhost(map, PINK_GHOST_SPAWN_X, PINK_GHOST_SPAWN_Y, GHOST_SPEED))
+    , greenGhost(new GreenGhost(map, GREEN_GHOST_SPAWN_X, GREEN_GHOST_SPAWN_Y, GHOST_SPEED))
+    , blueGhost(new BlueGhost(map, BLUE_GHOST_SPAWN_X, BLUE_GHOST_SPAWN_Y, GHOST_SPEED))
     , leaderboard()
     , state(GameState::MENU)
-    , pacmanSpeed(PACMAN_SPEED) // Using constant from constants.h
-    , ghostSpeed(GHOST_SPEED)  // Using constant from constants.h
+    , pacmanSpeed(PACMAN_SPEED)
+    , ghostSpeed(GHOST_SPEED)
     , ghostEatenCount(0)
 {
     // Audio wird später in run() initialisiert
@@ -116,7 +116,7 @@ void Game::handleMenuInput() {
     if (menu.isSelected()) {
         switch (menu.getSelectedIndex()) {
             case 0: // Start Game
-                resetGame();
+                //wechsel zu Spielen
                 state = GameState::PLAYING;
                 // Test-Sound beim Spielstart
                 if (eatFruitSound.frameCount > 0) {
@@ -151,6 +151,7 @@ void Game::handlePlayingInput() {
 
 void Game::handleGameOverInput() {
     if (IsKeyPressed(KEY_ENTER)) {
+        resetGame();
         state = GameState::ENTERNAME;
         playerName.clear();
     }
@@ -194,15 +195,15 @@ void Game::handleHowToInput() {
 
 void Game::resetGame() {
     map = Map(mapWidth, mapHeight, tileSize);
-    pacman = PacMan(10, 15, pacmanSpeed);
+    pacman = PacMan(PACMAN_SPAWN_X, PACMAN_SPAWN_Y, PACMAN_SPEED);
     delete redGhost;
     delete pinkGhost;
     delete greenGhost;
     delete blueGhost;
-    redGhost = new RedGhost(map, 10, 7, ghostSpeed);
-    pinkGhost = new PinkGhost(map, 10, 9, ghostSpeed);
-    greenGhost = new GreenGhost(map, 9, 9, ghostSpeed);
-    blueGhost = new BlueGhost(map, 11, 9, ghostSpeed);
+    redGhost = new RedGhost(map, RED_GHOST_SPAWN_X, RED_GHOST_SPAWN_Y, ghostSpeed);
+    pinkGhost = new PinkGhost(map, PINK_GHOST_SPAWN_X, PINK_GHOST_SPAWN_Y, ghostSpeed);
+    greenGhost = new GreenGhost(map, GREEN_GHOST_SPAWN_X, GREEN_GHOST_SPAWN_Y, ghostSpeed);
+    blueGhost = new BlueGhost(map, BLUE_GHOST_SPAWN_X, BLUE_GHOST_SPAWN_Y, ghostSpeed);
     ghostEatenCount = 0;
 }
 
