@@ -19,3 +19,5 @@ Rasterpunkt mit Obst betritt und das Obst frisst bekommt der Spieler 100 Punkte.
 selbständig.
 9. Es gibt ein Leaderboard in dem nach jedem Spiel der Spieler mit Punktestand eingetragen wird. Das Leaderboard wird auf der Festplatte gespeichert und beim Start des Spiels sowie nach jedem Spiel angezeigt.
 
+## Umsetzung
+...

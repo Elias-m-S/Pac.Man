@@ -26,28 +26,33 @@ Ghostbase::~Ghostbase() {
 }
 
 void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map) {
-
     stateTimer -= deltaTime;
-    moveTimer -= deltaTime;    // Automatischer State-Wechsel
+    moveTimer -= deltaTime;
+    
+    // Simplified state transitions
     if (stateTimer <= 0.0f) {
         if (state == GhostState::IN_BASE) {
+            // Leave base after initial wait
             changeState(GhostState::SCATTER);
-            stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
-        } else if (state == GhostState::FRIGHTENED) {
-            // Frightened-Modus beendet, zurück zu Chase
+            stateTimer = 7.0f; // 7 seconds in scatter mode
+        } 
+        else if (state == GhostState::SCATTER) {
+            // After scatter, permanently go to chase
             changeState(GhostState::CHASE);
-            stateTimer = 20.0f; // 20 Sekunden im Chase-Modus
-            moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
-        } else if (state == GhostState::SCATTER && state != GhostState::FRIGHTENED) {
-            changeState(GhostState::CHASE);
-            stateTimer = 20.0f; // 20 Sekunden im Chase-Modus
-        } else if (state == GhostState::CHASE && state != GhostState::FRIGHTENED) {
-            changeState(GhostState::SCATTER);
-            stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
+            stateTimer = FLT_MAX; // Stay in chase mode indefinitely
         }
-    }    // Nur bewegen wenn Move-Timer abgelaufen ist (diskrete Tile-Bewegung)
+        else if (state == GhostState::FRIGHTENED) {
+            // After frightened wears off, return to chase
+            changeState(GhostState::CHASE);
+            stateTimer = FLT_MAX; // Stay in chase mode indefinitely
+            moveInterval = 1.0f / speed; // Restore normal speed
+        }
+        // No more cycling between chase and scatter
+    }
+    
+    // Rest of update method remains unchanged
     if (moveTimer <= 0.0f) {
-        moveTimer = moveInterval; // Timer zurücksetzen
+         moveTimer = moveInterval; // Timer zurücksetzen
           Vector2 target;
         if (state == GhostState::IN_BASE) {
             // Ziel: Basis verlassen (gehe nach oben zur Tür bei Position 10,7)
@@ -77,6 +82,7 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
         }
     }
 }
+
 
 // Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen
 void Ghostbase::draw(int tileSize) const {
@@ -142,7 +148,7 @@ void Ghostbase::getEaten() {
         x = spawnX;
         y = spawnY;
         // Direkt zu Scatter-Modus wechseln (nicht EATEN)
-        changeState(GhostState::SCATTER);
+        changeState(GhostState::IN_BASE);
         stateTimer = 7.0f; // 7 Sekunden im Scatter-Modus
         moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
     }
