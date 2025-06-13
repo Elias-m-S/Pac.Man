@@ -151,7 +151,6 @@ void Game::handlePlayingInput() {
 
 void Game::handleGameOverInput() {
     if (IsKeyPressed(KEY_ENTER)) {
-        resetGame();
         state = GameState::ENTERNAME;
         playerName.clear();
     }
@@ -434,7 +433,7 @@ void Game::drawGameOverL(float dt) {
         // Position second message below the first with some spacing
         int y2 = y1 + fontSize1 + 10; // 10 pixels of space between the texts
         DrawText(msg2, w / 2 - tw2 / 2, y2, fontSize2, RED);
-    }
+    }    
 }
 
 void Game::drawGameOverW(float dt) {
