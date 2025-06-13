@@ -6,7 +6,7 @@ constexpr int MAP_HEIGHT = 21;
 
 // Game speed constants
 constexpr float PACMAN_SPEED = 8.0f;
-constexpr float GHOST_SPEED = 6.0f;
+constexpr float GHOST_SPEED = 5.0f;
 
 //Spawnpunkt für Geister nach Tot
 constexpr int GHOST_RESPAWN_X = 10;

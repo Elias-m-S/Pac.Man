@@ -87,7 +87,7 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
         setDirection((int)dir.x, (int)dir.y);
         
         // Debug-Ausgabe für direction
-        std::cout << "Direction fuer " << typeid(*this).name() << ": " << dir.x << ", " << dir.y << std::endl;        // Diskrete Tile-Bewegung: immer genau 1 Tile bewegen
+        //std::cout << "Direction fuer " << typeid(*this).name() << ": " << dir.x << ", " << dir.y << std::endl;        // Diskrete Tile-Bewegung: immer genau 1 Tile bewegen
         int nextX = x + getDirX();
         int nextY = y + getDirY();
         
