@@ -159,11 +159,11 @@ void Ghostbase::draw(int tileSize) const {
 void Ghostbase::setFrightened(bool on) {
     if (on) {
         changeState(GhostState::FRIGHTENED);
-        stateTimer = 10.0f; // 10 Sekunden verängstigt
+        stateTimer = 6.0f; // 6 Sekunden verängstigt
         moveInterval = 1.0f / (speed * 0.5f); // Langsamere Bewegung im Frightened-Modus
     } else if (!on && state == GhostState::FRIGHTENED) {
         changeState(GhostState::CHASE);
-        stateTimer = 10.0f; // Nach Frightened wieder zum Chase-Modus
+        stateTimer = 6.0f; // Nach Frightened wieder zum Chase-Modus
         moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
     }
 }
