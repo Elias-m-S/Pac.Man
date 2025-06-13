@@ -1,10 +1,11 @@
-
 #include "Ghostbase.h"
 #include <iostream>
 #include <algorithm> //für algorythmen
 #include <random> //für zufällige Komponenten
 #include <cfloat> //für FLT_MAX, um unendlich roße werte zu haben
 #include <cstdlib> //für rand()
+
+bool movingAllowed = false;
 
 Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
     : Entity(startX, startY, speed),
@@ -21,17 +22,21 @@ Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
 
 }
 
-
 void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map) {
     moveTimer -= deltaTime;
     stateTimer -= deltaTime;
 
+    // Timer Debugging
+    //std::cout << "State Timer: " << stateTimer << std::endl;
+    //std::cout << "Move Timer: " << moveTimer << std::endl;
+
     // Simplified state transitions
-        if (stateTimer <= 0.0f) {
+    if (stateTimer <= 0.0f) {
         if (state == GhostState::IN_BASE) {
             // Leave base after initial wait
             changeState(GhostState::SCATTER);
-            stateTimer = 7.0f; // 7 seconds in scatter mode
+            movingAllowed = true; // Allow movement after leaving base
+            stateTimer = 20.0f; // 7 seconds in scatter mode
         } 
         else if (state == GhostState::SCATTER) {
             // After scatter, permanently go to chase
@@ -48,27 +53,52 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
     }
 
     // Rest of update method remains unchanged
-    if (moveTimer <= 0.0f) {
+    if (moveTimer <= 0.0f && movingAllowed) {
         moveTimer = moveInterval; // Timer zurücksetzen
         Vector2 target;
         if (state == GhostState::IN_BASE) {
             // Ziel: Basis verlassen (gehe nach oben zur Tür bei Position 10,7)
             target = Vector2{10, 7};
         } else if (state == GhostState::FRIGHTENED) {
-            target = randomTile();
-        } else if (state == GhostState::SCATTER) {
+            target = randomTile();        } else if (state == GhostState::SCATTER) {
             target = getScatterTarget(); // Zur eigenen Ecke gehen
+            
+            // Prüfe ob bereits am Ziel angekommen
+            if (x == (int)target.x && y == (int)target.y) {
+                // Am Scatter-Ziel angekommen - nicht mehr bewegen
+                return; // Überspringt die Bewegungslogik
+            }
+            
+            // Wenn Geist im Tunnel ist, sofort raus in Richtung Mitte
+            if (x <= 0 || x >= mapRef.getWidth() - 1) {
+                if (x <= 0) {
+                    target = Vector2{mapRef.getWidth() / 2.0f, (float)y}; // Nach rechts zur Mitte
+                } else {
+                    target = Vector2{mapRef.getWidth() / 2.0f, (float)y}; // Nach links zur Mitte
+                }
+            }
+
+            // Debug-Ausgabe für Scatter-Ziel
+            //std::cout << "Scatter Target fuer " << typeid(*this).name() << ": " << target.x << ", " << target.y << std::endl;
+
         } else { // CHASE Modus
             target = getTargetTile(pacmanPos); // Pacman verfolgen
-        }
-
-        // Bewegung in Richtung ausgewählten Ziels
+        }        // Bewegung in Richtung ausgewählten Ziels
         Vector2 dir = chooseDirectionTowards(target);
         setDirection((int)dir.x, (int)dir.y);
         
-        // Diskrete Tile-Bewegung: immer genau 1 Tile bewegen
+        // Debug-Ausgabe für direction
+        std::cout << "Direction fuer " << typeid(*this).name() << ": " << dir.x << ", " << dir.y << std::endl;        // Diskrete Tile-Bewegung: immer genau 1 Tile bewegen
         int nextX = x + getDirX();
         int nextY = y + getDirY();
+        
+        // Zusätzliche Tunnel-Prüfung vor der Bewegung (im Scatter-Modus)
+        if (state == GhostState::SCATTER) {
+            if (nextX <= 0 || nextX >= mapRef.getWidth() - 1) {
+                // Tunnel erkannt! Bewegung verhindern
+                return;
+            }
+        }
         
         // Prüfe ob Bewegung möglich ist
         if (mapRef.isWalkable(nextX, nextY)) {
@@ -82,6 +112,7 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
 
 // Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen
 void Ghostbase::draw(int tileSize) const {
+
     Color drawColor;
     if (state == GhostState::FRIGHTENED) {
         drawColor = frightenedColor;
@@ -172,53 +203,81 @@ void Ghostbase::changeState(GhostState newState) {
 }
 
 Vector2 Ghostbase::chooseDirectionTowards(const Vector2& target) const {
-    static const Vector2 options[4] = {
-        {  1,  0 },
-        { -1,  0 },
-        {  0,  1 },
-        {  0, -1 }
+    static const Vector2 directions[4] = {
+        {  1,  0 },  // rechts
+        { -1,  0 },  // links
+        {  0,  1 },  // runter
+        {  0, -1 }   // rauf
+    };    // Aktuelle Richtung (entgegengesetzt = Rückwärts)
+    Vector2 opposite = { (float)(-dirX), (float)(-dirY) };
+    
+    struct Option {
+        Vector2 direction;
+        float distance;
+        int exits;
+        bool isReverse;
     };
-
-    float oppX = -dirX;
-    float oppY = -dirY;
-
-    float bestDist = FLT_MAX;
-    Vector2 bestMove{0, 0};
-
-    for (auto& opt : options) {
-        if ((int)opt.x == oppX && (int)opt.y == oppY) continue;
-
-        int nx = x + (int)opt.x;
-        int ny = y + (int)opt.y;
-
-        if (!mapRef.isWalkable(nx, ny)) continue;
-
-        //Sackgassen vermeiden: Prüfen, wie viele Wege es vom nächsten Feld gibt
+    
+    std::vector<Option> validOptions;
+      // Alle möglichen Richtungen prüfen
+    for (const auto& dir : directions) {
+        int nextX = x + (int)dir.x;
+        int nextY = y + (int)dir.y;        // Nicht begehbar? Überspringen
+        if (!mapRef.isWalkable(nextX, nextY)) continue;
+        
+        // Tunnel vermeiden im Scatter-Modus (linke und rechte Ränder)
+        if (state == GhostState::SCATTER) {
+            if (nextX <= 0 || nextX >= mapRef.getWidth() - 1) {
+                continue; // Tunnel-Position überspringen
+            }
+        }
+        
+        // Ist das Rückwärts?
+        bool isReverse = ((int)dir.x == (int)opposite.x && (int)dir.y == (int)opposite.y);
+        
+        // Distanz zum Ziel berechnen (Manhattan-Distanz)
+        float distance = fabsf(nextX - target.x) + fabsf(nextY - target.y);
+        
+        // Anzahl Ausgänge vom nächsten Feld zählen (Sackgassen-Vermeidung)
         int exits = 0;
-
-        for (auto& nextOpt : options) {
-            int ex = nx + (int)nextOpt.x;
-            int ey = ny + (int)nextOpt.y;
-
-            // nicht Rückrichtung zählen
-            if ((int)nextOpt.x == -opt.x && (int)nextOpt.y == -opt.y) continue;
-            if (mapRef.isWalkable(ex, ey)) exits++;
+        for (const auto& checkDir : directions) {
+            int checkX = nextX + (int)checkDir.x;
+            int checkY = nextY + (int)checkDir.y;
+            if (mapRef.isWalkable(checkX, checkY)) {
+                exits++;
+            }
         }
-
-        if (exits == 0) continue; // Sackgasse → überspringen
-
-        // normale Distanzberechnung
-        float dist = fabsf((nx - target.x)) + fabsf((ny - target.y));
-        if (dist < bestDist) {
-            bestDist = dist;
-            bestMove = opt;
-        }
+        
+        validOptions.push_back({dir, distance, exits, isReverse});
     }
-
-    if (bestDist == FLT_MAX) {
-        return Vector2{ oppX, oppY };
+    
+    // Keine gültigen Optionen? Notfall: Rückwärts gehen
+    if (validOptions.empty()) {
+        return opposite;
     }
-    return bestMove;
+    
+    // Sortierung nach Priorität:
+    // 1. Nicht rückwärts gehen (außer es ist die einzige Option)
+    // 2. Sackgassen vermeiden (exits > 1)
+    // 3. Kürzeste Distanz zum Ziel
+    std::sort(validOptions.begin(), validOptions.end(), 
+        [](const Option& a, const Option& b) {
+            // Rückwärts ist immer schlechter (außer beide sind rückwärts)
+            if (a.isReverse != b.isReverse) {
+                return !a.isReverse;  // a ist besser wenn es nicht rückwärts ist
+            }
+            
+            // Sackgassen vermeiden (mehr Ausgänge = besser)
+            if (a.exits != b.exits) {
+                return a.exits > b.exits;
+            }
+            
+            // Bei gleichen Ausgängen: kürzeste Distanz
+            return a.distance < b.distance;
+        });
+    
+    // Beste Option zurückgeben
+    return validOptions[0].direction;
 }
 
 // Private-Helfer

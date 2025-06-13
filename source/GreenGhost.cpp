@@ -21,5 +21,5 @@ Vector2 GreenGhost::getTargetTile(const Vector2& pacmanPos) const { // einfacher
 
 Vector2 GreenGhost::getScatterTarget() const {
     // GreenGhost (Clyde) geht zur unteren linken Ecke im Scatter-Modus
-    return Vector2{2, 20};
+    return Vector2{2, 19};
 }

@@ -365,6 +365,24 @@ void Game::drawPlaying() {
     pinkGhost->draw(tileSize);
     greenGhost->draw(tileSize);
     blueGhost->draw(tileSize);
+
+    // Debug: Scatter-Ziele der Geister einzeichnen
+    /*
+    int scatterRadius = tileSize / 6;
+    DrawCircle(redGhost->getScatterTarget().x * tileSize + tileSize/2,
+               redGhost->getScatterTarget().y * tileSize + tileSize/2,
+               scatterRadius, RED);
+    DrawCircle(pinkGhost->getScatterTarget().x * tileSize + tileSize/2,
+               pinkGhost->getScatterTarget().y * tileSize + tileSize/2,
+               scatterRadius, PINK);
+    DrawCircle(greenGhost->getScatterTarget().x * tileSize + tileSize/2,
+               greenGhost->getScatterTarget().y * tileSize + tileSize/2,
+               scatterRadius, GREEN);
+    DrawCircle(blueGhost->getScatterTarget().x * tileSize + tileSize/2,
+               blueGhost->getScatterTarget().y * tileSize + tileSize/2,
+               scatterRadius, BLUE);
+    */
+
     DrawText(TextFormat("Score: %i", pacman.getScore()), 10, 10, 20, GOLD);
 }
 

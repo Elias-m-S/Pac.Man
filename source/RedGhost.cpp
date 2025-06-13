@@ -15,5 +15,5 @@ Vector2 RedGhost::getTargetTile(const Vector2& pacmanPos) const {
 
 Vector2 RedGhost::getScatterTarget() const {
     // RedGhost (Blinky) geht zur oberen rechten Ecke im Scatter-Modus
-    return Vector2{18, 2};
+    return Vector2{18, 1};
 }

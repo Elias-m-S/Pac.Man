@@ -55,5 +55,5 @@ Vector2 BlueGhost::getTargetTile(const Vector2& pacmanPos) const {
 
 Vector2 BlueGhost::getScatterTarget() const {
     // BlueGhost (Inky) geht zur unteren rechten Ecke im Scatter-Modus
-    return Vector2{18, 20};
+    return Vector2{18, 19};
 }

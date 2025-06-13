@@ -45,5 +45,5 @@ Vector2 PinkGhost::getTargetTile(const Vector2& pacmanPos) const {
 Vector2 PinkGhost::getScatterTarget() const {
     // PinkGhost (Pinky) geht zur oberen linken Ecke im Scatter-Modus
     //Wenn keine Richtung gefunden wurde, soll der Geist umkehren
-    return Vector2{2, 2};
+    return Vector2{2, 1};
 }
