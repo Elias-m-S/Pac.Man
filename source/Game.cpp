@@ -117,6 +117,7 @@ void Game::handleMenuInput() {
         switch (menu.getSelectedIndex()) {
             case 0: // Start Game
                 //wechsel zu Spielen
+                resetGame();
                 state = GameState::PLAYING;
                 // Test-Sound beim Spielstart
                 if (eatFruitSound.frameCount > 0) {
