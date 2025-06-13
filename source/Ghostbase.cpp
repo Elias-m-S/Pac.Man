@@ -24,6 +24,7 @@ Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
 
 void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map) {
     moveTimer -= deltaTime;
+    stateTimer -= deltaTime;
 
     // Simplified state transitions
         if (stateTimer <= 0.0f) {
@@ -171,42 +172,50 @@ void Ghostbase::changeState(GhostState newState) {
 }
 
 Vector2 Ghostbase::chooseDirectionTowards(const Vector2& target) const {
-    // Richtungen welche möglich sind, static um nicht bei jedem Aufruf neu zu erstellen
     static const Vector2 options[4] = {
-        {  1,  0 },  // rechts
-        { -1,  0 },  // links
-        {  0,  1 },  // runter
-        {  0, -1 }   // rauf
+        {  1,  0 },
+        { -1,  0 },
+        {  0,  1 },
+        {  0, -1 }
     };
 
-    //Zurücklaufen auschließen
-    float oppX = -dirX;//setzt entgegengesetzte Richtung
+    float oppX = -dirX;
     float oppY = -dirY;
 
-    
-    float bestDist = FLT_MAX; //größtmöglicher floatwert, um beste Distanz finden zu können
-    Vector2 bestMove{0,0}; //standardwert, falls keine Richtung gefunden
+    float bestDist = FLT_MAX;
+    Vector2 bestMove{0, 0};
 
     for (auto& opt : options) {
-        // Zurückgehen überspringen
         if ((int)opt.x == oppX && (int)opt.y == oppY) continue;
 
         int nx = x + (int)opt.x;
         int ny = y + (int)opt.y;
-        //checken ob das nächste Feld überhupt begehbar ist
+
         if (!mapRef.isWalkable(nx, ny)) continue;
 
-        // Kürzeste Distanz (Fachbegriff Manhatten- Distanz) berechnen
-        float dist = fabsf((nx - target.x)) + fabsf((ny - target.y));// fabsf aus header, um negative Werte zu vermeiden
+        //Sackgassen vermeiden: Prüfen, wie viele Wege es vom nächsten Feld gibt
+        int exits = 0;
+
+        for (auto& nextOpt : options) {
+            int ex = nx + (int)nextOpt.x;
+            int ey = ny + (int)nextOpt.y;
+
+            // nicht Rückrichtung zählen
+            if ((int)nextOpt.x == -opt.x && (int)nextOpt.y == -opt.y) continue;
+            if (mapRef.isWalkable(ex, ey)) exits++;
+        }
+
+        if (exits == 0) continue; // Sackgasse → überspringen
+
+        // normale Distanzberechnung
+        float dist = fabsf((nx - target.x)) + fabsf((ny - target.y));
         if (dist < bestDist) {
-            bestDist = dist;//gleichsetzen mit der berechneten distanz
-            bestMove = opt;//beste richtung setzen
+            bestDist = dist;
+            bestMove = opt;
         }
     }
 
-    //Wenn keine Richtung gefunden wurde, soll der Geist umkehren
     if (bestDist == FLT_MAX) {
-        // Fall wie z.B. Sackgassen(selten)
         return Vector2{ oppX, oppY };
     }
     return bestMove;
