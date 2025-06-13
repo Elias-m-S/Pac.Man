@@ -31,13 +31,12 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
     //std::cout << "Move Timer: " << moveTimer << std::endl;
 
     // Simplified state transitions
-    if (stateTimer <= 0.0f) {
-        if (state == GhostState::IN_BASE) {
+    if (stateTimer <= 0.0f) {        if (state == GhostState::IN_BASE) {
             // Leave base after initial wait
             changeState(GhostState::SCATTER);
             movingAllowed = true; // Allow movement after leaving base
-            stateTimer = 20.0f; // 7 seconds in scatter mode
-        } 
+            stateTimer = 7.0f; // 7 seconds in scatter mode
+        }
         else if (state == GhostState::SCATTER) {
             // After scatter, permanently go to chase
             changeState(GhostState::CHASE);
@@ -174,9 +173,9 @@ void Ghostbase::getEaten() {
         // Geist wird sofort zur Spawn-Position teleportiert
         x = spawnX;
         y = spawnY;
-        // Direkt zu inbase-Modus wechseln (nicht EATEN)
-        changeState(GhostState::IN_BASE);
-        stateTimer = 2.0f; // 7 Sekunden im Scatter-Modus
+        // Direkt zu Chase-Modus wechseln (kein Scatter nach dem Tod)
+        changeState(GhostState::CHASE);
+        stateTimer = FLT_MAX; // Unbegrenzt im Chase-Modus bleiben
         moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
     }
 }
