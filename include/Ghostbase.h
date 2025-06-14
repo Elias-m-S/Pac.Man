@@ -69,8 +69,7 @@ protected:
     
     // Spawn-Position für Reset und Teleport
     int spawnX, spawnY;
-
-private:
+    
     // Hilfsfunktionen
     std::mt19937 rng;          // Zufallszahlengenerator
     
