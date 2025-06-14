@@ -170,11 +170,11 @@ void Ghostbase::getEaten() {
     }
 }
 
+//zwei Funktionen gleiche Funktionalität, aber für unterschiedliche Zwecke übersichtlich eigene Namen
 bool Ghostbase::canBeEaten() const {
     // Ich kann nur gefressen werden, wenn ich Angst habe
     return state == GhostState::FRIGHTENED;
 }
-
 bool Ghostbase::isFrightened() const {
     // Bin ich gerade im Frightened-Modus?
     return state == GhostState::FRIGHTENED;

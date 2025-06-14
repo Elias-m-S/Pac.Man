@@ -17,8 +17,8 @@ Vector2 GreenGhost::getTargetTile(const Vector2& pacmanPos) const {
         // Wenn weit weg: PacMan verfolgen
         return pacmanPos;
     } else {
-        // Wenn nah dran: in die Ecke fliehen
-        return {2, 2};
+        // Wenn nah dran: in rechte obere Ecke fliehen
+        return {18, 1};
     }
 }
 
