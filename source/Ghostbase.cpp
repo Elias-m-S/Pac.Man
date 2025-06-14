@@ -1,21 +1,21 @@
 #include "Ghostbase.h"
 #include <iostream>
-#include <algorithm> //für algorythmen
-#include <random> //für zufällige Komponenten
-#include <cfloat> //für FLT_MAX, um unendlich roße werte zu haben
-#include <cstdlib> //für rand()
+#include <algorithm> // für Algorithmen
+#include <random> // für Zufall
+#include <cfloat> // für FLT_MAX, damit ich quasi "unendlich" große Werte habe
+#include <cstdlib> // für rand()
 
 bool movingAllowed = false;
 
 Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
     : Entity(startX, startY, speed),
-      radius(14), // Feste Radius für Geister
+      radius(14), // Der Geist ist immer 14 Pixel groß (Radius)
       state(GhostState::IN_BASE),
-      stateTimer(2.0f), // 2 Sekunden warten bevor sie die Basis verlassen
+      stateTimer(2.0f), // Am Anfang wartet der Geist 2 Sekunden in der Base
       moveTimer(0.0f),
-      moveInterval(1.0f / speed), // Bewegungsintervall: 1/speed Sekunden pro Tile
+      moveInterval(1.0f / speed), // Wie oft darf sich der Geist bewegen? (je schneller, desto kleiner das Intervall)
       mapRef(map),
-      spawnX(startX), spawnY(startY), // Spawn-Position merken
+      spawnX(startX), spawnY(startY), // Ich merke mir, wo der Geist spawnt
       rng(std::random_device{}())
 {
 
@@ -25,98 +25,92 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
     moveTimer -= deltaTime;
     stateTimer -= deltaTime;
 
-    // Timer Debugging
+    // Debugging: Hier könnte ich mir die Timer ausgeben lassen, falls was nicht klappt
     //std::cout << "State Timer: " << stateTimer << std::endl;
     //std::cout << "Move Timer: " << moveTimer << std::endl;
 
-    // Simplified state transitions
-    if (stateTimer <= 0.0f) {        if (state == GhostState::IN_BASE) {
-            // Leave base after initial wait
+    // Hier wird geprüft, ob der aktuelle Zustand abgelaufen ist (z.B. Base-Zeit, Scatter-Zeit, Frightened-Zeit)
+    if (stateTimer <= 0.0f) {
+        if (state == GhostState::IN_BASE) {
+            // Wenn die Wartezeit in der Base vorbei ist, gehe in den Scatter-Modus
             changeState(GhostState::SCATTER);
-            movingAllowed = true; // Allow movement after leaving base
-            stateTimer = 7.0f; // 7 seconds in scatter mode
+            movingAllowed = true; // Ab jetzt darf sich der Geist bewegen
+            stateTimer = 7.0f; // Im Scatter-Modus bleibt der Geist 7 Sekunden
         }
         else if (state == GhostState::SCATTER) {
-            // After scatter, permanently go to chase
+            // Nach dem Scatter-Modus kommt der Chase-Modus (dauerhaft)
             changeState(GhostState::CHASE);
-            stateTimer = FLT_MAX; // Stay in chase mode indefinitely
+            stateTimer = FLT_MAX; // Der Timer läuft quasi nie ab, Geist bleibt im Chase
         }
         else if (state == GhostState::FRIGHTENED) {
-            // After frightened wears off, return to chase
+            // Wenn der Frightened-Modus vorbei ist, wieder auf Chase umschalten
             changeState(GhostState::CHASE);
-            stateTimer = FLT_MAX; // Stay in chase mode indefinitely
-            moveInterval = 1.0f / speed; // Restore normal speed
+            stateTimer = FLT_MAX; // Auch hier: Chase bleibt für immer
+            moveInterval = 1.0f / speed; // Geschwindigkeit wieder normal machen
         }
-        // No more cycling between chase and scatter
+        // Es gibt keinen Wechsel mehr zurück zu Scatter
     }
 
-    // Rest of update method remains unchanged
+    // Ab hier kommt die eigentliche Bewegungslogik
     if (moveTimer <= 0.0f && movingAllowed) {
-        moveTimer = moveInterval; // Timer zurücksetzen
+        moveTimer = moveInterval; // Timer für die nächste Bewegung zurücksetzen
         Vector2 target;
         if (state == GhostState::IN_BASE) {
-            // Ziel: Basis verlassen (gehe nach oben zur Tür bei Position 10,7)
+            // Wenn ich noch in der Base bin, will ich zur Tür (Position 10,7)
             target = Vector2{10, 7};
         } else if (state == GhostState::FRIGHTENED) {
-            target = randomTile();        } else if (state == GhostState::SCATTER) {
-            target = getScatterTarget(); // Zur eigenen Ecke gehen
-            
-            // Prüfe ob bereits am Ziel angekommen
+            // Wenn ich erschrocken bin, laufe ich einfach irgendwohin (Zufall)
+            target = randomTile();
+        } else if (state == GhostState::SCATTER) {
+            // Im Scatter-Modus will ich in meine Ecke
+            target = getScatterTarget();
+            // Bin ich schon in der Ecke angekommen?
             if (x == (int)target.x && y == (int)target.y) {
-                // Am Scatter-Ziel angekommen - nicht mehr bewegen
-                return; // Überspringt die Bewegungslogik
+                // Dann bleibe ich einfach stehen und mache nichts mehr
+                return; // Ich überspringe die Bewegung
             }
-            
-            // Wenn Geist im Tunnel ist, sofort raus in Richtung Mitte
+            // Falls ich im Tunnel bin, gehe ich sofort wieder raus Richtung Mitte
             if (x <= 0 || x >= mapRef.getWidth() - 1) {
-                if (x <= 0) {
-                    target = Vector2{mapRef.getWidth() / 2.0f, (float)y}; // Nach rechts zur Mitte
-                } else {
-                    target = Vector2{mapRef.getWidth() / 2.0f, (float)y}; // Nach links zur Mitte
-                }
+                target = Vector2{mapRef.getWidth() / 2.0f, (float)y}; // Ziel ist die Mitte
             }
-
-            // Debug-Ausgabe für Scatter-Ziel
+            // Hier könnte ich mir das Ziel zum Debuggen ausgeben lassen
             //std::cout << "Scatter Target fuer " << typeid(*this).name() << ": " << target.x << ", " << target.y << std::endl;
-
         } else { // CHASE Modus
-            target = getTargetTile(pacmanPos); // Pacman verfolgen
-        }        // Bewegung in Richtung ausgewählten Ziels
+            // Im Chase-Modus will ich PacMan jagen
+            target = getTargetTile(pacmanPos);
+        }
+        // Jetzt suche ich mir die beste Richtung zum Ziel
         Vector2 dir = chooseDirectionTowards(target);
         setDirection((int)dir.x, (int)dir.y);
-        
-        // Debug-Ausgabe für direction
-        //std::cout << "Direction fuer " << typeid(*this).name() << ": " << dir.x << ", " << dir.y << std::endl;        // Diskrete Tile-Bewegung: immer genau 1 Tile bewegen
+        // Hier könnte ich mir die Richtung zum Debuggen ausgeben lassen
+        //std::cout << "Direction fuer " << typeid(*this).name() << ": " << dir.x << ", " << dir.y << std::endl;
+        // Ich bewege mich immer genau ein Feld weiter
         int nextX = x + getDirX();
         int nextY = y + getDirY();
-        
-        // Zusätzliche Tunnel-Prüfung vor der Bewegung (im Scatter-Modus)
+        // Im Scatter-Modus darf ich nicht in den Tunnel laufen
         if (state == GhostState::SCATTER) {
             if (nextX <= 0 || nextX >= mapRef.getWidth() - 1) {
-                // Tunnel erkannt! Bewegung verhindern
+                // Tunnel erkannt! Ich bleibe stehen
                 return;
             }
         }
-        
-        // Prüfe ob Bewegung möglich ist
+        // Prüfen, ob das nächste Feld begehbar ist
         if (mapRef.isWalkable(nextX, nextY)) {
             x = nextX;
             y = nextY;
-            // Tunnel benutzen
+            // Falls ich am Rand bin, Tunnel benutzen
             handleTunnelWrap(map.getWidth());
         }
     }
 }
 
-// Generalisiertes zeichnen, so dass einzelne Geister nur noch Farb überschrieben müssen
+// Zeichnen: Hier wird der Geist gemalt. Die Farbe kann jede Geisterklasse selbst setzen.
 void Ghostbase::draw(int tileSize) const {
-
     Color drawColor;
     if (state != GhostState::FRIGHTENED) {
         drawColor = normalColor;
     }
-
-    //Die Mitte der tiles festlegen als "Anker"
+    // Die Mitte des Feldes berechnen, damit der Geist immer schön mittig sitzt
     int centerX = x * tileSize + tileSize/2;
     int centerY = y * tileSize + tileSize/2;
     //Basierend auf TileSize den Radius der geister bestimmen
@@ -124,20 +118,18 @@ void Ghostbase::draw(int tileSize) const {
     
     // Körper nur zeichnen wenn NICHT im Frightened Modus
     if (state != GhostState::FRIGHTENED) {
-        // Kreis(Kopfrundung)der Geister
+        // Kopf vom Geist malen (Kreis)
         DrawCircle(centerX, centerY - ghostRadius/4, ghostRadius, drawColor);
-        
-        // rechteckiger Körper (aka das Betttuch was runterhängt)
+        // Körper vom Geist malen (Rechteck, sieht aus wie ein Laken)
         DrawRectangle(centerX - ghostRadius, centerY - ghostRadius/4, 
                       ghostRadius * 2, ghostRadius + ghostRadius/2, drawColor);
     }    
-    // Augen Zeichnenvorbereiten, damit abhängig von den Zuständen
+    // Jetzt kommen die Augen. Die sind je nach Zustand unterschiedlich groß
     int eyeSize = ghostRadius / 4;
     int eyeOffsetX = ghostRadius / 3;
     int eyeOffsetY = ghostRadius / 3;
-    
     if (state == GhostState::FRIGHTENED) {
-        // Nur Augen für frightened Geister (größer und auffälliger)
+        // Wenn der Geist Angst hat, sind die Augen größer und auffälliger
         eyeSize = ghostRadius / 2;
         DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
         DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
@@ -147,7 +139,6 @@ void Ghostbase::draw(int tileSize) const {
         // Normale Augen für normale Geister
         DrawCircle(centerX - eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
         DrawCircle(centerX - eyeOffsetX + eyeSize/3, centerY - eyeOffsetY, eyeSize/2, BLACK);
-        
         DrawCircle(centerX + eyeOffsetX, centerY - eyeOffsetY, eyeSize, WHITE);
         DrawCircle(centerX + eyeOffsetX + eyeSize/3, centerY - eyeOffsetY, eyeSize/2, BLACK);
     }
@@ -155,33 +146,37 @@ void Ghostbase::draw(int tileSize) const {
 
 void Ghostbase::setFrightened(bool on) {
     if (on) {
+        // Wenn PacMan ein PowerUp frisst, werden alle Geister erschrocken
         changeState(GhostState::FRIGHTENED);
-        stateTimer = 6.0f; // 6 Sekunden verängstigt
-        moveInterval = 1.0f / (speed * 0.5f); // Langsamere Bewegung im Frightened-Modus
+        stateTimer = 6.0f; // So lange bleibt der Geist erschrocken
+        moveInterval = 1.0f / (speed * 0.5f); // Geist wird langsamer
     } else if (!on && state == GhostState::FRIGHTENED) {
+        // Wenn die Angst vorbei ist, wieder normal jagen
         changeState(GhostState::CHASE);
-        stateTimer = 6.0f; // Nach Frightened wieder zum Chase-Modus
-        moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
+        stateTimer = 6.0f; // Timer für Chase-Modus (eigentlich egal, weil FLT_MAX)
+        moveInterval = 1.0f / speed; // Geschwindigkeit wieder normal
     }
 }
 
 void Ghostbase::getEaten() {
     if (state == GhostState::FRIGHTENED) {
-        // Geist wird sofort zur Spawn-Position teleportiert
+        // Wenn PacMan mich frisst, werde ich sofort zur Startposition teleportiert
         x = spawnX;
         y = spawnY;
-        // Direkt zu Chase-Modus wechseln (kein Scatter nach dem Tod)
+        // Danach jage ich sofort wieder PacMan (kein Scatter mehr)
         changeState(GhostState::CHASE);
-        stateTimer = FLT_MAX; // Unbegrenzt im Chase-Modus bleiben
-        moveInterval = 1.0f / speed; // Normale Geschwindigkeit wiederherstellen
+        stateTimer = FLT_MAX; // Bleibe für immer im Chase-Modus
+        moveInterval = 1.0f / speed; // Geschwindigkeit wieder normal
     }
 }
 
 bool Ghostbase::canBeEaten() const {
+    // Ich kann nur gefressen werden, wenn ich Angst habe
     return state == GhostState::FRIGHTENED;
 }
 
 bool Ghostbase::isFrightened() const {
+    // Bin ich gerade im Frightened-Modus?
     return state == GhostState::FRIGHTENED;
 }
 

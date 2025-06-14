@@ -4,7 +4,7 @@ constexpr int TILE_SIZE = 32;
 constexpr int MAP_WIDTH = 21;
 constexpr int MAP_HEIGHT = 21;
 
-// Game speed constants
+// GGeschwindigkeitskonstanten
 constexpr float PACMAN_SPEED = 8.0f;
 constexpr float GHOST_SPEED = 5.0f;
 
@@ -13,8 +13,6 @@ constexpr int GHOST_RESPAWN_X = 10;
 constexpr int GHOST_RESPAWN_Y = 7;
 
 // individuelle Spawnpunkte für Geister
-
-// Spawn position constants
 constexpr int PACMAN_SPAWN_X = 10;
 constexpr int PACMAN_SPAWN_Y = 15;
 

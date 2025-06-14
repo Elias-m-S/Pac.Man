@@ -2,6 +2,7 @@
 #include "Map.h"
 #include <cmath>
 
+// Konstruktor: Hier wird der pinke Geist erstellt und bekommt seine Farbe
 PinkGhost::PinkGhost(const Map& map, int startX, int startY, float speed)
     : Ghostbase(map, startX, startY, speed)
 {
@@ -9,20 +10,16 @@ PinkGhost::PinkGhost(const Map& map, int startX, int startY, float speed)
 }
 
 Vector2 PinkGhost::getTargetTile(const Vector2& pacmanPos) const {
-    // PinkGhost (Speedy) ambushes 4 tiles ahead of PacMan's current direction
-    // We need to get PacMan's direction, but since we only have position,
-    // we'll implement a simpler ambush strategy targeting a point ahead of PacMan
-    
-    // Try to target 4 tiles ahead in the direction PacMan is likely moving
-    // Since we don't have direct access to PacMan's direction, we'll target
-    // slightly ahead based on the map center direction
+    //der Pinke Geist will eigentlich 4 Felder vor pacman angreifen, da wir aber der einfachheit halber
+    //keine richtung sondern nur die position übergeben, wird er einfach 4 Felder vor pacman angreifen, aber nicht basierend auf richtung,
+    //sondern von pacman in richtung mitte 4 Felder
     Vector2 target = pacmanPos;
     
-    // Simple ambush: target 3 tiles ahead towards map center
+    // Mitte der Map
     float mapCenterX = mapRef.getWidth() / 2.0f;
     float mapCenterY = mapRef.getHeight() / 2.0f;
     
-    // Calculate direction from pacman towards center
+    // Berechnung richtung mitte 
     float dirX = (mapCenterX - pacmanPos.x);
     float dirY = (mapCenterY - pacmanPos.y);
     
@@ -44,5 +41,5 @@ Vector2 PinkGhost::getTargetTile(const Vector2& pacmanPos) const {
 Vector2 PinkGhost::getScatterTarget() const {
     // PinkGhost (Pinky) geht zur oberen linken Ecke im Scatter-Modus
     //Wenn keine Richtung gefunden wurde, soll der Geist umkehren
-    return Vector2{2, 1};
+    return Vector2{2, 2};
 }

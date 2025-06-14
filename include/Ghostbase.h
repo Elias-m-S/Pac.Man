@@ -68,10 +68,8 @@ protected:
     
     // Spawn-Position für Reset und Teleport
     int spawnX, spawnY;
-    
-    // Hilfsfunktionen
-    std::mt19937 rng;          // Zufallszahlengenerator
-    
-    // Zufällige Tile (z.B. für Scatter Zustand)
+    // Zufallszahlengenerator (für Frightened)
+    std::mt19937 rng;
+    // randomTile() sucht ein zufälliges Feld (z.B. für Frightened)
     Vector2 randomTile() const;
 };
