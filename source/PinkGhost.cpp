@@ -6,7 +6,6 @@ PinkGhost::PinkGhost(const Map& map, int startX, int startY, float speed)
     : Ghostbase(map, startX, startY, speed)
 {
     normalColor = PINK; // Setzt die normale Farbe für den RedGhost
-    frightenedColor = BLUE; // Farbe wenn verängstigt
 }
 
 Vector2 PinkGhost::getTargetTile(const Vector2& pacmanPos) const {

@@ -5,7 +5,6 @@ RedGhost::RedGhost(const Map& map, int startX, int startY, float speed)
     : Ghostbase(map, startX, startY, speed)
 {
     normalColor = RED;
-    frightenedColor = BLUE;
 }
 
 Vector2 RedGhost::getTargetTile(const Vector2& pacmanPos) const {

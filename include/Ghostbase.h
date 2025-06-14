@@ -57,7 +57,6 @@ protected:
     Vector2 chooseDirectionTowards(const Vector2& target) const;
       // Farben
     Color normalColor;         // Normale Farbe welche jeder Geist hat (verschiedene deswegen nicht festgelegt)
-    Color frightenedColor = BLUE; // Farbe welche die Geister haben wenn sie Angst haben
     
     // Eigenschaften
     float radius;              // Radius der Geister, bestimmt die Form der Geister mit

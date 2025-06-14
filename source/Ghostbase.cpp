@@ -9,7 +9,6 @@ bool movingAllowed = false;
 
 Ghostbase::Ghostbase(const Map& map, int startX, int startY, float speed)
     : Entity(startX, startY, speed),
-      frightenedColor(BLUE),
       radius(14), // Feste Radius für Geister
       state(GhostState::IN_BASE),
       stateTimer(2.0f), // 2 Sekunden warten bevor sie die Basis verlassen
@@ -113,9 +112,7 @@ void Ghostbase::update(float deltaTime, const Vector2& pacmanPos, const Map& map
 void Ghostbase::draw(int tileSize) const {
 
     Color drawColor;
-    if (state == GhostState::FRIGHTENED) {
-        drawColor = frightenedColor;
-    } else {
+    if (state != GhostState::FRIGHTENED) {
         drawColor = normalColor;
     }
 
