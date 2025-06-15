@@ -5,7 +5,7 @@
 #include <iostream>
 
 Leaderboard::Leaderboard(const std::string& filename)
-    : filename("assets/Scoreboard.txt") // immer fester Pfad
+    : filename("../assets/Scoreboard.txt") // immer fester Pfad
 {
     load();
 }

@@ -68,9 +68,9 @@ void Game::initializeAudio() {
     }
     
     // Lade Sound-Dateien
-    deathSound = LoadSound("assets/pacman_death.wav");
-    eatFruitSound = LoadSound("assets/pacman_eatfruit.wav");
-    eatGhostSound = LoadSound("assets/pacman_eatghost.wav");
+    deathSound = LoadSound("../assets/pacman_death.wav");
+    eatFruitSound = LoadSound("../assets/pacman_eatfruit.wav");
+    eatGhostSound = LoadSound("../assets/pacman_eatghost.wav");
     
     // Setze Lautstärke
     SetSoundVolume(deathSound, 1.0f);
@@ -80,7 +80,7 @@ void Game::initializeAudio() {
 }
 
 void Game::setWindowIcon() {
-    Image icon = LoadImage("assets/icon.png");
+    Image icon = LoadImage("../assets/icon.png");
     SetWindowIcon(icon);
     UnloadImage(icon);
 }

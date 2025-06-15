@@ -21,9 +21,3 @@ add_executable(pacman ${SOURCES})
 
 # Link libraries
 target_link_libraries(pacman raylib opengl32 gdi32 winmm)
-
-add_custom_command(TARGET pacman POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/assets/icon.png"
-        "$<TARGET_FILE_DIR:pacman>/assets/icon.png"
-)
