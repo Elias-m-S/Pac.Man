@@ -271,10 +271,9 @@ Vector2 Ghostbase::chooseDirectionTowards(const Vector2& target) const {
     return validOptions[0].direction;
 }
 
-// Private-Helfer
+
+//Zufällige Felder suchen, welche die Geister in Frightened Zustand ansteuern können
 Vector2 Ghostbase::randomTile() const {
-    // Improved random movement for frightened mode
-    // Try to move away from current position in a random direction
     static const Vector2 directions[4] = {
         {  1,  0 },  // right
         { -1,  0 },  // left
@@ -284,7 +283,7 @@ Vector2 Ghostbase::randomTile() const {
     
     std::vector<Vector2> validMoves;
     
-    // Find all valid directions
+    //alle möglichen richtungen prüfen
     for (int i = 0; i < 4; i++) {
         int testX = x + (int)directions[i].x;
         int testY = y + (int)directions[i].y;
@@ -295,10 +294,10 @@ Vector2 Ghostbase::randomTile() const {
     }
     
     if (validMoves.empty()) {
-        return Vector2{ (float)x, (float)y }; // Stay in place if no valid moves
+        return Vector2{ (float)x, (float)y }; //stehenbleiben wenn keine Richutng möglich
     }
     
-    // Choose random valid direction
+    //zufällige mögliche Richtung auswählen
     int randomIndex = rand() % validMoves.size();
     Vector2 chosenDir = validMoves[randomIndex];
     
