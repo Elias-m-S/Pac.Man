@@ -10,7 +10,7 @@ constexpr float GHOST_SPEED = 5.0f;
 
 //Spawnpunkt für Geister nach Tot
 constexpr int GHOST_RESPAWN_X = 10;
-constexpr int GHOST_RESPAWN_Y = 7;
+constexpr int GHOST_RESPAWN_Y = 9;
 
 // individuelle Spawnpunkte für Geister
 constexpr int PACMAN_SPAWN_X = 10;
