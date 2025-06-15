@@ -19,5 +19,5 @@ Rasterpunkt mit Obst betritt und das Obst frisst bekommt der Spieler 100 Punkte.
 selbständig.
 9. Es gibt ein Leaderboard in dem nach jedem Spiel der Spieler mit Punktestand eingetragen wird. Das Leaderboard wird auf der Festplatte gespeichert und beim Start des Spiels sowie nach jedem Spiel angezeigt.
 
-## Umsetzung
-...
+## Ausführen:
+Die Raylib- Library liegt im Projekt- Root und ist bereits mit der CMake eingebunden. Mit CMake also das programm kompilieren und ausführen, viel Spaß beim Spiel.
