@@ -4,8 +4,8 @@ project(PacMan)
 set(CMAKE_CXX_STANDARD 17)
 
 # Include Raylib (adjust path as needed)
-include_directories("C:/raylib/include")
-link_directories("C:/raylib/lib")
+include_directories(${PROJECT_SOURCE_DIR}/raylib/include)
+link_directories(${PROJECT_SOURCE_DIR}/raylib/lib)
 
 # Include headers
 include_directories(${PROJECT_SOURCE_DIR}/include)
